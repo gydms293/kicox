@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>사업계획서 작성 도우미 | 국가산업단지 인허가 안내</title>
+<style>
+/* ── 상단 네비 ── */
+.top-bar{position:sticky;top:0;z-index:300;background:#fff;border-bottom:1px solid #d1d5db;padding:10px 16px;display:flex;justify-content:space-between;align-items:center}
+.top-bar a.back{display:inline-flex;align-items:center;gap:6px;color:#1a56db;text-decoration:none;font-size:13px;font-weight:500;padding:5px 10px;border-radius:5px;font-family:'맑은 고딕','Malgun Gothic',sans-serif}
+.top-bar a.back:hover{background:#eff6ff}
+.top-bar .top-title{font-size:11.5px;color:#6b7280;font-weight:500}
+/* ── 기본 ── */
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'맑은 고딕','Malgun Gothic',sans-serif;background:#f3f4f6;color:#111;font-size:14px}
+
+/* ── 앱 레이아웃 ── */
+.app{display:flex;min-height:100vh}
+.sidebar{width:230px;flex-shrink:0;background:#fff;border-right:1px solid #d1d5db;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+.content{flex:1;overflow-y:auto}
+
+/* ── 사이드바 ── */
+.sb-top{padding:16px 16px 14px;border-bottom:1px solid #e5e7eb}
+.sb-top h1{font-size:12px;font-weight:700;color:#1a56db;line-height:1.5}
+.sb-top p{font-size:10px;color:#6b7280;margin-top:3px}
+.sb-section-title{font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:.06em;padding:10px 16px 3px;text-transform:uppercase}
+.nav-btn{display:flex;align-items:center;gap:8px;padding:8px 16px;width:100%;background:none;border:none;border-left:3px solid transparent;font-size:12.5px;color:#6b7280;cursor:pointer;font-family:inherit;text-align:left;transition:all .12s}
+.nav-btn:hover{background:#f3f4f6;color:#111}
+.nav-btn.on{background:#eff6ff;color:#1a56db;border-left-color:#1a56db;font-weight:700}
+.nav-btn .dot{width:18px;height:18px;border-radius:50%;background:#e5e7eb;color:#6b7280;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-btn.on .dot{background:#1a56db;color:#fff}
+.sb-prog{padding:14px 16px;border-top:1px solid #e5e7eb;margin-top:auto}
+.sb-prog p{font-size:10px;color:#6b7280;margin-bottom:5px}
+.prog-bar{height:5px;background:#e5e7eb;border-radius:99px;overflow:hidden}
+.prog-fill{height:5px;background:#1a56db;border-radius:99px;transition:width .3s;width:0%}
+.prog-pct{font-size:11px;font-weight:700;color:#1a56db;margin-top:4px}
+
+/* ── 화면 전환 ── */
+.view{display:none}.view.on{display:block}
+
+/* ── 입력 폼 화면 ── */
+.form-wrap{padding:28px 32px;max-width:860px}
+.sec-hd{margin-bottom:20px}
+.sec-badge{display:inline-block;background:#eff6ff;color:#1a56db;font-size:10px;font-weight:700;padding:2px 9px;border-radius:99px;margin-bottom:7px}
+.sec-hd h2{font-size:18px;font-weight:700}
+.sec-hd p{font-size:12px;color:#6b7280;margin-top:4px;line-height:1.6}
+.card{background:#fff;border:1px solid #d1d5db;border-radius:6px;padding:18px 20px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.07)}
+.card-title{font-size:13px;font-weight:700;margin-bottom:14px;padding-bottom:9px;border-bottom:1px solid #e5e7eb}
+.field{margin-bottom:12px}
+.field-label{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600;margin-bottom:4px}
+.fnum{background:#1a56db;color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;flex-shrink:0}
+.req{color:#dc2626;margin-left:1px}
+input[type=text],input[type=number],input[type=date],input[type=email],input[type=tel],input[type=url],textarea{width:100%;padding:7px 10px;border:1px solid #d1d5db;border-radius:5px;font-size:13px;font-family:inherit;color:#111;background:#fff;transition:border-color .15s}
+input:focus,textarea:focus{outline:none;border-color:#1a56db;box-shadow:0 0 0 3px rgba(26,86,219,.1)}
+textarea{resize:vertical;line-height:1.6}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.iunit{display:flex;align-items:center;gap:6px}
+.iunit input{flex:1}
+.unit{font-size:12px;color:#6b7280;white-space:nowrap}
+.hint{font-size:11px;color:#6b7280;margin-top:3px;line-height:1.5}
+.hint a{color:#1a56db}
+/* ── 툴팁 ── */
+.tip{position:relative;display:inline-flex}
+.tip-btn{width:15px;height:15px;border-radius:50%;background:#e5e7eb;border:none;cursor:pointer;font-size:9px;font-weight:700;color:#6b7280;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;line-height:1}
+.tip-btn:hover{background:#1a56db;color:#fff}
+.tip-box{display:none;position:absolute;left:20px;top:-4px;width:260px;background:#1f2937;color:#fff;font-size:11px;font-weight:400;padding:9px 11px;border-radius:6px;line-height:1.6;z-index:200;box-shadow:0 4px 14px rgba(0,0,0,.35);white-space:normal}
+.tip-box::before{content:'';position:absolute;left:-5px;top:8px;border:5px solid transparent;border-right-color:#1f2937;border-left:none}
+.tip-btn:hover .tip-box,.tip:hover .tip-box{display:block}
+.cbg{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.cbg label{display:flex;align-items:center;gap:4px;font-size:13px;cursor:pointer;padding:5px 10px;border:1px solid #d1d5db;border-radius:5px;transition:all .12s}
+.cbg label:hover,.cbg label:has(input:checked){border-color:#1a56db;background:#eff6ff}
+.cbg input[type=checkbox]{width:auto;accent-color:#1a56db}
+.alert-info{background:#eff6ff;color:#1e40af;border:1px solid #bfdbfe;border-radius:5px;padding:8px 12px;font-size:12px;line-height:1.6;margin-bottom:12px}
+.alert-warn{background:#fffbeb;color:#92400e;border:1px solid #fcd34d;border-radius:5px;padding:8px 12px;font-size:12px;line-height:1.6;margin-bottom:12px}
+.alert-err{background:#fef2f2;color:#991b1b;border:1px solid #fca5a5;border-radius:5px;padding:8px 12px;font-size:12px;line-height:1.6;margin-bottom:12px;display:none}
+/* 건설계획 테이블 */
+.btbl{width:100%;border-collapse:collapse;font-size:12px}
+.btbl th,.btbl td{border:1px solid #d1d5db;padding:6px 8px;text-align:center}
+.btbl th{background:#f3f4f6;font-weight:600;font-size:11px}
+.btbl td.lbl{text-align:left;font-weight:600;background:#fafafa}
+.btbl td.sublbl{text-align:left;padding-left:16px;color:#6b7280;background:#fafafa}
+.btbl td input{border:none;text-align:right;width:100%;font-size:12px;background:transparent;padding:2px 4px}
+.btbl td.calc{background:#f0fdf4;font-weight:700;color:#059669}
+.btbl tr.tot td{background:#fef9c3;font-weight:700}
+/* 공정 */
+.proc-row{display:flex;align-items:center;gap:7px;margin-bottom:5px}
+.proc-num{width:22px;height:22px;border-radius:50%;background:#1a56db;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.proc-arrow{text-align:center;color:#9ca3af;font-size:16px;margin:-2px 0;padding-left:11px}
+/* 동적 테이블 */
+.dtbl{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:6px}
+.dtbl th{background:#f3f4f6;padding:7px 8px;border:1px solid #d1d5db;font-weight:600;font-size:11px;text-align:center;white-space:nowrap}
+.dtbl td{border:1px solid #d1d5db;padding:3px 5px}
+.dtbl td input{border:none;padding:4px 6px;font-size:12px;background:transparent;width:100%}
+.add-btn{font-size:12px;color:#1a56db;background:none;border:1px dashed #1a56db;padding:4px 12px;border-radius:5px;cursor:pointer;margin-top:4px}
+.del-btn{background:none;border:none;color:#dc2626;cursor:pointer;font-size:14px;padding:0 3px}
+/* 네비 버튼 */
+.nav-btns{display:flex;gap:8px;margin-top:24px;padding-top:16px;border-top:1px solid #e5e7eb}
+.btn{padding:9px 20px;border-radius:5px;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:all .12s}
+.btn-prev{background:#fff;border:1px solid #d1d5db;color:#111}
+.btn-prev:hover{background:#f3f4f6}
+.btn-next{background:#1a56db;color:#fff}
+.btn-next:hover{background:#1447c3}
+.btn-preview{background:#059669;color:#fff}
+.btn-preview:hover{background:#047857}
+
+/* ══════════════════════════════════════
+   미리보기 화면 (법정 양식 그대로)
+══════════════════════════════════════ */
+.preview-wrap{padding:20px 30px;background:#e5e7eb;min-height:100vh;overflow-x:auto}
+.preview-toolbar{display:flex;align-items:center;gap:10px;margin-bottom:18px;flex-wrap:wrap}
+.preview-toolbar h2{font-size:15px;font-weight:700;color:#111;margin-right:auto}
+.btn-back{background:#fff;border:1px solid #d1d5db;color:#111;padding:7px 16px;border-radius:5px;font-size:13px;font-weight:600;cursor:pointer}
+.btn-print-real{background:#1a56db;color:#fff;padding:7px 16px;border-radius:5px;font-size:13px;font-weight:600;cursor:pointer;border:none}
+.page-nav{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+.page-tab{padding:5px 12px;border:1px solid #d1d5db;border-radius:5px;background:#fff;font-size:12px;cursor:pointer;font-weight:500;color:#6b7280}
+.page-tab.on{background:#1a56db;color:#fff;border-color:#1a56db}
+
+/* A4 페이지 */
+.a4-shadow{display:flex;justify-content:center;padding-bottom:30px}
+.a4{width:210mm;min-height:297mm;background:#fff;box-shadow:0 4px 20px rgba(0,0,0,.15);padding:15mm 17mm 12mm 20mm;font-family:'맑은 고딕','Malgun Gothic',sans-serif;font-size:9pt;color:#000;display:none}
+.a4.on{display:block}
+
+/* 법정 양식 공통 스타일 — PDF와 동일하게 */
+.lf-law{font-size:7pt;margin-bottom:3pt}
+.lf-pnum{text-align:right;font-size:8pt;margin-bottom:3pt}
+.lf-t{width:100%;border-collapse:collapse;table-layout:fixed}
+.lf-t th,.lf-t td{border:1pt solid #000;padding:3pt 4pt;vertical-align:middle;line-height:1.4;font-size:8.5pt;word-break:break-word;overflow:hidden}
+.lf-t th{font-weight:bold;text-align:center;white-space:nowrap}
+.lf-t .h{font-weight:bold;text-align:center;font-size:8pt;background:#fafafa}
+/* 법정 양식에서 카테고리(세로글자) 셀 */
+.lf-t .rh{font-weight:bold;text-align:center;font-size:9pt;white-space:nowrap;padding:3pt 2pt;background:#f5f5f5;line-height:1.4}
+.lf-note{font-size:7.5pt;margin-top:3pt;line-height:1.5}
+.lf-keyre{font-size:7.5pt;border:1pt solid #000;padding:4pt 6pt;margin-top:5pt;line-height:1.7}
+.lf-sec{font-size:10pt;font-weight:bold;margin:6pt 0 3pt}
+
+/* 표지 */
+.lf-cover{display:flex;flex-direction:column;align-items:center;padding-top:60mm}
+.lf-cover-title{font-size:22pt;font-weight:bold;letter-spacing:1.2em;margin-bottom:40pt;text-align:center}
+.lf-cover-date{font-size:13pt;letter-spacing:.3em;margin-bottom:50pt}
+.lf-cover-row{font-size:11pt;margin-bottom:8pt;display:flex;gap:0}
+.lf-cover-lbl{display:inline-block;width:80pt;text-align:justify;text-align-last:justify}
+.lf-cover-val{display:inline-block;min-width:120pt;border-bottom:1pt solid #000;font-weight:bold;padding-bottom:1pt}
+
+/* 생산공정 */
+.lf-proc-step{border:1pt solid #000;padding:2pt 5pt;text-align:center;font-size:8pt;margin:0 auto 1pt;max-width:80pt}
+.lf-proc-arr{text-align:center;font-size:10pt;line-height:1.2;margin:1pt 0}
+
+/* 모바일 대응: 작은 화면에서 A4 미리보기 축소 */
+@media (max-width: 900px) {
+  .preview-wrap{padding:14px 10px}
+  .preview-toolbar h2{font-size:13px;flex-basis:100%;margin-right:0;margin-bottom:6px}
+  .a4-shadow{padding-bottom:20px}
+  .a4{transform:scale(0.5);transform-origin:top center;margin-bottom:-150mm}
+}
+@media (max-width: 500px) {
+  .a4{transform:scale(0.42);margin-bottom:-170mm}
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="../" class="back">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+    메인으로 돌아가기
+  </a>
+  <span class="top-title">국가산업단지 인허가 안내</span>
+</div>
+
+<div class="app">
+
+<!-- ══ 사이드바 ══ -->
+<aside class="sidebar">
+  <div class="sb-top">
+    <h1>사업계획서 작성 도우미</h1>
+    <p>산업집적활성화 및 공장설립에 관한 법률<br>시행규칙 별지 제2호의2서식</p>
+  </div>
+  <div class="sb-section-title">입력 단계</div>
+  <button class="nav-btn on" onclick="goSec(0)" id="nav0"><span class="dot">표</span> 표지</button>
+  <button class="nav-btn" onclick="goSec(1)" id="nav1"><span class="dot">1</span> 사업개요</button>
+  <button class="nav-btn" onclick="goSec(2)" id="nav2"><span class="dot">2</span> 공장건설계획</button>
+  <button class="nav-btn" onclick="goSec(3)" id="nav3"><span class="dot">3</span> 생산공정도</button>
+  <button class="nav-btn" onclick="goSec(4)" id="nav4"><span class="dot">4</span> 생산시설 명세</button>
+  <button class="nav-btn" onclick="goSec(5)" id="nav5"><span class="dot">5</span> 배출시설 명세</button>
+  <button class="nav-btn" onclick="goSec(6)" id="nav6"><span class="dot">6</span> 용수·전력·연료</button>
+  <button class="nav-btn" onclick="goSec(7)" id="nav7"><span class="dot">7</span> 공장배치도</button>
+  <div class="sb-prog">
+    <p>작성 진행률</p>
+    <div class="prog-bar"><div class="prog-fill" id="pf"></div></div>
+    <div class="prog-pct" id="pp">0%</div>
+  </div>
+</aside>
+
+<!-- ══ 본문 ══ -->
+<div class="content">
+
+<!-- ─ 입력 폼 화면 ─ -->
+<div class="view on" id="viewForm">
+<div class="form-wrap">
+
+<!-- 0. 표지 -->
+<div class="view on" id="sec0">
+  <div class="sec-hd"><div class="sec-badge">제1쪽</div><h2>표지</h2></div>
+  <div class="card">
+    <div class="card-title">📋 표지 정보</div>
+    <div class="g3">
+      <div class="field"><div class="field-label">작성 연도</div><input type="number" id="coverYear" placeholder="2025" oninput="prog()"></div>
+      <div class="field"><div class="field-label">월</div><input type="number" id="coverMonth" placeholder="1" min="1" max="12" oninput="prog()"></div>
+      <div class="field"><div class="field-label">일</div><input type="number" id="coverDay" placeholder="1" min="1" max="31" oninput="prog()"></div>
+    </div>
+    <div class="field"><div class="field-label">회사명 <span class="req">*</span></div><input type="text" id="coverCompany" placeholder="예: (주)한국산업" oninput="prog()"></div>
+    <div class="field"><div class="field-label">신청인(대표자) <span class="req">*</span></div><input type="text" id="coverRep" placeholder="예: 홍길동" oninput="prog()"></div>
+  </div>
+  <div class="nav-btns">
+    <button class="btn btn-next" onclick="goSec(1)">다음 →</button>
+    <button class="btn btn-preview" onclick="openPreview()">👁 미리보기</button>
+  </div>
+</div>
+
+<!-- 1. 사업개요 -->
+<div class="view" id="sec1">
+  <div class="sec-hd"><div class="sec-badge">제2쪽</div><h2>1. 사업개요</h2></div>
+  <div class="card">
+    <div class="card-title">업체 현황 — 회사</div>
+    <div class="field"><div class="field-label"><span class="fnum">①</span> 명칭 <span class="tip"><button class="tip-btn">?<div class="tip-box">사업자등록증 또는 법인등기부등본의 상호명을 기재합니다.</div></button></span></div><input type="text" id="compName" placeholder="(주)한국산업" oninput="prog()"></div>
+    <div class="field"><div class="field-label"><span class="fnum">②</span> 주소 <span class="tip"><button class="tip-btn">?<div class="tip-box">법인 본점 소재지 또는 사업장 주소를 기재합니다.</div></button></span></div><input type="text" id="compAddr" placeholder="○○도 ○○시 00길 (○○동 ○○○-1번지)" oninput="prog()"></div>
+    <div class="g2">
+      <div class="field"><div class="field-label"><span class="fnum">③</span> 전화번호 <span class="tip"><button class="tip-btn">?<div class="tip-box">회사 전화번호를 기재합니다. 없을 경우 연락 가능한 대표자 핸드폰 번호를 기재합니다.</div></button></span></div><input type="tel" id="compTel" placeholder="02-333-3333" oninput="prog()"></div>
+      <div class="field"><div class="field-label">팩스번호</div><input type="tel" id="compFax" placeholder="02-333-3332" oninput="prog()"></div>
+    </div>
+    <div class="g2">
+      <div class="field"><div class="field-label"><span class="fnum">⑤</span> 홈페이지 주소</div><input type="text" id="compWeb" placeholder="www.example.co.kr" oninput="prog()"></div>
+      <div class="field"><div class="field-label"><span class="fnum">⑥</span> 법인등록번호 <span class="tip"><button class="tip-btn">?<div class="tip-box">법인(조합)일 경우 법인등록번호를 기재합니다. 개인사업자일 경우 미기재.</div></button></span></div><input type="text" id="corpNum" placeholder="000000-0000001" oninput="prog()"></div>
+    </div>
+    <div class="field"><div class="field-label">사업자등록번호</div><input type="text" id="bizRegNum" placeholder="000-00-00001" oninput="prog()"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">업체 현황 — 대표자</div>
+    <div class="g2">
+      <div class="field"><div class="field-label"><span class="fnum">⑦</span> 성명 <span class="tip"><button class="tip-btn">?<div class="tip-box">사업자등록증 또는 법인등기부등본 상 대표자를 기재합니다. 2인 이상일 경우 성명 모두 기재합니다.</div></button></span></div><input type="text" id="ceoName" placeholder="홍길동" oninput="prog()"></div>
+      <div class="field"><div class="field-label"><span class="fnum">⑧</span> 이메일 주소 <span class="tip"><button class="tip-btn">?<div class="tip-box">대표자 또는 회사 대표 이메일을 기재합니다.</div></button></span></div><input type="email" id="ceoEmail" placeholder="ceo@example.com" oninput="prog()"></div>
+    </div>
+    <div class="field"><div class="field-label">주소 <span class="tip"><button class="tip-btn">?<div class="tip-box">대표자 주민등록상 실제 거주하는 곳의 주소지를 기재합니다.</div></button></span></div><input type="text" id="ceoAddr" placeholder="○○도 ○○시 00길" oninput="prog()"></div>
+    <div class="g3">
+      <div class="field"><div class="field-label">생년월일</div><input type="date" id="ceoBirth" oninput="prog()"></div>
+      <div class="field"><div class="field-label">전화번호</div><input type="tel" id="ceoTel" placeholder="010-0000-0000" oninput="prog()"></div>
+      <div class="field"><div class="field-label">팩스번호</div><input type="tel" id="ceoFax" placeholder="00-000-0000" oninput="prog()"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">생산제품 현황</div>
+    <div class="field"><div class="field-label"><span class="fnum">⑬</span> 업종(5단위) <span class="tip"><button class="tip-btn">?<div class="tip-box">한국표준산업분류상 세세분류(5단위)까지 기재합니다. 이전 공장 등록 시 신고된 업종명 및 업종번호(5자리)를 기재하거나, 신규 업종 추가 시 femis.go.kr에서 확인합니다.</div></button></span></div><input type="text" id="bizType" placeholder="예: 고무, 화학섬유 및 플라스틱 성형기 제조업(29292)" oninput="prog()"><div class="hint">💡 <a href="https://femis.go.kr" target="_blank">femis.go.kr</a>에서 업종 분류번호 확인</div></div>
+    <div class="field"><div class="field-label"><span class="fnum">⑭</span> 생산품명 <span class="tip"><button class="tip-btn">?<div class="tip-box">생산 제품목이나 용역의 종류를 기재합니다. 예: 사출성형기계, 봉제물품, 레이저 절단가공품 등</div></button></span></div><input type="text" id="productName" placeholder="예: 사출성형기계" oninput="prog()"></div>
+    <div class="field"><div class="field-label"><span class="fnum">⑮</span> 주 원자재 <span class="tip"><button class="tip-btn">?<div class="tip-box">생산을 위한 원료가 되는 자재를 기재합니다. 예: 플라스틱, 환봉, 모터 등</div></button></span></div><input type="text" id="rawMat" placeholder="예: 플라스틱, 환봉, 모터 등" oninput="prog()"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">공장 현황</div>
+    <div class="field"><div class="field-label">공장 주소 <span class="tip"><button class="tip-btn">?<div class="tip-box">공장 및 사업장 설립예정지의 모든 도로명 및 지번을 기재합니다. 토지대장상 지번을 기재하며, 2필지 이상인 경우 모두 기재합니다.</div></button></span></div><input type="text" id="factAddr" placeholder="○○도 ○○시 00길 (○○동 ○○○-1번지 외 2필지)" oninput="prog()"></div>
+    <div class="field">
+      <div class="field-label">형태 <span class="tip"><button class="tip-btn">?<div class="tip-box">공장의 취득 형태에 따라 해당 항목에 체크합니다.</div></button></span></div>
+      <div class="cbg">
+        <label><input type="checkbox" name="factForm" value="분양" onchange="prog()"><span>분양</span></label>
+        <label><input type="checkbox" name="factForm" value="경매" onchange="prog()"><span>경매</span></label>
+        <label><input type="checkbox" name="factForm" value="양도" onchange="prog()"><span>양도</span></label>
+        <label><input type="checkbox" name="factForm" value="양수" onchange="prog()"><span>양수</span></label>
+        <label><input type="checkbox" name="factForm" value="임대" onchange="prog()"><span>임대</span></label>
+      </div>
+    </div>
+    <div class="g2">
+      <div class="field"><div class="field-label">용도지역 <span class="tip"><button class="tip-btn">?<div class="tip-box">국토의 계획 및 이용에 관한 법률에 의한 도시지역(주거·상업·공업·녹지), 관리지역(보전·생산·계획), 농림지역, 자연환경보전지역 중 기재합니다. 2개 이상에 걸려있는 경우 모두 기재합니다.</div></button></span></div><input type="text" id="useZone" placeholder="예: 계획관리지역" oninput="prog()"></div>
+      <div class="field"><div class="field-label">지목 <span class="tip"><button class="tip-btn">?<div class="tip-box">지적법상 공장용지, 전, 답, 임야 등 28종류 중 토지대장상 지목을 기재합니다.</div></button></span></div><input type="text" id="landCat" placeholder="예: 전, 답" oninput="prog()"></div>
+    </div>
+    <div class="g3">
+      <div class="field"><div class="field-label">착공 예정일 <span class="tip"><button class="tip-btn">?<div class="tip-box">공장설립 공사 착공 예정일자를 기재합니다(건축법상 건축물 착공계 제출 예정일). 기존 건축물일 경우 건축물대장상 착공일자를 기재합니다.</div></button></span></div><input type="date" id="startDate" oninput="prog()"></div>
+      <div class="field"><div class="field-label">준공 예정일 또는 준공일 <span class="tip"><button class="tip-btn">?<div class="tip-box">공장설립 공사 준공 예정일자를 기재합니다(건축법상 사용승인 예정일). 기존 건축물일 경우 건축물대장상 사용승인 일자를 기재합니다.</div></button></span></div><input type="date" id="endDate" oninput="prog()"></div>
+      <div class="field"><div class="field-label">사업 시작일 <span class="tip"><button class="tip-btn">?<div class="tip-box">공장설립 완료 후 최초 가동개시(예정)일을 기재합니다.</div></button></span></div><input type="date" id="bizStart" oninput="prog()"></div>
+    </div>
+    <div class="field"><div class="field-label">종업원 수 <span class="tip"><button class="tip-btn">?<div class="tip-box">현재 및 예정 상시근로자 수를 기재합니다.</div></button></span></div>
+      <div class="g4">
+        <div class="field"><div class="field-label" style="font-size:11px">국내 남(명)</div><input type="number" id="emDM" placeholder="0" min="0" oninput="prog()"></div>
+        <div class="field"><div class="field-label" style="font-size:11px">국내 여(명)</div><input type="number" id="emDF" placeholder="0" min="0" oninput="prog()"></div>
+        <div class="field"><div class="field-label" style="font-size:11px">국외 남(명)</div><input type="number" id="emOM" placeholder="0" min="0" oninput="prog()"></div>
+        <div class="field"><div class="field-label" style="font-size:11px">국외 여(명)</div><input type="number" id="emOF" placeholder="0" min="0" oninput="prog()"></div>
+      </div>
+    </div>
+    <div class="field"><div class="field-label">용지 면적 <span class="tip"><button class="tip-btn">?<div class="tip-box">공장설립(예정)지 면적을 토지대장상 면적(㎡)을 근거로 정확히 기재합니다(지번별 합산 면적). 임차일 경우 임대차 계약서상 임차하는 면적만 기재합니다.</div></button></span></div><div class="iunit"><input type="number" id="landArea" placeholder="2000.01" step="0.01" oninput="calcRatio();prog()"><span class="unit">㎡</span></div></div>
+    <div class="g2">
+      <div class="field"><div class="field-label">건축면적 — 제조시설 <span class="tip"><button class="tip-btn">?<div class="tip-box">제품제조공정을 형성하는 기계·장치 등이 존재하는 건축물 연면적 및 옥외공작물의 수평투영면적을 기재합니다. (건축물대장상 순수 작업장 면적 + 옥외공작물 면적)</div></button></span></div><div class="iunit"><input type="number" id="mfgArea" placeholder="600.58" step="0.01" oninput="calcRatio();prog()"><span class="unit">㎡</span></div></div>
+      <div class="field"><div class="field-label">건축면적 — 부대시설 <span class="tip"><button class="tip-btn">?<div class="tip-box">제조시설의 관리·지원, 종업원 복지후생을 위한 건축물 면적을 기재합니다. (창고, 사무실, 기숙사, 연구실, 식당 등의 합산 면적)</div></button></span></div><div class="iunit"><input type="number" id="suppArea" placeholder="200.99" step="0.01" oninput="calcRatio();prog()"><span class="unit">㎡</span></div></div>
+    </div>
+    <div class="field"><div class="field-label">건축면적 / 용지면적 (자동계산)</div><input type="text" id="areaRatio" readonly style="background:#f9fafb;color:#6b7280"></div>
+    <div class="g3">
+      <div class="field"><div class="field-label">기준공장 면적율 <span class="tip"><button class="tip-btn">?<div class="tip-box">제조업종별 공장용지 면적에 대한 건축면적의 비율입니다. 기준공장면적율 이상 건축되어야 합니다.</div></button></span></div><div class="iunit"><input type="number" id="stdRate" placeholder="15" step="0.1" oninput="prog()"><span class="unit">%</span></div></div>
+      <div class="field"><div class="field-label">건폐율 <span class="tip"><button class="tip-btn">?<div class="tip-box">대지면적에 대한 건축면적(1층만)의 비율입니다.</div></button></span></div><div class="iunit"><input type="number" id="coverRate" placeholder="30" step="0.1" oninput="prog()"><span class="unit">%</span></div></div>
+      <div class="field"><div class="field-label">용적율 <span class="tip"><button class="tip-btn">?<div class="tip-box">대지면적에 대한 건축바닥면적(각 층 바닥면적 합계)의 비율입니다.</div></button></span></div><div class="iunit"><input type="number" id="floorRate" placeholder="40" step="0.1" oninput="prog()"><span class="unit">%</span></div></div>
+    </div>
+    <div class="g3" style="margin-top:4px">
+      <div class="field"><div class="field-label">투자 계 <span class="tip"><button class="tip-btn">?<div class="tip-box">공장설립 시 소요되는 토지구입비, 건축비, 기계·장치 구입비, 운전자금을 합산한 금액입니다. 자기자본 + 타인자본 합산금액과 반드시 일치해야 합니다.</div></button></span></div><div class="iunit"><input type="number" id="invTotal" placeholder="1000" oninput="chkInv();prog()"><span class="unit">백만원</span></div></div>
+      <div class="field"><div class="field-label">자기자본</div><div class="iunit"><input type="number" id="invOwn" placeholder="400" oninput="chkInv();prog()"><span class="unit">백만원</span></div></div>
+      <div class="field"><div class="field-label">타인자본</div><div class="iunit"><input type="number" id="invOther" placeholder="600" oninput="chkInv();prog()"><span class="unit">백만원</span></div></div>
+    </div>
+    <div class="g2">
+      <div class="field"><div class="field-label">외국인 투자금액</div><div class="iunit"><input type="number" id="invFg" placeholder="0"><span class="unit">천불</span></div></div>
+      <div class="field"><div class="field-label">외국인 투자비율</div><div class="iunit"><input type="number" id="invFgR" placeholder="0" step="0.1"><span class="unit">%</span></div></div>
+    </div>
+    <div class="alert-err" id="invErr">⚠️ 자기자본 + 타인자본 합계가 총 투자금액과 일치하지 않습니다.</div>
+    <div class="g3" style="margin-top:8px">
+      <div class="field"><div class="field-label">공장 보유구분 <span class="tip"><button class="tip-btn">?<div class="tip-box">공장의 보유 형태를 선택합니다.</div></button></span></div>
+        <div class="cbg" style="flex-direction:column;gap:4px">
+          <label><input type="checkbox" name="ownType" value="자가" onchange="prog()"><span>자가</span></label>
+          <label><input type="checkbox" name="ownType" value="임차" onchange="prog()"><span>임차</span></label>
+        </div>
+      </div>
+      <div class="field"><div class="field-label">공장 설립형태 <span class="tip"><button class="tip-btn">?<div class="tip-box">나대지에서 신규로 건설할 경우 '신규 건립 입주', 기존 건축물을 이용할 경우 '기존 건물 입주'를 선택합니다.</div></button></span></div>
+        <div class="cbg" style="flex-direction:column;gap:4px">
+          <label><input type="checkbox" name="buildType" value="신규 건립 입주" onchange="prog()"><span>신규 건립 입주</span></label>
+          <label><input type="checkbox" name="buildType" value="기존 건물 입주" onchange="prog()"><span>기존 건물 입주</span></label>
+        </div>
+      </div>
+      <div class="field"><div class="field-label">공장 규모 <span class="tip"><button class="tip-btn">?<div class="tip-box">중소기업기본법 시행령 제8조 및 같은 법 시행령 별표 1에 따른 업종별 평균매출액 기준에 맞는 규모를 선택합니다.</div></button></span></div>
+        <div class="cbg" style="flex-direction:column;gap:4px">
+          <label><input type="checkbox" name="factSz" value="대" onchange="prog()"><span>대</span></label>
+          <label><input type="checkbox" name="factSz" value="중" onchange="prog()"><span>중</span></label>
+          <label><input type="checkbox" name="factSz" value="소" onchange="prog()"><span>소</span></label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nav-btns">
+    <button class="btn btn-prev" onclick="goSec(0)">← 이전</button>
+    <button class="btn btn-next" onclick="goSec(2)">다음 →</button>
+    <button class="btn btn-preview" onclick="openPreview()">👁 미리보기</button>
+  </div>
+</div>
+
+<!-- 2. 공장건설계획 -->
+<div class="view" id="sec2">
+  <div class="sec-hd"><div class="sec-badge">제3쪽</div><h2>2. 공장건설계획</h2></div>
+  <div class="card">
+    <div class="alert-info">💡 연면적 기준, 소수 둘째자리까지 기재. "계" 열은 사업개요 ㉖㉗㉘ 수치와 일치해야 합니다.</div>
+    <div class="g3" style="margin-bottom:10px">
+      <div class="field"><div class="field-label">1차 연도</div><input type="number" id="yr1" placeholder="2023" oninput="yrHd()"></div>
+      <div class="field"><div class="field-label">2차 연도</div><input type="number" id="yr2" placeholder="2024" oninput="yrHd()"></div>
+      <div class="field"><div class="field-label">3차 연도</div><input type="number" id="yr3" placeholder="2025" oninput="yrHd()"></div>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="btbl">
+        <thead><tr><th style="width:110px">구분</th><th style="width:80px">현 재</th><th style="width:80px" id="yr1h">　　년</th><th style="width:80px" id="yr2h">　　년</th><th style="width:80px" id="yr3h">　　년</th><th style="width:80px">계</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">제조시설</td><td><input type="number" step="0.01" id="m0" oninput="bCalc()"></td><td><input type="number" step="0.01" id="m1" oninput="bCalc()"></td><td><input type="number" step="0.01" id="m2" oninput="bCalc()"></td><td><input type="number" step="0.01" id="m3" oninput="bCalc()"></td><td class="calc" id="mS">0.00</td></tr>
+          <tr><td class="lbl">부대시설</td><td><input type="number" step="0.01" id="p0" oninput="bCalc()"></td><td><input type="number" step="0.01" id="p1" oninput="bCalc()"></td><td><input type="number" step="0.01" id="p2" oninput="bCalc()"></td><td><input type="number" step="0.01" id="p3" oninput="bCalc()"></td><td class="calc" id="pS">0.00</td></tr>
+          <tr><td class="sublbl">└ 창고</td><td><input type="number" step="0.01" id="pw0" oninput="bCalc()"></td><td><input type="number" step="0.01" id="pw1" oninput="bCalc()"></td><td><input type="number" step="0.01" id="pw2" oninput="bCalc()"></td><td><input type="number" step="0.01" id="pw3" oninput="bCalc()"></td><td class="calc" id="pwS">0.00</td></tr>
+          <tr><td class="sublbl">└ 사무실</td><td><input type="number" step="0.01" id="po0" oninput="bCalc()"></td><td><input type="number" step="0.01" id="po1" oninput="bCalc()"></td><td><input type="number" step="0.01" id="po2" oninput="bCalc()"></td><td><input type="number" step="0.01" id="po3" oninput="bCalc()"></td><td class="calc" id="poS">0.00</td></tr>
+          <tr><td class="sublbl">└ 연구실</td><td><input type="number" step="0.01" id="pl0" oninput="bCalc()"></td><td><input type="number" step="0.01" id="pl1" oninput="bCalc()"></td><td><input type="number" step="0.01" id="pl2" oninput="bCalc()"></td><td><input type="number" step="0.01" id="pl3" oninput="bCalc()"></td><td class="calc" id="plS">0.00</td></tr>
+          <tr><td class="sublbl">└ 기타</td><td><input type="number" step="0.01" id="pe0" oninput="bCalc()"></td><td><input type="number" step="0.01" id="pe1" oninput="bCalc()"></td><td><input type="number" step="0.01" id="pe2" oninput="bCalc()"></td><td><input type="number" step="0.01" id="pe3" oninput="bCalc()"></td><td class="calc" id="peS">0.00</td></tr>
+          <tr class="tot"><td class="lbl">계</td><td class="calc" id="t0">0.00</td><td class="calc" id="t1">0.00</td><td class="calc" id="t2">0.00</td><td class="calc" id="t3">0.00</td><td class="calc" id="tS">0.00</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="nav-btns">
+    <button class="btn btn-prev" onclick="goSec(1)">← 이전</button>
+    <button class="btn btn-next" onclick="goSec(3)">다음 →</button>
+    <button class="btn btn-preview" onclick="openPreview()">👁 미리보기</button>
+  </div>
+</div>
+
+<!-- 3. 생산공정도 -->
+<div class="view" id="sec3">
+  <div class="sec-hd"><div class="sec-badge">제3쪽</div><h2>3. 생산공정도 해설</h2></div>
+  <div class="card">
+    <div class="card-title">생산공정도 (최대 10단계)</div>
+    <div class="alert-info">💡 각 공정 단계에 대표 공정명을 기재합니다. 예: 원자재 입고 → 소재 절단 → ... → 포장 및 납품</div>
+    <div id="procWrap"></div>
+    <button class="add-btn" onclick="addProc()">+ 단계 추가</button>
+  </div>
+  <div class="card">
+    <div class="card-title">생산공정 요약 설명</div>
+    <div class="alert-info">💡 ① 원부자재 종류 및 연간 사용량 ② 공정별 자체/외주 가공 여부 ③ 기계·장비와 연계한 가공형태 상세 포함</div>
+    <textarea id="procDesc" rows="10" placeholder="1. 설계도면에 따라 주요 원자재인 철판(20톤/월), 환봉(5톤/월) 등을 구매하여...
+2. 입고한 철판 등을 절단기로 절단
+...
+10. 포장하여 거래처에 납품" oninput="prog()"></textarea>
+  </div>
+  <div class="nav-btns">
+    <button class="btn btn-prev" onclick="goSec(2)">← 이전</button>
+    <button class="btn btn-next" onclick="goSec(4)">다음 →</button>
+    <button class="btn btn-preview" onclick="openPreview()">👁 미리보기</button>
+  </div>
+</div>
+
+<!-- 4. 생산시설 -->
+<div class="view" id="sec4">
+  <div class="sec-hd"><div class="sec-badge">제4쪽</div><h2>4. 생산시설 명세</h2></div>
+  <div class="card">
+    <div class="alert-info">💡 전기 모터 있는 기계: HP 필수 / 용접기·크레인: 암페어·톤수 / 도장시설: 내경사이즈(㎥) <span class="tip"><button class="tip-btn">?<div class="tip-box">시설명은 가급적 쉬운 한글명이나 법적 용어로 기재합니다. 용량은 모터마력(HP), 암페어, 톤수, 내경사이즈(㎥) 등으로 기재하며, 비고란에는 설치목적 또는 사용용도를 기재합니다.</div></button></span></div>
+    <div style="overflow-x:auto">
+      <table class="dtbl">
+        <thead><tr><th style="width:35%">시설명</th><th style="width:20%">용량</th><th style="width:10%">수량</th><th>비고 (설치목적/용도)</th><th style="width:5%"></th></tr></thead>
+        <tbody id="facBody"></tbody>
+      </table>
+    </div>
+    <button class="add-btn" onclick="addFac()">+ 시설 추가</button>
+  </div>
+  <div class="nav-btns">
+    <button class="btn btn-prev" onclick="goSec(3)">← 이전</button>
+    <button class="btn btn-next" onclick="goSec(5)">다음 →</button>
+    <button class="btn btn-preview" onclick="openPreview()">👁 미리보기</button>
+  </div>
+</div>
+
+<!-- 5. 배출시설 -->
+<div class="view" id="sec5">
+  <div class="sec-hd"><div class="sec-badge">제4쪽</div><h2>5. 배출시설 명세</h2></div>
+  <div class="card">
+    <div class="alert-warn">⚠️ 해당 없을 시 "해당사항 없음" 기재</div>
+    <div class="g3" style="margin-bottom:10px">
+      <div class="field"><div class="field-label">대기 배출시설 종수 <span class="tip"><button class="tip-btn">?<div class="tip-box">대기환경보전법 시행령 제13조에 따른 사업장별 오염물질 배출규모별 1~5종 중 선택합니다.</div></button></span></div><div class="iunit"><input type="number" id="airCnt" placeholder="0" min="0" max="5" oninput="prog()"><span class="unit">종</span></div></div>
+      <div class="field"><div class="field-label">수질 배출시설 종수 <span class="tip"><button class="tip-btn">?<div class="tip-box">물환경보전법 시행령 제44조에 따른 사업장별 오염물질 배출규모별 1~5종 중 선택합니다.</div></button></span></div><div class="iunit"><input type="number" id="wtCnt" placeholder="0" min="0" max="5" oninput="prog()"><span class="unit">종</span></div></div>
+      <div class="field"><div class="field-label">소음·진동 <span class="tip"><button class="tip-btn">?<div class="tip-box">소음·진동관리법에 따른 관련 배출시설이 있는지 유·무에만 체크합니다.</div></button></span></div>
+        <div class="cbg">
+          <label><input type="checkbox" name="noise" value="유" onchange="prog()"><span>유</span></label>
+          <label><input type="checkbox" name="noise" value="무" onchange="prog()"><span>무</span></label>
+        </div>
+      </div>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="dtbl">
+        <thead>
+          <tr><th rowspan="2" style="width:18%">시설명</th><th rowspan="2" style="width:17%">용량·규격<br>(HP·㎾·㎥)</th><th rowspan="2" style="width:8%">수량</th><th colspan="2">배출오염물질</th><th rowspan="2" style="width:14%">비고</th><th rowspan="2" style="width:4%"></th></tr>
+          <tr><th style="width:16%">종류</th><th style="width:16%">배출량</th></tr>
+        </thead>
+        <tbody id="emitBody"></tbody>
+      </table>
+    </div>
+    <button class="add-btn" onclick="addEmit()">+ 배출시설 추가</button>
+  </div>
+  <div class="nav-btns">
+    <button class="btn btn-prev" onclick="goSec(4)">← 이전</button>
+    <button class="btn btn-next" onclick="goSec(6)">다음 →</button>
+    <button class="btn btn-preview" onclick="openPreview()">👁 미리보기</button>
+  </div>
+</div>
+
+<!-- 6. 용수·전력·연료 -->
+<div class="view" id="sec6">
+  <div class="sec-hd"><div class="sec-badge">제4쪽</div><h2>6. 용수·전력·연료 사용계획</h2></div>
+  <div class="card">
+    <div class="g2">
+      <div class="field"><div class="field-label">생활용수 (상수도·지하수) <span class="tip"><button class="tip-btn">?<div class="tip-box">근로자 생활 등에 관련된 용수량을 기재합니다.</div></button></span></div><div class="iunit"><input type="number" id="lifeWt" placeholder="1" step="0.1" oninput="prog()"><span class="unit">톤/일</span></div></div>
+      <div class="field"><div class="field-label">공업용수 (상수도·지하수) <span class="tip"><button class="tip-btn">?<div class="tip-box">생산공정에 사용되는 용수량을 기재합니다.</div></button></span></div><div class="iunit"><input type="number" id="indWt" placeholder="4" step="0.1" oninput="prog()"><span class="unit">톤/일</span></div></div>
+    </div>
+    <div class="g2">
+      <div class="field"><div class="field-label">일반전력 <span class="tip"><button class="tip-btn">?<div class="tip-box">한전으로부터 전력을 공급받는 경우 기재합니다. 전기요금서상 계약전력량 또는 사용전력량을 기재하며, 추정이 안 될 시 모든 기계의 모터 마력 합계와 잉여전력량을 고려하여 산정합니다.</div></button></span></div><div class="iunit"><input type="number" id="pw" placeholder="100" oninput="prog()"><span class="unit">㎾/일</span></div></div>
+      <div class="field"><div class="field-label">자가발전 <span class="tip"><button class="tip-btn">?<div class="tip-box">공장 내 자가발전시설을 이용하는 전력을 기재합니다.</div></button></span></div><div class="iunit"><input type="number" id="spw" placeholder="0" oninput="prog()"><span class="unit">㎾/일</span></div></div>
+    </div>
+    <div class="g3">
+      <div class="field"><div class="field-label">석유</div><div class="iunit"><input type="number" id="oil" placeholder="0" oninput="prog()"><span class="unit">ℓ/일</span></div></div>
+      <div class="field"><div class="field-label">가스</div><div class="iunit"><input type="number" id="gas" placeholder="0" oninput="prog()"><span class="unit">㎥/일</span></div></div>
+      <div class="field"><div class="field-label">기타</div><div class="iunit"><input type="number" id="ofu" placeholder="0" oninput="prog()"><span class="unit">톤/일</span></div></div>
+    </div>
+  </div>
+  <div class="nav-btns">
+    <button class="btn btn-prev" onclick="goSec(5)">← 이전</button>
+    <button class="btn btn-next" onclick="goSec(7)">다음 →</button>
+    <button class="btn btn-preview" onclick="openPreview()">👁 미리보기</button>
+  </div>
+</div>
+
+<!-- 7. 공장배치도 -->
+<div class="view" id="sec7">
+  <div class="sec-hd"><div class="sec-badge">제5쪽</div><h2>7. 공장배치도</h2></div>
+  <div class="card">
+    <div class="alert-warn">📎 도면이 있으면 첨부하고, 없을 경우 아래에 간략히 기재합니다. <span class="tip"><button class="tip-btn">?<div class="tip-box">공장배치도에는 공장건설계획의 용도별 면적과 일치되게 그려야 합니다. 기존 건축물관리대장이 있는 경우 도면 첨부를 요청하면 공장배치도 도면 발급이 가능합니다.</div></button></span></div>
+    <div class="field"><div class="field-label">공장배치 설명</div>
+      <textarea id="layoutDesc" rows="8" placeholder="예:
+- 부지 북쪽: 공장동(A동) 제조시설 100.00㎡
+- 부지 남쪽: 부대동(B동) 사무실·연구실 100.00㎡
+- 부지 동쪽: 창고동(C동) 창고 100.00㎡" oninput="prog()"></textarea>
+    </div>
+    <div class="field"><div class="field-label">배치도 파일 첨부</div>
+      <input type="file" id="layoutFile" accept=".pdf,.jpg,.jpeg,.png" style="font-size:13px;padding:6px">
+      <div class="hint">실제 제출 시 이 파일을 사업계획서와 함께 제출합니다.</div>
+    </div>
+  </div>
+  <div class="nav-btns">
+    <button class="btn btn-prev" onclick="goSec(6)">← 이전</button>
+    <button class="btn btn-preview" onclick="openPreview()" style="margin-left:0">👁 미리보기 / 인쇄</button>
+  </div>
+</div>
+
+</div><!-- /form-wrap -->
+</div><!-- /viewForm -->
+
+<!-- ─ 미리보기 화면 ─ -->
+<div class="view" id="viewPreview">
+<div class="preview-wrap">
+  <div class="preview-toolbar">
+    <h2>📄 법정 양식 미리보기</h2>
+    <div class="page-nav">
+      <button class="page-tab on" onclick="showPage(0)">제1쪽 표지</button>
+      <button class="page-tab" onclick="showPage(1)">제2쪽 사업개요</button>
+      <button class="page-tab" onclick="showPage(2)">제3쪽 공장건설·공정도</button>
+      <button class="page-tab" onclick="showPage(3)">제4쪽 시설·환경·용수</button>
+      <button class="page-tab" onclick="showPage(4)">제5쪽 공장배치도</button>
+    </div>
+    <button class="btn-back" onclick="closePreview()">← 입력으로 돌아가기</button>
+    <button class="btn-print-real" onclick="doPrint()">🖨️ 인쇄 / PDF 저장</button>
+  </div>
+
+  <!-- 제1쪽: 표지 -->
+  <div class="a4-shadow"><div class="a4 on" id="pg0">
+    <div class="lf-law">■ 산업집적활성화 및 공장설립에 관한 법률 시행규칙 [별지 제2호의2서식] &lt;개정 2024. 7. 10.&gt;</div>
+    <div class="lf-pnum">(제1쪽)</div>
+    <div class="lf-cover">
+      <div class="lf-cover-title">사 업 계 획 서</div>
+      <div class="lf-cover-date">20<span id="pv-year"></span>&nbsp;.&nbsp;&nbsp;<span id="pv-month"></span>&nbsp;.&nbsp;&nbsp;<span id="pv-day"></span>&nbsp;.</div>
+      <div class="lf-cover-row"><span class="lf-cover-lbl">회 사 명</span><span class="lf-cover-val" id="pv-company">&nbsp;</span></div>
+      <div class="lf-cover-row" style="margin-top:16pt"><span class="lf-cover-lbl">신 청 인</span><span style="min-width:100pt;border-bottom:1pt solid #000;display:inline-block">&nbsp;</span><span style="font-size:9pt;margin-left:6pt">(서명 또는 인)</span></div>
+    </div>
+  </div></div>
+
+  <!-- 제2쪽: 사업개요 -->
+  <div class="a4-shadow"><div class="a4" id="pg1">
+    <div class="lf-pnum">(제2쪽)</div>
+    <div class="lf-sec">1. 사업개요</div>
+    <table class="lf-t">
+      <colgroup>
+        <col style="width:7%"><!-- 카테고리 -->
+        <col style="width:7%"><!-- 서브카테고리 -->
+        <col style="width:13%"><!-- 라벨1 -->
+        <col style="width:21%"><!-- 값1 -->
+        <col style="width:13%"><!-- 라벨2 -->
+        <col style="width:13%"><!-- 값2 -->
+        <col style="width:13%"><!-- 라벨3 -->
+        <col style="width:13%"><!-- 값3 -->
+      </colgroup>
+      <!-- ════ 업체현황 - 회사 (4행) ════ -->
+      <tr>
+        <td class="rh" rowspan="7">업체<br>현황</td>
+        <td class="rh" rowspan="4">회사</td>
+        <td class="h">명 칭</td>
+        <td colspan="5" id="pv-compName">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="h">주 소</td>
+        <td colspan="5" id="pv-compAddr">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="h">전화번호</td>
+        <td id="pv-compTel">&nbsp;</td>
+        <td class="h">팩스번호</td>
+        <td id="pv-compFax">&nbsp;</td>
+        <td class="h">사업자등록번호</td>
+        <td id="pv-bizRegNum">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="h">홈페이지 주소</td>
+        <td colspan="3" id="pv-compWeb">&nbsp;</td>
+        <td class="h">법인등록번호</td>
+        <td id="pv-corpNum">&nbsp;</td>
+      </tr>
+      <!-- ════ 업체현황 - 대표자 (3행) ════ -->
+      <tr>
+        <td class="rh" rowspan="3">대표자</td>
+        <td class="h">성 명</td>
+        <td id="pv-ceoName">&nbsp;</td>
+        <td class="h">이메일 주소</td>
+        <td colspan="3" id="pv-ceoEmail">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="h">주 소</td>
+        <td colspan="3" id="pv-ceoAddr">&nbsp;</td>
+        <td class="h">생년월일</td>
+        <td id="pv-ceoBirth">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="h">전화번호</td>
+        <td id="pv-ceoTel">&nbsp;</td>
+        <td class="h">팩스번호</td>
+        <td colspan="3" id="pv-ceoFax">&nbsp;</td>
+      </tr>
+      <!-- ════ 생산제품 현황 (3행) ════ -->
+      <tr>
+        <td class="rh" rowspan="3" colspan="2">생산제품<br>현황</td>
+        <td class="h">업종(5단위)</td>
+        <td colspan="5" id="pv-bizType">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="h">생산품명</td>
+        <td colspan="5" id="pv-productName">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="h">주 원자재</td>
+        <td colspan="5" id="pv-rawMat">&nbsp;</td>
+      </tr>
+      <!-- ════ 공장현황 (3행) ════ -->
+      <tr>
+        <td class="rh" rowspan="3" colspan="2">공장<br>현황</td>
+        <td class="h">공 장 주 소</td>
+        <td colspan="5" id="pv-factAddr">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="h">형 태</td>
+        <td colspan="5">
+          분양(<span id="pv-f분양">&nbsp;</span>)&nbsp;&nbsp;
+          경매(<span id="pv-f경매">&nbsp;</span>)&nbsp;&nbsp;
+          양도(<span id="pv-f양도">&nbsp;</span>)&nbsp;&nbsp;
+          양수(<span id="pv-f양수">&nbsp;</span>)&nbsp;&nbsp;
+          임대(<span id="pv-f임대">&nbsp;</span>)
+        </td>
+      </tr>
+      <tr>
+        <td class="h">용 도 지 역</td>
+        <td colspan="2" id="pv-useZone">&nbsp;</td>
+        <td class="h">지 목</td>
+        <td colspan="2" id="pv-landCat">&nbsp;</td>
+      </tr>
+      <!-- ════ 공장건설계획 (3행) ════ -->
+      <tr>
+        <td class="rh" rowspan="3" colspan="2">공장<br>건설<br>계획</td>
+        <td class="h">사업자등록번호</td>
+        <td colspan="5" id="pv-bizReg2">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="h">착공 예정일</td>
+        <td id="pv-startDate">&nbsp;</td>
+        <td class="h" colspan="2">준공 예정일 또는 준공일</td>
+        <td colspan="2" id="pv-endDate">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="h">사업 시작일</td>
+        <td colspan="5" id="pv-bizStart">&nbsp;</td>
+      </tr>
+      <!-- ════ 공장의 규모 (5행) ════ -->
+      <tr>
+        <td class="rh" rowspan="5" colspan="2">공장의<br>규모</td>
+        <td class="h">종업원 수</td>
+        <td colspan="5" style="text-align:left;padding-left:6pt">
+          국내&nbsp;남 <span id="pv-emDM" style="display:inline-block;min-width:24pt;border-bottom:0.5pt dotted #888;text-align:center">&nbsp;</span>명&nbsp;&nbsp;
+          여 <span id="pv-emDF" style="display:inline-block;min-width:24pt;border-bottom:0.5pt dotted #888;text-align:center">&nbsp;</span>명&nbsp;&nbsp;&nbsp;
+          국외&nbsp;남 <span id="pv-emOM" style="display:inline-block;min-width:24pt;border-bottom:0.5pt dotted #888;text-align:center">&nbsp;</span>명&nbsp;&nbsp;
+          여 <span id="pv-emOF" style="display:inline-block;min-width:24pt;border-bottom:0.5pt dotted #888;text-align:center">&nbsp;</span>명
+        </td>
+      </tr>
+      <tr>
+        <td class="h">용지 면적</td>
+        <td id="pv-landArea">&nbsp;</td>
+        <td class="h">건축 면적<br>(제조시설)</td>
+        <td id="pv-mfgArea">&nbsp;</td>
+        <td class="h">건축 면적<br>(부대시설)</td>
+        <td id="pv-suppArea">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="h">건축 면적/<br>용지 면적</td>
+        <td colspan="5" id="pv-areaRatio">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="h">기준공장 면적율</td>
+        <td id="pv-stdRate">&nbsp;</td>
+        <td class="h">건폐율</td>
+        <td id="pv-coverRate">&nbsp;</td>
+        <td class="h">용적율</td>
+        <td id="pv-floorRate">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="h">공장 보유 구분</td>
+        <td colspan="5" style="text-align:left;padding-left:6pt">
+          자가(<span id="pv-own자가">&nbsp;</span>)&nbsp;&nbsp;&nbsp;임차(<span id="pv-own임차">&nbsp;</span>)
+        </td>
+      </tr>
+      <!-- ════ 투자규모 (2행) ════ -->
+      <tr>
+        <td class="rh" rowspan="2" colspan="2">투자<br>규모</td>
+        <td class="h">계</td>
+        <td id="pv-invTotal">&nbsp;</td>
+        <td class="h">자기자본</td>
+        <td id="pv-invOwn">&nbsp;</td>
+        <td class="h">타인자본</td>
+        <td id="pv-invOther">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="h">외국인 투자금액</td>
+        <td colspan="2" id="pv-invFg">&nbsp;</td>
+        <td class="h">외국인 투자비율</td>
+        <td colspan="2" id="pv-invFgR">&nbsp;</td>
+      </tr>
+      <!-- ════ 공장설립형태 / 공장규모 (1행, 가로 나열) ════ -->
+      <tr>
+        <td class="h" colspan="2">공장 설립 형태</td>
+        <td colspan="2" style="text-align:left;padding-left:6pt">
+          신규 건립 입주(<span id="pv-bt신규">&nbsp;</span>)&nbsp;&nbsp;
+          기존 건물 입주(<span id="pv-bt기존">&nbsp;</span>)
+        </td>
+        <td class="h" colspan="2">공장 규모</td>
+        <td colspan="2" style="text-align:left;padding-left:6pt">
+          대(<span id="pv-sz대">&nbsp;</span>)&nbsp;
+          중(<span id="pv-sz중">&nbsp;</span>)&nbsp;
+          소(<span id="pv-sz소">&nbsp;</span>)
+        </td>
+      </tr>
+    </table>
+    <div class="lf-keyre">
+      <strong>기재요령</strong><br>
+      1. 업종은 「통계법」 제22조제1항에 따른 한국표준산업분류상 세세분류(5단위)까지 적습니다.<br>
+      2. 건축면적은 공장설립일부터 4년 이내의 건설계획분을 포함하여 적습니다.<br>
+      3. 공장규모는 「중소기업기본법 시행령」 제8조 및 같은 법 시행령 별표 1에 따른 분류에 따라 적습니다.
+    </div>
+  </div></div>
+
+  <!-- 제3쪽: 공장건설계획 + 생산공정도 -->
+  <div class="a4-shadow"><div class="a4" id="pg2">
+    <div class="lf-pnum">(제3쪽)</div>
+    <div class="lf-sec">2. 공장건설계획</div>
+    <table class="lf-t" id="pv-buildTable">
+      <thead>
+        <tr>
+          <th style="width:18%">구 분</th>
+          <th style="width:13%">현 재</th>
+          <th style="width:13%" id="pv-yr1h">　　년</th>
+          <th style="width:13%" id="pv-yr2h">　　년</th>
+          <th style="width:13%" id="pv-yr3h">　　년</th>
+          <th style="width:13%">계</th>
+        </tr>
+      </thead>
+      <tbody id="pv-buildBody"></tbody>
+    </table>
+    <div class="lf-note">※ 작성요령 : 각 시설물에 대한 건축면적은 연면적을 적습니다.</div>
+    <div class="lf-sec" style="margin-top:8pt">3. 생산공정도 해설</div>
+    <table class="lf-t">
+      <tr>
+        <th style="width:28%">생산공정도</th>
+        <th>생산공정 요약 설명</th>
+      </tr>
+      <tr style="vertical-align:top">
+        <td style="padding:5pt;min-height:80pt" id="pv-procSteps"></td>
+        <td style="padding:5pt;white-space:pre-wrap;font-size:8pt;line-height:1.8;min-height:80pt" id="pv-procDesc"></td>
+      </tr>
+    </table>
+  </div></div>
+
+  <!-- 제4쪽 -->
+  <div class="a4-shadow"><div class="a4" id="pg3">
+    <div class="lf-pnum">(제4쪽)</div>
+    <div class="lf-sec">4. 생산시설 명세</div>
+    <table class="lf-t">
+      <thead><tr><th style="width:36%">시설명</th><th style="width:20%">용량</th><th style="width:10%">수량</th><th>비고</th></tr></thead>
+      <tbody id="pv-facRows"></tbody>
+    </table>
+    <div class="lf-sec" style="margin-top:8pt">5. 배출시설 명세</div>
+    <table class="lf-t">
+      <thead>
+        <tr>
+          <th rowspan="2" style="width:20%">시설명</th>
+          <th rowspan="2" style="width:18%">용량 및 규격<br>(HP·㎾·㎥)</th>
+          <th rowspan="2" style="width:8%">수량</th>
+          <th colspan="2">배출오염물질</th>
+          <th rowspan="2">비 고</th>
+        </tr>
+        <tr><th style="width:16%">종류</th><th style="width:14%">배출량</th></tr>
+      </thead>
+      <tbody id="pv-emitRows"></tbody>
+      <tr>
+        <td colspan="3"></td>
+        <td colspan="3" style="font-size:8pt;line-height:2.2">
+          대 기 ( <span id="pv-airCnt"></span> )종<br>
+          수 질 ( <span id="pv-wtCnt"></span> )종<br>
+          소음·진동(<span id="pv-noise"></span>)
+        </td>
+      </tr>
+    </table>
+    <div class="lf-note">※ 작성요령 : 「물환경보전법」, 「대기환경보전법」 또는 「소음·진동관리법」에 따른 배출시설을 적습니다.</div>
+    <div class="lf-sec" style="margin-top:7pt">6. 용수·전력·연료의 사용계획</div>
+    <table class="lf-t">
+      <thead>
+        <tr>
+          <th colspan="2">용수(톤/일)</th>
+          <th colspan="2">전력(㎾/일)</th>
+          <th colspan="3">연료</th>
+        </tr>
+        <tr>
+          <th>생활용수<br>(상수도·지하수)</th>
+          <th>공업용수<br>(상수도·지하수)</th>
+          <th>일반전력</th><th>자가발전</th>
+          <th>석유(ℓ/일)</th><th>가스(㎥/일)</th><th>기타(톤/일)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="text-align:center">
+          <td style="padding:5pt" id="pv-lifeWt"></td>
+          <td style="padding:5pt" id="pv-indWt"></td>
+          <td style="padding:5pt" id="pv-pw"></td>
+          <td style="padding:5pt" id="pv-spw"></td>
+          <td style="padding:5pt" id="pv-oil"></td>
+          <td style="padding:5pt" id="pv-gas"></td>
+          <td style="padding:5pt" id="pv-ofu"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div></div>
+
+  <!-- 제5쪽: 공장배치도 -->
+  <div class="a4-shadow"><div class="a4" id="pg4">
+    <div class="lf-pnum">(제5쪽)</div>
+    <div class="lf-sec">7. 공장배치도</div>
+    <div style="border:1pt solid #000;min-height:220mm;padding:6pt;white-space:pre-wrap;font-size:8.5pt;line-height:1.8" id="pv-layout"></div>
+    <div class="lf-note" style="margin-top:4pt">※ 공장배치도 작성요령: 건축물의 용도 위주로 개략적으로 위치, 면적, 연도별 설치계획만을 표시합니다.</div>
+  </div></div>
+
+</div><!-- /preview-wrap -->
+</div><!-- /viewPreview -->
+
+</div><!-- /content -->
+</div><!-- /app -->
+
+<script>
+const g  = id => (document.getElementById(id)||{}).value||'';
+const gT = id => document.getElementById(id)?.textContent||'';
+const chkV = name => [...document.querySelectorAll(`[name="${name}"]:checked`)].map(e=>e.value);
+const chkM = (name,val) => chkV(name).includes(val) ? '√' : '&nbsp;';
+const esc  = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const n2   = v => parseFloat(v)||0;
+
+/* ── 섹션 전환 ── */
+function goSec(n){
+  document.querySelectorAll('#viewForm .view').forEach((el,i)=>{
+    el.classList.toggle('on', i===n);
+  });
+  document.querySelectorAll('.nav-btn').forEach((btn,i)=>btn.classList.toggle('on',i===n));
+  window.scrollTo(0,0);
+}
+
+/* ── 미리보기 열기 ── */
+let lastSec = 0;
+function openPreview(){
+  lastSec = [...document.querySelectorAll('#viewForm .view')].findIndex(el=>el.classList.contains('on'));
+  fillPreview();
+  document.getElementById('viewForm').classList.remove('on');
+  document.getElementById('viewPreview').classList.add('on');
+  showPage(0);
+}
+function closePreview(){
+  document.getElementById('viewPreview').classList.remove('on');
+  document.getElementById('viewForm').classList.add('on');
+  goSec(lastSec);
+}
+
+/* ── 페이지 탭 ── */
+function showPage(n){
+  document.querySelectorAll('.a4').forEach((el,i)=>el.classList.toggle('on',i===n));
+  document.querySelectorAll('.page-tab').forEach((el,i)=>el.classList.toggle('on',i===n));
+}
+
+/* ── 미리보기 데이터 채우기 ── */
+function set(id,val){ const el=document.getElementById(id); if(el) el.textContent=val||''; }
+
+function fillPreview(){
+  /* 표지 */
+  set('pv-year',  g('coverYear'));
+  set('pv-month', g('coverMonth'));
+  set('pv-day',   g('coverDay'));
+  set('pv-company', g('coverCompany'));
+
+  /* 사업개요 - 회사 */
+  set('pv-compName',  g('compName'));
+  set('pv-compAddr',  g('compAddr'));
+  set('pv-compTel',   g('compTel'));
+  set('pv-compFax',   g('compFax'));
+  set('pv-compWeb',   g('compWeb'));
+  set('pv-corpNum',   g('corpNum'));
+  set('pv-bizRegNum', g('bizRegNum'));
+  /* 대표자 */
+  set('pv-ceoName',  g('ceoName'));
+  set('pv-ceoEmail', g('ceoEmail'));
+  set('pv-ceoAddr',  g('ceoAddr'));
+  set('pv-ceoBirth', g('ceoBirth'));
+  set('pv-ceoTel',   g('ceoTel'));
+  /* 생산제품 */
+  set('pv-bizType',     g('bizType'));
+  set('pv-productName', g('productName'));
+  set('pv-rawMat',      g('rawMat'));
+  /* 공장현황 */
+  set('pv-factAddr', g('factAddr'));
+  ['분양','경매','양도','양수','임대'].forEach(v=>{
+    const el=document.getElementById('pv-f'+v);
+    if(el) el.textContent = chkV('factForm').includes(v)?'√':' ';
+  });
+  set('pv-useZone', g('useZone'));
+  set('pv-landCat', g('landCat'));
+  set('pv-bizReg2', g('bizRegNum'));
+  set('pv-startDate', g('startDate'));
+  set('pv-endDate',   g('endDate'));
+  set('pv-bizStart',  g('bizStart'));
+  /* 종업원 */
+  set('pv-emDM', g('emDM')||'');  set('pv-emDF', g('emDF')||'');
+  set('pv-emOM', g('emOM')||'');  set('pv-emOF', g('emOF')||'');
+  /* 면적 */
+  const land=n2(g('landArea')), mfg=n2(g('mfgArea')), supp=n2(g('suppArea'));
+  set('pv-landArea', land?land.toFixed(2)+'㎡':'');
+  set('pv-mfgArea',  mfg?mfg.toFixed(2)+'㎡':'');
+  set('pv-suppArea', supp?supp.toFixed(2)+'㎡':'');
+  set('pv-areaRatio', (mfg||supp)?`${(mfg+supp).toFixed(2)}㎡ / ${land?land.toFixed(2)+'㎡':'미입력'}`:'');
+  set('pv-stdRate',   g('stdRate')?g('stdRate')+'%':'');
+  set('pv-coverRate', g('coverRate')?g('coverRate')+'%':'');
+  set('pv-floorRate', g('floorRate')?g('floorRate')+'%':'');
+  /* 투자 */
+  set('pv-invTotal', g('invTotal')?Number(g('invTotal')).toLocaleString()+'백만원':'');
+  set('pv-invOwn',   g('invOwn')?Number(g('invOwn')).toLocaleString()+'백만원':'');
+  set('pv-invOther', g('invOther')?Number(g('invOther')).toLocaleString()+'백만원':'');
+  set('pv-invFg',    g('invFg')?g('invFg')+'천불':'');
+  set('pv-invFgR',   g('invFgR')?g('invFgR')+'%':'');
+  /* 체크박스 */
+  ['자가','임차'].forEach(v=>{ const el=document.getElementById('pv-own'+v); if(el) el.textContent=chkV('ownType').includes(v)?'√':' '; });
+  [['신규','신규 건립 입주'],['기존','기존 건물 입주']].forEach(([k,v])=>{ const el=document.getElementById('pv-bt'+k); if(el) el.textContent=chkV('buildType').includes(v)?'√':' '; });
+  ['대','중','소'].forEach(v=>{ const el=document.getElementById('pv-sz'+v); if(el) el.textContent=chkV('factSz').includes(v)?'√':' '; });
+
+  /* 공장건설계획 */
+  const yr1=g('yr1'),yr2=g('yr2'),yr3=g('yr3');
+  document.getElementById('pv-yr1h').textContent = yr1?yr1+'년':'　　년';
+  document.getElementById('pv-yr2h').textContent = yr2?yr2+'년':'　　년';
+  document.getElementById('pv-yr3h').textContent = yr3?yr3+'년':'　　년';
+  const bRows=[
+    {lbl:'제조시설', cols:['m0','m1','m2','m3'], sum:'mS'},
+    {lbl:'부대시설', cols:['p0','p1','p2','p3'], sum:'pS'},
+    {lbl:'- 창고',   cols:['pw0','pw1','pw2','pw3'], sum:'pwS', sub:true},
+    {lbl:'- 사무실', cols:['po0','po1','po2','po3'], sum:'poS', sub:true},
+    {lbl:'- 연구실', cols:['pl0','pl1','pl2','pl3'], sum:'plS', sub:true},
+    {lbl:'- 기타',   cols:['pe0','pe1','pe2','pe3'], sum:'peS', sub:true},
+    {lbl:'계',        cols:['t0','t1','t2','t3'], sum:'tS', tot:true},
+  ];
+  const bBody=document.getElementById('pv-buildBody');
+  bBody.innerHTML='';
+  bRows.forEach(r=>{
+    const tr=document.createElement('tr');
+    const lStyle=r.tot?'font-weight:bold;text-align:center':'text-align:left'+(r.sub?';padding-left:10pt':'');
+    let h=`<td style="border:1pt solid #000;padding:2pt 4pt;${lStyle}">${r.lbl}</td>`;
+    r.cols.forEach(id=>{
+      const v=r.tot?gT(id):g(id);
+      h+=`<td style="border:1pt solid #000;padding:2pt 4pt;text-align:right">${v||''}</td>`;
+    });
+    h+=`<td style="border:1pt solid #000;padding:2pt 4pt;text-align:right;font-weight:bold">${gT(r.sum)||''}</td>`;
+    tr.innerHTML=h; bBody.appendChild(tr);
+  });
+
+  /* 생산공정도 */
+  const pw=document.getElementById('pv-procSteps');
+  pw.innerHTML='';
+  let first=true;
+  for(let i=1;i<=10;i++){
+    const el=document.getElementById('proc'+i);
+    if(!el||!el.value.trim()) continue;
+    if(!first){ const a=document.createElement('div'); a.className='lf-proc-arr'; a.textContent='▼'; pw.appendChild(a); }
+    const b=document.createElement('div'); b.className='lf-proc-step'; b.textContent=el.value;
+    pw.appendChild(b); first=false;
+  }
+  set('pv-procDesc', g('procDesc'));
+
+  /* 생산시설 */
+  const fRows=document.getElementById('pv-facRows');
+  fRows.innerHTML='';
+  document.querySelectorAll('#facBody tr').forEach(tr=>{
+    const inp=[...tr.querySelectorAll('input')];
+    if(inp.length<4||(!inp[0].value&&!inp[1].value)) return;
+    const v=inp.map(i=>i.value);
+    const nr=document.createElement('tr');
+    nr.innerHTML=`<td style="border:1pt solid #000;padding:3pt 4pt">${esc(v[0])}</td><td style="border:1pt solid #000;padding:3pt 4pt;text-align:center">${esc(v[1])}</td><td style="border:1pt solid #000;padding:3pt 4pt;text-align:center">${esc(v[2])}</td><td style="border:1pt solid #000;padding:3pt 4pt">${esc(v[3])}</td>`;
+    fRows.appendChild(nr);
+  });
+  for(let i=fRows.querySelectorAll('tr').length;i<5;i++){
+    const nr=document.createElement('tr');
+    nr.innerHTML='<td style="border:1pt solid #000;padding:5pt">&nbsp;</td><td style="border:1pt solid #000"></td><td style="border:1pt solid #000"></td><td style="border:1pt solid #000"></td>';
+    fRows.appendChild(nr);
+  }
+
+  /* 배출시설 */
+  const eRows=document.getElementById('pv-emitRows');
+  eRows.innerHTML='';
+  document.querySelectorAll('#emitBody tr').forEach(tr=>{
+    const inp=[...tr.querySelectorAll('input')];
+    if(inp.length<5||!inp[0].value) return;
+    const v=inp.map(i=>i.value);
+    const nr=document.createElement('tr');
+    nr.innerHTML=`<td style="border:1pt solid #000;padding:3pt 4pt">${esc(v[0])}</td><td style="border:1pt solid #000;padding:3pt 4pt;text-align:center">${esc(v[1])}</td><td style="border:1pt solid #000;padding:3pt 4pt;text-align:center">${esc(v[2])}</td><td style="border:1pt solid #000;padding:3pt 4pt">${esc(v[3])}</td><td style="border:1pt solid #000;padding:3pt 4pt">${esc(v[4])}</td><td style="border:1pt solid #000;padding:3pt 4pt">${esc(v[5]||'')}</td>`;
+    eRows.appendChild(nr);
+  });
+  for(let i=eRows.querySelectorAll('tr').length;i<4;i++){
+    const nr=document.createElement('tr');
+    nr.innerHTML='<td style="border:1pt solid #000;padding:5pt">&nbsp;</td><td style="border:1pt solid #000"></td><td style="border:1pt solid #000"></td><td style="border:1pt solid #000"></td><td style="border:1pt solid #000"></td><td style="border:1pt solid #000"></td>';
+    eRows.appendChild(nr);
+  }
+  set('pv-airCnt', g('airCnt')||'&nbsp;');
+  set('pv-wtCnt',  g('wtCnt')||'&nbsp;');
+  set('pv-noise',  chkV('noise').join('/')||'유·무');
+
+  /* 용수전력연료 */
+  set('pv-lifeWt', g('lifeWt')); set('pv-indWt', g('indWt'));
+  set('pv-pw', g('pw')); set('pv-spw', g('spw'));
+  set('pv-oil', g('oil')); set('pv-gas', g('gas')); set('pv-ofu', g('ofu'));
+
+  /* 공장배치도 */
+  set('pv-layout', g('layoutDesc'));
+}
+
+/* ── 인쇄: 새 창에 법정양식 HTML 직접 생성 ── */
+function doPrint(){
+  fillPreview();
+  const yr1=g('yr1'),yr2=g('yr2'),yr3=g('yr3');
+  const land=n2(g('landArea')),mfg=n2(g('mfgArea')),supp=n2(g('suppArea'));
+
+  // 건설계획 행
+  const bRows=[
+    {lbl:'제조시설',cols:['m0','m1','m2','m3'],sum:'mS'},
+    {lbl:'부대시설',cols:['p0','p1','p2','p3'],sum:'pS'},
+    {lbl:'&nbsp;- 창고',cols:['pw0','pw1','pw2','pw3'],sum:'pwS',sub:true},
+    {lbl:'&nbsp;- 사무실',cols:['po0','po1','po2','po3'],sum:'poS',sub:true},
+    {lbl:'&nbsp;- 연구실',cols:['pl0','pl1','pl2','pl3'],sum:'plS',sub:true},
+    {lbl:'&nbsp;- 기타',cols:['pe0','pe1','pe2','pe3'],sum:'peS',sub:true},
+    {lbl:'계',cols:['t0','t1','t2','t3'],sum:'tS',tot:true},
+  ];
+  const bHtml=bRows.map(r=>{
+    const cells=r.cols.map(id=>`<td style="border:0.5pt solid #000;padding:2pt 4pt;text-align:right">${r.tot?esc(gT(id)):esc(g(id))}</td>`).join('');
+    return `<tr><td style="border:0.5pt solid #000;padding:2pt 4pt;${r.tot?'font-weight:bold;text-align:center':''}">${r.lbl}</td>${cells}<td style="border:0.5pt solid #000;padding:2pt 4pt;text-align:right;font-weight:bold">${esc(gT(r.sum))}</td></tr>`;
+  }).join('');
+
+  // 공정도
+  let procH='';
+  for(let i=1;i<=10;i++){
+    const el=document.getElementById('proc'+i);
+    if(!el||!el.value.trim()) continue;
+    if(procH) procH+='<div style="text-align:center;line-height:1.3">▼</div>';
+    procH+=`<div style="border:0.5pt solid #000;padding:2pt 5pt;text-align:center;font-size:8pt;margin:1pt auto;max-width:80pt">${esc(el.value)}</div>`;
+  }
+  // 생산시설
+  let facH='';
+  document.querySelectorAll('#facBody tr').forEach(tr=>{
+    const inp=[...tr.querySelectorAll('input')];
+    if(inp.length<4||(!inp[0].value&&!inp[1].value)) return;
+    const v=inp.map(i=>esc(i.value));
+    facH+=`<tr><td style="border:0.5pt solid #000;padding:3pt 4pt">${v[0]}</td><td style="border:0.5pt solid #000;padding:3pt 4pt;text-align:center">${v[1]}</td><td style="border:0.5pt solid #000;padding:3pt 4pt;text-align:center">${v[2]}</td><td style="border:0.5pt solid #000;padding:3pt 4pt">${v[3]}</td></tr>`;
+  });
+  for(let i=facH.split('<tr>').length-1;i<6;i++) facH+='<tr><td style="border:0.5pt solid #000;padding:5pt">&nbsp;</td><td style="border:0.5pt solid #000"></td><td style="border:0.5pt solid #000"></td><td style="border:0.5pt solid #000"></td></tr>';
+  // 배출시설
+  let emH='';
+  document.querySelectorAll('#emitBody tr').forEach(tr=>{
+    const inp=[...tr.querySelectorAll('input')];
+    if(inp.length<5||!inp[0].value) return;
+    const v=inp.map(i=>esc(i.value));
+    emH+=`<tr><td style="border:0.5pt solid #000;padding:3pt 4pt">${v[0]}</td><td style="border:0.5pt solid #000;padding:3pt 4pt;text-align:center">${v[1]}</td><td style="border:0.5pt solid #000;padding:3pt 4pt;text-align:center">${v[2]}</td><td style="border:0.5pt solid #000;padding:3pt 4pt">${v[3]}</td><td style="border:0.5pt solid #000;padding:3pt 4pt">${v[4]}</td><td style="border:0.5pt solid #000;padding:3pt 4pt">${esc(v[5]||'')}</td></tr>`;
+  });
+  for(let i=emH.split('<tr>').length-1;i<5;i++) emH+='<tr><td style="border:0.5pt solid #000;padding:5pt">&nbsp;</td><td style="border:0.5pt solid #000"></td><td style="border:0.5pt solid #000"></td><td style="border:0.5pt solid #000"></td><td style="border:0.5pt solid #000"></td><td style="border:0.5pt solid #000"></td></tr>';
+
+  const cm = (n,v) => chkV(n).includes(v)?'√':'&nbsp;';
+  const html=`<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><title>사업계획서</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'맑은 고딕','Malgun Gothic',sans-serif;font-size:9pt;color:#000;background:#fff}
+.page{width:210mm;min-height:297mm;padding:14mm 17mm 12mm 20mm;page-break-after:always}
+.page:last-child{page-break-after:auto}
+@page{size:A4;margin:0}
+table{width:100%;border-collapse:collapse}
+th,td{border:0.5pt solid #000;padding:2pt 3pt;vertical-align:middle;line-height:1.5;font-size:8.5pt}
+th{font-weight:bold;text-align:center;white-space:nowrap}
+.h{font-weight:bold;text-align:left;white-space:nowrap;font-size:8pt}
+.rh{font-weight:bold;text-align:center;writing-mode:vertical-rl;white-space:nowrap;padding:3pt 2pt}
+.sec{font-size:10pt;font-weight:bold;margin:5pt 0 3pt}
+.note{font-size:7.5pt;margin-top:3pt;line-height:1.5}
+.keyre{font-size:7.5pt;border:0.5pt solid #000;padding:4pt 6pt;margin-top:5pt;line-height:1.7}
+</style></head><body>
+
+<div class="page" style="display:flex;flex-direction:column;align-items:center;justify-content:center">
+  <div style="font-size:7pt;margin-bottom:10pt;align-self:flex-start">■ 산업집적활성화 및 공장설립에 관한 법률 시행규칙 [별지 제2호의2서식] &lt;개정 2024. 7. 10.&gt;</div>
+  <div style="text-align:right;width:100%;font-size:8pt;margin-bottom:20pt">(제1쪽)</div>
+  <div style="font-size:22pt;font-weight:bold;letter-spacing:1.2em;margin-bottom:40pt;text-align:center">사 업 계 획 서</div>
+  <div style="font-size:13pt;letter-spacing:.3em;margin-bottom:50pt">20${esc(g('coverYear'))}&nbsp;.&nbsp;&nbsp;${esc(g('coverMonth'))}&nbsp;.&nbsp;&nbsp;${esc(g('coverDay'))}&nbsp;.</div>
+  <div style="font-size:11pt;margin-bottom:8pt;display:flex;gap:0;align-self:flex-start;margin-left:50pt">
+    <span style="display:inline-block;width:70pt;text-align:justify;text-align-last:justify">회 사 명</span>
+    <span style="font-weight:bold;min-width:130pt;border-bottom:0.5pt solid #000;display:inline-block;padding-bottom:1pt">${esc(g('coverCompany'))}</span>
+  </div>
+  <div style="font-size:11pt;margin-top:14pt;display:flex;gap:0;align-self:flex-start;margin-left:50pt">
+    <span style="display:inline-block;width:70pt;text-align:justify;text-align-last:justify">신 청 인</span>
+    <span style="min-width:100pt;border-bottom:0.5pt solid #000;display:inline-block">&nbsp;</span>
+    <span style="font-size:9pt;margin-left:6pt">(서명 또는 인)</span>
+  </div>
+</div>
+
+<div class="page">
+  <div style="text-align:right;font-size:8pt;margin-bottom:3pt">(제2쪽)</div>
+  <div class="sec">1. 사업개요</div>
+  <table>
+    <colgroup>
+      <col style="width:7%"><col style="width:7%"><col style="width:13%"><col style="width:21%">
+      <col style="width:13%"><col style="width:13%"><col style="width:13%"><col style="width:13%">
+    </colgroup>
+    <!-- 업체현황 - 회사 -->
+    <tr>
+      <td class="rh" rowspan="7">업체<br>현황</td>
+      <td class="rh" rowspan="4">회사</td>
+      <td class="h">명 칭</td>
+      <td colspan="5">${esc(g('compName'))||'&nbsp;'}</td>
+    </tr>
+    <tr>
+      <td class="h">주 소</td>
+      <td colspan="5">${esc(g('compAddr'))||'&nbsp;'}</td>
+    </tr>
+    <tr>
+      <td class="h">전화번호</td>
+      <td>${esc(g('compTel'))||'&nbsp;'}</td>
+      <td class="h">팩스번호</td>
+      <td>${esc(g('compFax'))||'&nbsp;'}</td>
+      <td class="h">사업자등록번호</td>
+      <td>${esc(g('bizRegNum'))||'&nbsp;'}</td>
+    </tr>
+    <tr>
+      <td class="h">홈페이지 주소</td>
+      <td colspan="3">${esc(g('compWeb'))||'&nbsp;'}</td>
+      <td class="h">법인등록번호</td>
+      <td>${esc(g('corpNum'))||'&nbsp;'}</td>
+    </tr>
+    <!-- 업체현황 - 대표자 -->
+    <tr>
+      <td class="rh" rowspan="3">대표자</td>
+      <td class="h">성 명</td>
+      <td>${esc(g('ceoName'))||'&nbsp;'}</td>
+      <td class="h">이메일 주소</td>
+      <td colspan="3">${esc(g('ceoEmail'))||'&nbsp;'}</td>
+    </tr>
+    <tr>
+      <td class="h">주 소</td>
+      <td colspan="3">${esc(g('ceoAddr'))||'&nbsp;'}</td>
+      <td class="h">생년월일</td>
+      <td>${esc(g('ceoBirth'))||'&nbsp;'}</td>
+    </tr>
+    <tr>
+      <td class="h">전화번호</td>
+      <td>${esc(g('ceoTel'))||'&nbsp;'}</td>
+      <td class="h">팩스번호</td>
+      <td colspan="3">${esc(g('ceoFax'))||'&nbsp;'}</td>
+    </tr>
+    <!-- 생산제품 현황 -->
+    <tr>
+      <td class="rh" rowspan="3" colspan="2">생산제품<br>현황</td>
+      <td class="h">업종(5단위)</td>
+      <td colspan="5">${esc(g('bizType'))||'&nbsp;'}</td>
+    </tr>
+    <tr><td class="h">생산품명</td><td colspan="5">${esc(g('productName'))||'&nbsp;'}</td></tr>
+    <tr><td class="h">주 원자재</td><td colspan="5">${esc(g('rawMat'))||'&nbsp;'}</td></tr>
+    <!-- 공장현황 -->
+    <tr>
+      <td class="rh" rowspan="3" colspan="2">공장<br>현황</td>
+      <td class="h">공 장 주 소</td>
+      <td colspan="5">${esc(g('factAddr'))||'&nbsp;'}</td>
+    </tr>
+    <tr>
+      <td class="h">형 태</td>
+      <td colspan="5">분양(${cm('factForm','분양')})&nbsp;&nbsp; 경매(${cm('factForm','경매')})&nbsp;&nbsp; 양도(${cm('factForm','양도')})&nbsp;&nbsp; 양수(${cm('factForm','양수')})&nbsp;&nbsp; 임대(${cm('factForm','임대')})</td>
+    </tr>
+    <tr>
+      <td class="h">용 도 지 역</td>
+      <td colspan="2">${esc(g('useZone'))||'&nbsp;'}</td>
+      <td class="h">지 목</td>
+      <td colspan="2">${esc(g('landCat'))||'&nbsp;'}</td>
+    </tr>
+    <!-- 공장건설계획 -->
+    <tr>
+      <td class="rh" rowspan="3" colspan="2">공장<br>건설<br>계획</td>
+      <td class="h">사업자등록번호</td>
+      <td colspan="5">${esc(g('bizRegNum'))||'&nbsp;'}</td>
+    </tr>
+    <tr>
+      <td class="h">착공 예정일</td>
+      <td>${esc(g('startDate'))||'&nbsp;'}</td>
+      <td class="h" colspan="2">준공 예정일 또는 준공일</td>
+      <td colspan="2">${esc(g('endDate'))||'&nbsp;'}</td>
+    </tr>
+    <tr>
+      <td class="h">사업 시작일</td>
+      <td colspan="5">${esc(g('bizStart'))||'&nbsp;'}</td>
+    </tr>
+    <!-- 공장의 규모 -->
+    <tr>
+      <td class="rh" rowspan="5" colspan="2">공장의<br>규모</td>
+      <td class="h">종업원 수</td>
+      <td colspan="5" style="text-align:left;padding-left:6pt">국내 남 ${esc(g('emDM'))||'&nbsp;'} 명&nbsp;&nbsp;&nbsp;여 ${esc(g('emDF'))||'&nbsp;'} 명&nbsp;&nbsp;&nbsp;&nbsp;국외 남 ${esc(g('emOM'))||'&nbsp;'} 명&nbsp;&nbsp;&nbsp;여 ${esc(g('emOF'))||'&nbsp;'} 명</td>
+    </tr>
+    <tr>
+      <td class="h">용지 면적</td>
+      <td>${land?land.toFixed(2)+'㎡':'&nbsp;'}</td>
+      <td class="h">건축 면적<br>(제조시설)</td>
+      <td>${mfg?mfg.toFixed(2)+'㎡':'&nbsp;'}</td>
+      <td class="h">건축 면적<br>(부대시설)</td>
+      <td>${supp?supp.toFixed(2)+'㎡':'&nbsp;'}</td>
+    </tr>
+    <tr>
+      <td class="h">건축 면적/<br>용지 면적</td>
+      <td colspan="5">${(mfg||supp)?`${(mfg+supp).toFixed(2)}㎡ / ${land?land.toFixed(2)+'㎡':''}`:'&nbsp;'}</td>
+    </tr>
+    <tr>
+      <td class="h">기준공장 면적율</td>
+      <td>${g('stdRate')?g('stdRate')+'%':'&nbsp;'}</td>
+      <td class="h">건폐율</td>
+      <td>${g('coverRate')?g('coverRate')+'%':'&nbsp;'}</td>
+      <td class="h">용적율</td>
+      <td>${g('floorRate')?g('floorRate')+'%':'&nbsp;'}</td>
+    </tr>
+    <tr>
+      <td class="h">공장 보유 구분</td>
+      <td colspan="5" style="text-align:left;padding-left:6pt">자가(${cm('ownType','자가')})&nbsp;&nbsp;&nbsp;임차(${cm('ownType','임차')})</td>
+    </tr>
+    <!-- 투자규모 -->
+    <tr>
+      <td class="rh" rowspan="2" colspan="2">투자<br>규모</td>
+      <td class="h">계</td>
+      <td>${g('invTotal')?Number(g('invTotal')).toLocaleString()+' 백만원':'&nbsp;'}</td>
+      <td class="h">자기자본</td>
+      <td>${g('invOwn')?Number(g('invOwn')).toLocaleString()+' 백만원':'&nbsp;'}</td>
+      <td class="h">타인자본</td>
+      <td>${g('invOther')?Number(g('invOther')).toLocaleString()+' 백만원':'&nbsp;'}</td>
+    </tr>
+    <tr>
+      <td class="h">외국인 투자금액</td>
+      <td colspan="2">${g('invFg')?g('invFg')+' 천불':'&nbsp;'}</td>
+      <td class="h">외국인 투자비율</td>
+      <td colspan="2">${g('invFgR')?g('invFgR')+'%':'&nbsp;'}</td>
+    </tr>
+    <!-- 공장설립형태 / 공장규모 -->
+    <tr>
+      <td class="h" colspan="2">공장 설립 형태</td>
+      <td colspan="2" style="text-align:left;padding-left:6pt">신규 건립 입주(${cm('buildType','신규 건립 입주')})&nbsp;&nbsp; 기존 건물 입주(${cm('buildType','기존 건물 입주')})</td>
+      <td class="h" colspan="2">공장 규모</td>
+      <td colspan="2" style="text-align:left;padding-left:6pt">대(${cm('factSz','대')})&nbsp; 중(${cm('factSz','중')})&nbsp; 소(${cm('factSz','소')})</td>
+    </tr>
+  </table>
+  <div class="keyre"><strong>기재요령</strong><br>
+    1. 업종은 「통계법」 제22조제1항에 따른 한국표준산업분류상 세세분류(5단위)까지 적습니다.<br>
+    2. 건축면적은 공장설립일부터 4년 이내의 건설계획분을 포함하여 적습니다.<br>
+    3. 공장규모는 「중소기업기본법 시행령」 제8조 및 같은 법 시행령 별표 1에 따른 분류에 따라 적습니다.
+  </div>
+</div>
+
+<div class="page">
+  <div style="text-align:right;font-size:8pt;margin-bottom:3pt">(제3쪽)</div>
+  <div class="sec">2. 공장건설계획</div>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:18%">구 분</th>
+        <th style="width:13%">현 재</th>
+        <th style="width:13%">${yr1?yr1+'년':'　　년'}</th>
+        <th style="width:13%">${yr2?yr2+'년':'　　년'}</th>
+        <th style="width:13%">${yr3?yr3+'년':'　　년'}</th>
+        <th style="width:13%">계</th>
+      </tr>
+    </thead>
+    <tbody>${bHtml}</tbody>
+  </table>
+  <div class="note">※ 작성요령 : 각 시설물에 대한 건축면적은 연면적을 적습니다.</div>
+  <div class="sec" style="margin-top:8pt">3. 생산공정도 해설</div>
+  <table>
+    <tr><th style="width:28%">생산공정도</th><th>생산공정 요약 설명</th></tr>
+    <tr style="vertical-align:top">
+      <td style="padding:5pt;min-height:80pt">${procH||'&nbsp;'}</td>
+      <td style="padding:5pt;white-space:pre-wrap;font-size:8pt;line-height:1.8;min-height:80pt">${esc(g('procDesc'))}</td>
+    </tr>
+  </table>
+</div>
+
+<div class="page">
+  <div style="text-align:right;font-size:8pt;margin-bottom:3pt">(제4쪽)</div>
+  <div class="sec">4. 생산시설 명세</div>
+  <table>
+    <thead><tr><th style="width:36%">시설명</th><th style="width:20%">용량</th><th style="width:10%">수량</th><th>비고</th></tr></thead>
+    <tbody>${facH}</tbody>
+  </table>
+  <div class="sec" style="margin-top:8pt">5. 배출시설 명세</div>
+  <table>
+    <thead>
+      <tr>
+        <th rowspan="2" style="width:20%">시설명</th>
+        <th rowspan="2" style="width:18%">용량 및 규격<br>(HP·㎾·㎥)</th>
+        <th rowspan="2" style="width:8%">수량</th>
+        <th colspan="2">배출오염물질</th>
+        <th rowspan="2">비 고</th>
+      </tr>
+      <tr><th style="width:16%">종류</th><th style="width:14%">배출량</th></tr>
+    </thead>
+    <tbody>${emH}</tbody>
+    <tr>
+      <td colspan="3"></td>
+      <td colspan="3" style="font-size:8pt;line-height:2.2">
+        대 기 ( ${esc(g('airCnt'))||'&nbsp;&nbsp;'} )종<br>
+        수 질 ( ${esc(g('wtCnt'))||'&nbsp;&nbsp;'} )종<br>
+        소음·진동(${chkV('noise').join('/')||'유·무'})
+      </td>
+    </tr>
+  </table>
+  <div class="note">※ 작성요령 : 「물환경보전법」, 「대기환경보전법」 또는 「소음·진동관리법」에 따른 배출시설을 적습니다.</div>
+  <div class="sec" style="margin-top:7pt">6. 용수·전력·연료의 사용계획</div>
+  <table>
+    <thead>
+      <tr>
+        <th colspan="2">용수(톤/일)</th>
+        <th colspan="2">전력(㎾/일)</th>
+        <th colspan="3">연료</th>
+      </tr>
+      <tr>
+        <th>생활용수<br>(상수도·지하수)</th><th>공업용수<br>(상수도·지하수)</th>
+        <th>일반전력</th><th>자가발전</th>
+        <th>석유(ℓ/일)</th><th>가스(㎥/일)</th><th>기타(톤/일)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="text-align:center">
+        <td style="padding:5pt">${esc(g('lifeWt'))}</td><td style="padding:5pt">${esc(g('indWt'))}</td>
+        <td style="padding:5pt">${esc(g('pw'))}</td><td style="padding:5pt">${esc(g('spw'))}</td>
+        <td style="padding:5pt">${esc(g('oil'))}</td><td style="padding:5pt">${esc(g('gas'))}</td><td style="padding:5pt">${esc(g('ofu'))}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="page">
+  <div style="text-align:right;font-size:8pt;margin-bottom:3pt">(제5쪽)</div>
+  <div class="sec">7. 공장배치도</div>
+  <div style="border:0.5pt solid #000;min-height:220mm;padding:6pt;white-space:pre-wrap;font-size:8.5pt;line-height:1.8">${esc(g('layoutDesc'))}</div>
+  <div class="note" style="margin-top:4pt">※ 공장배치도 작성요령: 건축물의 용도 위주로 개략적으로 위치, 면적, 연도별 설치계획만을 표시합니다.</div>
+</div>
+
+<script>window.onload=function(){window.print()}<\/script>
+</body></html>`;
+
+  const w=window.open('','_blank','width=900,height=700');
+  if(!w){alert('팝업이 차단되어 있습니다.\n브라우저 주소창 옆 팝업 허용 버튼을 클릭 후 다시 시도해 주세요.');return;}
+  w.document.open(); w.document.write(html); w.document.close();
+}
+
+/* ── 자동계산 ── */
+function calcRatio(){
+  const land=n2(g('landArea')), mfg=n2(g('mfgArea')), supp=n2(g('suppArea'));
+  const el=document.getElementById('areaRatio');
+  el.value=(mfg||supp)?`${(mfg+supp).toFixed(2)}㎡ / ${land?land.toFixed(2)+'㎡':'(용지면적 미입력)'}` :'';
+}
+function chkInv(){
+  const t=n2(g('invTotal')), o=n2(g('invOwn')), ot=n2(g('invOther'));
+  document.getElementById('invErr').style.display=(t>0&&(o>0||ot>0)&&Math.abs(t-o-ot)>0.01)?'block':'none';
+}
+function bCalc(){
+  ['m','p','pw','po','pl','pe'].forEach(px=>{
+    let s=0; for(let c=0;c<4;c++) s+=n2(g(px+c));
+    document.getElementById(px+'S').textContent=s.toFixed(2);
+  });
+  for(let c=0;c<4;c++){
+    const mv=n2(g('m'+c)), pv=n2(g('p'+c));
+    document.getElementById('t'+c).textContent=(mv+pv).toFixed(2);
+  }
+  const ms=n2(gT('mS')), ps=n2(gT('pS'));
+  document.getElementById('tS').textContent=(ms+ps).toFixed(2);
+}
+function yrHd(){
+  [1,2,3].forEach(i=>{ const v=g('yr'+i); document.getElementById('yr'+i+'h').textContent=v?v+'년':'　　년'; });
+}
+
+/* ── 공정 단계 ── */
+let pCnt=0;
+function addProc(){
+  if(pCnt>=10){alert('최대 10단계');return;}
+  pCnt++;
+  const wrap=document.getElementById('procWrap');
+  if(pCnt>1){ const a=document.createElement('div'); a.className='proc-arrow'; a.textContent='▼'; wrap.appendChild(a); }
+  const row=document.createElement('div'); row.className='proc-row'; row.id='pr'+pCnt;
+  const labels=['원자재 입고','소재 절단','소재 가공','취부·조립','열처리','표면처리','검사·QC','도장·마감','포장','출하·납품'];
+  row.innerHTML=`<div class="proc-num">${pCnt}</div><input type="text" placeholder="${labels[pCnt-1]||pCnt+'단계'}" style="flex:1" id="proc${pCnt}" oninput="prog()"><button class="del-btn" onclick="delLastProc()">×</button>`;
+  wrap.appendChild(row); prog();
+}
+function delLastProc(){
+  if(pCnt<1) return;
+  const wrap=document.getElementById('procWrap');
+  wrap.removeChild(wrap.lastChild);
+  if(pCnt>1) wrap.removeChild(wrap.lastChild);
+  pCnt--; prog();
+}
+addProc(); addProc(); addProc();
+
+/* ── 생산시설 테이블 ── */
+let fCnt=0;
+function addFac(n='',c='',q='',note=''){
+  fCnt++;
+  const tr=document.createElement('tr'); tr.id='fc'+fCnt;
+  tr.innerHTML=`<td><input type="text" placeholder="예: 범용 선반" value="${n}" oninput="prog()"></td><td><input type="text" placeholder="예: 15HP" value="${c}"></td><td><input type="number" placeholder="1" value="${q}" min="1" style="width:50px"></td><td><input type="text" placeholder="예: 금속 절삭가공용" value="${note}"></td><td><button class="del-btn" onclick="document.getElementById('fc${fCnt}').remove()">×</button></td>`;
+  document.getElementById('facBody').appendChild(tr);
+}
+addFac('범용 선반','15HP','1','금속 절삭가공용');
+addFac('CNC 선반','70HP','1','상동');
+addFac('','','','');
+
+/* ── 배출시설 테이블 ── */
+let eCnt=0;
+function addEmit(){
+  eCnt++;
+  const tr=document.createElement('tr'); tr.id='em'+eCnt;
+  tr.innerHTML=`<td><input type="text" placeholder="예: 도장시설"></td><td><input type="text" placeholder="예: 7㎥, 5HP"></td><td><input type="number" placeholder="1" min="1" style="width:44px"></td><td><input type="text" placeholder="예: 대기, 소음"></td><td><input type="text" placeholder="예: 5톤/년"></td><td><input type="text" placeholder="예: 1종"></td><td><button class="del-btn" onclick="document.getElementById('em${eCnt}').remove()">×</button></td>`;
+  document.getElementById('emitBody').appendChild(tr);
+}
+addEmit();
+
+/* ── 진행률 ── */
+function prog(){
+  const all=document.querySelectorAll('#viewForm input[type=text]:not([readonly]),#viewForm input[type=number]:not([readonly]),#viewForm input[type=date],#viewForm input[type=email],#viewForm input[type=tel],#viewForm textarea');
+  let f=0,t=0;
+  all.forEach(el=>{t++;if(el.value.trim())f++;});
+  const pct=t>0?Math.round(f/t*100):0;
+  document.getElementById('pf').style.width=pct+'%';
+  document.getElementById('pp').textContent=pct+'%';
+}
+document.addEventListener('input',prog);
+document.addEventListener('change',prog);
+prog();
+</script>
+</body>
+</html>
