@@ -872,6 +872,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 14px;
     margin-top: 20px;
+    align-items: start;
   }
   .faq-item {
     border: 1px solid var(--line);
@@ -1389,183 +1390,193 @@
 // ===== DATA =====
 // ===== 각 케이스별 양식 파일 매핑 =====
 // 각 케이스(s1~s12, r1~r10)에 대해 서류 인덱스별 파일 정보를 매핑
-// forms: 케이스의 모든 양식 파일 (작성예시가 한 파일에 포함된 HWP)
+// forms: 케이스의 모든 양식 파일 (작성예시가 한 파일에 포함된 PDF)
 // preview: 절차 한눈에 보기 이미지
-// docFiles: 서류 리스트 인덱스(0부터) → 파일명 매칭 (선택적)
 const caseFiles = {
   // ========== 자가공장 ==========
   's1': {  // 매매(경매포함)
-    preview: { name: '공장 매입하여 입주할 경우.png', file: 'forms/form_1d0229f12c.png' },
-    extraPreview: { name: '경매로 공장을 매입할 경우.png', file: 'forms/form_ec3aa5b51e.png' },
+    preview: { name: '공장 매입하여 입주할 경우.png', file: 'forms/form_df171af2f6.png' },
+    extraPreview: { name: '경매로 공장을 매입할 경우.png', file: 'forms/form_d37473bb5d.png' },
     docFiles: {
       // 양도인
-      'a-0': { name: '처분신고서 및 작성예시 (개인정보동의서 첨부)', file: 'forms/form_fde78b9178.hwp' },
+      'a-0': { name: '처분신고서 및 작성예시 (개인정보동의서 첨부).pdf', file: 'forms/form_f4e6e7e29f.pdf' },
       // 양수인
-      'b-0': { name: '(자가)입주계약신청서 및 작성예시', file: 'forms/form_1d06b86524.hwp' },
-      'b-1': { name: '[제조업]사업계획서 및 작성예시', file: 'forms/form_f4cd1de26b.hwp' },
-      'b-2': { name: '위험상황전파 개인정보 수집활용 동의서', file: 'forms/form_575f05833c.hwp' },
-      // 경매인 (양수인과 동일 양식 활용)
-      'c-0': { name: '(자가)입주계약신청서 및 작성예시', file: 'forms/form_1d06b86524.hwp' },
-      'c-1': { name: '[제조업]사업계획서 및 작성예시', file: 'forms/form_f4cd1de26b.hwp' }
+      'b-0': { name: '(자가)입주계약신청서 및 작성예시.pdf', file: 'forms/form_74b1ad47bb.pdf' },
+      'b-1': { name: '[제조업]사업계획서 및 작성예시.pdf', file: 'forms/form_d23e6da729.pdf' },
+      'b-2': { name: '위험상황전파 개인정보 수집활용 동의서.pdf', file: 'forms/form_49ef0ea6eb.pdf' },
+      // 경매인
+      'c-0': { name: '(자가)입주계약신청서 및 작성예시.pdf', file: 'forms/form_74b1ad47bb.pdf' },
+      'c-1': { name: '[제조업]사업계획서 및 작성예시.pdf', file: 'forms/form_d23e6da729.pdf' }
     }
   },
   's2': {  // 증축
-    preview: { name: '자가-공장을 증축하는 경우.png', file: 'forms/form_f5a987ca9c.png' },
+    preview: { name: '자가-공장을 증축하는 경우.png', file: 'forms/form_9df8cbe174.png' },
     docFiles: {
-      '0-0': { name: '(증축_면적증가)입주계약신청서 및 작성예시', file: 'forms/form_012f4eca85.hwp' },
-      '0-2': { name: '(증축)사업계획서 양식 및 작성예시', file: 'forms/form_3a26078618.hwp' }
+      '0-0': { name: '(증축_면적증가) 입주계약신청서 및 작성예시.pdf', file: 'forms/form_d6942325bc.pdf' },
+      '0-2': { name: '(증축) 사업계획서 양식 및 작성예시.pdf', file: 'forms/form_4b363a2aca.pdf' }
     }
   },
   's3': {  // 업종추가/변경
-    preview: { name: '자가-업종추가 or 변경.png', file: 'forms/form_6cb4c41743.png' },
+    preview: { name: '자가-업종추가 or 변경.png', file: 'forms/form_329f1cc1fe.png' },
     docFiles: {
-      '0-0': { name: '(자가-업종변경) 산업단지입주 신청(확인)서 작성예시', file: 'forms/form_bfbd38ef58.hwp' },
-      '0-1': { name: '(자가-업종변경/추가) 사업계획서 작성예시', file: 'forms/form_589424ce5e.hwp' }
+      '0-0': { name: '(자가-업종변경) 산업단지입주 신청(확인)서 작성예시.pdf', file: 'forms/form_c99f69009a.pdf' },
+      '0-1': { name: '(자가-업종변경/추가) 사업계획서 작성예시.pdf', file: 'forms/form_02baa33f92.pdf' }
     }
   },
   's4': {  // 상호/대표자 변경
-    preview: { name: '자가-회사명/대표자변경.png', file: 'forms/form_30a0665f2c.png' },
+    preview: { name: '자가-회사명/대표자변경.png', file: 'forms/form_a99a33c91c.png' },
     docFiles: {
-      // 법인일 경우
-      'corp-0': { name: '법인 - 회사명/대표자변경 입주계약신청서 작성예시', file: 'forms/form_aad55f0a36.hwp' },
-      // 개인일 경우
-      'indiv-0': { name: '개인 - 회사명/대표자변경 입주계약신청서 작성예시', file: 'forms/form_220e8ace22.hwp' }
+      'corp-0': { name: '법인 - 회사명/대표자변경 입주계약신청서 작성예시.pdf', file: 'forms/form_23890916d3.pdf' },
+      'indiv-0': { name: '개인 - 회사명/대표자변경 입주계약신청서 작성예시.pdf', file: 'forms/form_69db4c4b06.pdf' }
     }
   },
   's5': {  // 법인전환
-    preview: { name: '자가-법인전환 (개인→법인).png', file: 'forms/form_a3f171bda9.png' },
+    preview: { name: '자가-법인전환 (개인→법인).png', file: 'forms/form_296a8a5393.png' },
     docFiles: {
-      '0-0': { name: '(자가-법인전환) 산업단지입주 신청(확인)서 작성예시', file: 'forms/form_ee3e30e1ad.hwp' }
+      '0-0': { name: '(자가-법인전환) 산업단지입주 신청(확인)서 작성예시.pdf', file: 'forms/form_5db4216e9e.pdf' }
     }
   },
   's6': {  // 공장설립완료신고
-    preview: { name: '자가-공장등록완료.png', file: 'forms/form_14e5daac59.png' },
+    preview: { name: '자가-공장등록완료.png', file: 'forms/form_c560e3c863.png' },
     docFiles: {
-      '0-0': { name: '공장설립등의 완료신고서 일체', file: 'forms/form_5882c4fb4a.hwp' }
+      '0-0': { name: '공장설립등의 완료신고서 일체.pdf', file: 'forms/form_5155159a8a.pdf' }
     }
   },
   's7': {  // 처분신고
-    preview: { name: '자가-처분신고.png', file: 'forms/form_4bf4012656.png' },
+    preview: { name: '자가-처분신고.png', file: 'forms/form_7cacc7e37b.png' },
     docFiles: {
-      '0-0': { name: '처분신고서 작성예시', file: 'forms/form_773b45fb01.hwp' }
+      '0-0': { name: '처분신고서 작성예시.pdf', file: 'forms/form_772aed693d.pdf' }
     }
   },
   's8': {  // 분할
-    preview: { name: '자가-산업용지의 분할.png', file: 'forms/form_6d9da05619.png' },
+    preview: { name: '자가-산업용지의 분할.png', file: 'forms/form_3f24b96c2c.png' },
     docFiles: {
-      '0-0': { name: '산업용지 분할 협의 신청서', file: 'forms/form_3b5a78ebdf.hwp' }
+      '0-0': { name: '산업용지 분할 협의 신청서.pdf', file: 'forms/form_3df35893fe.pdf' }
     }
   },
   's9': {  // 임대사업자 전환
-    preview: { name: '자가-임대사업자 전환.png', file: 'forms/form_ef99f16764.png' },
+    preview: { name: '자가-임대사업자 전환.png', file: 'forms/form_04d1a6a913.png' },
     docFiles: {
-      '0-0': { name: '입주계약변경(임대사업자) 신청서 및 작성예시', file: 'forms/form_db4fd62c01.hwp' },
-      '0-1': { name: '임대사업자 사업계획서 및 작성예시', file: 'forms/form_12999ac2e5.hwp' }
+      '0-0': { name: '입주계약변경(임대사업자) 신청서 및 작성예시.pdf', file: 'forms/form_da6e89d9f4.pdf' },
+      '0-1': { name: '임대사업자 사업계획서 및 작성예시.pdf', file: 'forms/form_7fcc6bbd79.pdf' }
     }
   },
-  's10': {  // 비제조업 입주
-    preview: { name: '자가-비제조업 입주.png', file: 'forms/form_e1fa04197a.png' },
+  's10': {  // 비제조업 입주 (임차공장의 비제조업 양식 사용 - 자가공장 양식 누락분 대체)
+    preview: { name: '비제조업 입주.png', file: 'forms/form_1eb5726eb5.png' },
     docFiles: {
-      '0-0': { name: '(비제조업) 입주계약신청서 및 작성예시', file: 'forms/form_290b9a4f6d.hwp' },
-      '0-1': { name: '비제조업사업계획서 및 작성예시', file: 'forms/form_dd2c8b4b62.hwp' }
+      '0-0': { name: '(비제조업) 입주계약신청(확인)서 및 작성예시.pdf', file: 'forms/form_bdb5009cbd.pdf' },
+      '0-1': { name: '비제조업 사업계획서 및 작성예시.pdf', file: 'forms/form_501393e091.pdf' }
     }
   },
   's11': {  // 사업개시신고
-    preview: { name: '자가-사업개시신고 (비제조업).png', file: 'forms/form_5566ae42f3.png' },
+    preview: { name: '자가-사업개시신고 (비제조업).png', file: 'forms/form_0d36710544.png' },
     docFiles: {
-      '0-0': { name: '사업개시 신고(확인)서', file: 'forms/form_96b6e17c77.hwp' }
+      '0-0': { name: '사업개시 신고(확인)서.pdf', file: 'forms/form_25b24de9a0.pdf' }
     }
   },
   's12': {  // 지식산업센터
-    preview: { name: '자가-지식산업센터 신설.png', file: 'forms/form_222bb65fe8.png' },
-    extraPreview: { name: '지식산업센터 분양하여 입주하는 경우.png', file: 'forms/form_609adbb1f1.png' },
-    docFiles: {}  // 지식산업센터는 별도 양식 그룹으로 처리
+    preview: { name: '자가-지식산업센터 신설.png', file: 'forms/form_d120d1518f.png' },
+    extraPreview: { name: '지식산업센터 분양하여 입주하는 경우.png', file: 'forms/form_cb553d3739.png' },
+    docFiles: {
+      // 추가 양식들은 extra 섹션으로 처리
+      'extra-0': { name: '주인공장 처분신고서 (지식산업센터).pdf', file: 'forms/form_027d054894.pdf' },
+      'extra-1': { name: '매입공장 입주계약신청서 (지식산업센터 신설/증설).pdf', file: 'forms/form_958e7f24b2.pdf' },
+      'extra-2': { name: '지식산업센터 설립 사업계획서.pdf', file: 'forms/form_ca02aa1978.pdf' },
+      'extra-3': { name: '지식산업센터 건설 - (비제조업) 입주계약신청서.pdf', file: 'forms/form_0a8fb7009f.pdf' },
+      'extra-4': { name: '지식산업센터 건설 - 비제조업 사업계획서.pdf', file: 'forms/form_d56b4c2fc0.pdf' },
+      'extra-5': { name: '준공 후 - 지식산업센터 설립완료신고서.pdf', file: 'forms/form_9143e43ee8.pdf' },
+      'extra-6': { name: '[분양] 지식산업센터 분양 입주계약신청서.pdf', file: 'forms/form_90e53bd67a.pdf' },
+      'extra-7': { name: '[분양] 지식산업센터 사업계획서.pdf', file: 'forms/form_4febc4abdf.pdf' },
+      'extra-8': { name: '[분양] 위험상황전파 개인정보 수집활용 동의서.pdf', file: 'forms/form_c6c82cbbe5.pdf' }
+    }
   },
 
   // ========== 임차공장 ==========
   'r1': {  // 입주계약 (임차)
-    preview: { name: '임차-공장을 임차하여 입주할 경우.png', file: 'forms/form_f9863c5959.png' },
+    preview: { name: '임차-공장을 임차하여 입주할 경우.png', file: 'forms/form_2a639c3ad7.png' },
     docFiles: {
       // 임대인
-      'a-0': { name: '주인공장 - 임대신고서 작성예시', file: 'forms/form_717b0675d3.hwp' },
+      'a-0': { name: '주인공장 - 임대신고서 작성예시.pdf', file: 'forms/form_4da64d001d.pdf' },
       // 임차인
-      'b-0': { name: '임차공장 - 산업단지입주계약 신청(확인)서 작성예시', file: 'forms/form_09cea9a789.hwp' },
-      'b-1': { name: '[제조업]사업계획서 및 작성예시', file: 'forms/form_41734edaa8.hwp' }
+      'b-0': { name: '임차공장 - 산업단지입주계약 신청(확인)서 작성예시.pdf', file: 'forms/form_c5ae9ba601.pdf' },
+      'b-1': { name: '[제조업] 사업계획서 및 작성예시.pdf', file: 'forms/form_65e15824a9.pdf' },
+      // 추가 - 비제조업 사업계획서
+      'extra-0': { name: '비제조업 사업계획서 및 작성예시.pdf', file: 'forms/form_e973cf32ad.pdf' }
     }
   },
   'r2': {  // 전대계약
-    preview: { name: '임차-공장을 전대하여 입주할 경우.png', file: 'forms/form_c40768c2a9.png' },
+    preview: null,  // 전대계약 PNG는 별도 없음
     docFiles: {
       // 전대인
-      'a-0': { name: '임대공장 - 임대신고서 및 작성예시', file: 'forms/form_4527b42e41.hwp' },
-      'a-1': { name: '건물주인 날인 - 전대동의서', file: 'forms/form_3375de9d97.hwp' },
+      'a-0': { name: '임대공장 - 임대신고서 및 작성예시.pdf', file: 'forms/form_16d4bcc2ae.pdf' },
+      'a-1': { name: '건물주인 날인 - 전대동의서.pdf', file: 'forms/form_93f4a0622a.pdf' },
       // 전차인
-      'b-0': { name: '전차인 - (임차)입주계약신청서 및 작성예시', file: 'forms/form_b691fdd08a.hwp' },
-      'b-1': { name: '전차인 임차(신규입주) - 사업계획서 양식 및 작성예시', file: 'forms/form_da9eb8d7f9.hwp' },
-      'b-2': { name: '위험상황전파 개인정보 수집활용 동의서', file: 'forms/form_107192c250.hwp' }
+      'b-0': { name: '전차인 - (임차) 입주계약신청서 및 작성예시.pdf', file: 'forms/form_472b62e23b.pdf' },
+      'b-1': { name: '전차인 임차(신규입주) - 사업계획서 양식 및 작성예시.pdf', file: 'forms/form_7fb62dfe0b.pdf' },
+      'b-2': { name: '위험상황전파 개인정보 수집활용 동의서.pdf', file: 'forms/form_e161b9eec9.pdf' }
     }
   },
   'r3': {  // 업종추가/변경 (임차)
-    preview: { name: '임차-업종추가 또는 변경.png', file: 'forms/form_e315cb5a02.png' },
+    preview: { name: '임차-업종추가 또는 변경.png', file: 'forms/form_2314313dd9.png' },
     docFiles: {
-      '0-0': { name: '(임차-업종변경) 산업단지입주 신청(확인)서 작성예시', file: 'forms/form_1a04e36f21.hwp' },
-      '0-1': { name: '(임차-업종변경/추가) 사업계획서 작성예시', file: 'forms/form_f4b28ecd86.hwp' }
+      '0-0': { name: '(임차-업종변경) 산업단지입주 신청(확인)서 작성예시.pdf', file: 'forms/form_db48cf5304.pdf' },
+      '0-1': { name: '(임차-업종변경/추가) 사업계획서 작성예시.pdf', file: 'forms/form_b808de0cf8.pdf' }
     }
   },
   'r4': {  // 면적변경
-    preview: { name: '임차-임차(전차)면적이 변경되는 경우.png', file: 'forms/form_48cefb7306.png' },
+    preview: { name: '임차-임차(전차)면적이 변경되는 경우.png', file: 'forms/form_448c625c76.png' },
     docFiles: {
-      '0-0': { name: '임대인 신고 - (변경)임대신고서 및 작성예시', file: 'forms/form_c6e13444dc.hwp' },
-      '0-1': { name: '제조공간 증축(추가임차) - 입주계약신청서 작성예시', file: 'forms/form_da01009d16.hwp' },
-      // 보조 양식들
-      'extra-0': { name: '제조공간 증축 - 임차(신규입주) 사업계획서', file: 'forms/form_27dbd1d221.hwp' },
-      'extra-1': { name: '부대면적 증축 - 입주계약신청서 작성예시', file: 'forms/form_6b60a15418.hwp' }
+      '0-0': { name: '임대인 신고 - (변경)임대신고서 및 작성예시.pdf', file: 'forms/form_bf9ddc340a.pdf' },
+      '0-1': { name: '제조공간 증축(추가임차) - 입주계약신청서 작성예시.pdf', file: 'forms/form_ea4583ee34.pdf' },
+      // 보조 양식
+      'extra-0': { name: '제조공간 증축 - 임차(신규입주) 사업계획서.pdf', file: 'forms/form_70a5060951.pdf' },
+      'extra-1': { name: '부대면적 증축 - 입주계약신청서 작성예시.pdf', file: 'forms/form_5663c80df9.pdf' }
     }
   },
   'r5': {  // 상호/대표자 변경 (임차)
-    preview: { name: '임차-상호(회사명)/대표자 변경.png', file: 'forms/form_f11c2bf936.png' },
+    preview: { name: '임차-상호(회사명)/대표자 변경.png', file: 'forms/form_265b0341ab.png' },
     docFiles: {
-      'corp-0': { name: '법인 - 회사명/대표자변경 입주계약신청서 작성예시', file: 'forms/form_05027c903a.hwp' },
-      'indiv-0': { name: '개인 - 회사명/대표자변경 입주계약신청서 작성예시', file: 'forms/form_e1b9d7b85b.hwp' }
+      'corp-0': { name: '법인 - 회사명/대표자변경 입주계약신청서 작성예시.pdf', file: 'forms/form_09ed7865bb.pdf' },
+      'indiv-0': { name: '개인 - 회사명/대표자변경 입주계약신청서 작성예시.pdf', file: 'forms/form_50f00f0471.pdf' }
     }
   },
   'r6': {  // 법인전환 (임차)
-    preview: { name: '임차-법인전환 (개인→법인).png', file: 'forms/form_1653cf86ab.png' },
+    preview: { name: '임차-법인전환 (개인→법인).png', file: 'forms/form_d4da417a1c.png' },
     docFiles: {
-      '0-0': { name: '임차(법인전환) - 입주계약(변경) 신청서', file: 'forms/form_f3163bd378.hwp' }
+      '0-0': { name: '임차(법인전환) - 입주계약(변경) 신청서.pdf', file: 'forms/form_24c0061949.pdf' }
     }
   },
   'r7': {  // 공장설립완료신고 (임차)
-    preview: { name: '임차-공장등록.png', file: 'forms/form_56dbaf8324.png' },
+    preview: { name: '임차-공장등록.png', file: 'forms/form_4e2faf8f6f.png' },
     docFiles: {
-      '0-0': { name: '공장설립등의 완료신고서 일체', file: 'forms/form_6de7e4f1ff.hwp' },
+      '0-0': { name: '공장설립등의 완료신고서 일체.pdf', file: 'forms/form_d10c21bbe2.pdf' },
       // 부가 자료
-      'extra-0': { name: '공장등록증 발급방법 안내', file: 'forms/form_2ef247fc3a.pdf' },
-      'extra-1': { name: '등록면허세 납부안내', file: 'forms/form_9f714fbe1a.hwp' }
+      'extra-0': { name: '공장등록증 발급방법 안내.pdf', file: 'forms/form_526da7d20a.pdf' },
+      'extra-1': { name: '등록면허세 납부안내.pdf', file: 'forms/form_985c395e7f.pdf' }
     }
   },
   'r8': {  // 입주계약 해지
-    preview: { name: '임차-임차공장의 해지(퇴거, 폐업 등).png', file: 'forms/form_e862e0c959.png' },
+    preview: { name: '임차-임차공장의 해지(퇴거, 폐업 등).png', file: 'forms/form_4107810e1c.png' },
     docFiles: {
-      '0-0': { name: '입주계약 해지신청서', file: 'forms/form_24b473ebbf.hwp' }
+      '0-0': { name: '입주계약 해지신청서.pdf', file: 'forms/form_9e46d6acf9.pdf' }
     }
   },
   'r9': {  // 비제조업 입주 (임차)
-    preview: { name: '임차-비제조업 입주.png', file: 'forms/form_ca2792f07f.png' },
+    preview: { name: '임차-비제조업 입주.png', file: 'forms/form_1eb5726eb5.png' },
     docFiles: {
       // 주인공장
-      'a-0': { name: '주인공장 - 임대신고서 작성예시', file: 'forms/form_c1bf3423a5.hwp' },
+      'a-0': { name: '주인공장 - 임대신고서 작성예시.pdf', file: 'forms/form_4da64d001d.pdf' },
       // 임차공장
-      'b-0': { name: '임차공장 - (비제조업) 산업단지입주계약신청(확인)서 작성예시', file: 'forms/form_5bd4e0c7e9.hwp' },
-      'b-1': { name: '임차공장 - 비제조업사업계획서 및 작성예시', file: 'forms/form_18aa591914.hwp' },
+      'b-0': { name: '임차공장 - (비제조업) 산업단지입주계약신청(확인)서 작성예시.pdf', file: 'forms/form_bdb5009cbd.pdf' },
+      'b-1': { name: '임차공장 - 비제조업 사업계획서 및 작성예시.pdf', file: 'forms/form_501393e091.pdf' },
       // 보조
-      'extra-0': { name: '전차일 경우 - 전대동의서', file: 'forms/form_8178a74666.hwp' }
+      'extra-0': { name: '전차일 경우 - 전대동의서.pdf', file: 'forms/form_2830c4b3af.pdf' }
     }
   },
   'r10': {  // 사업개시신고 (비제조업, 임차)
-    preview: { name: '임차-사업개시신고 (비제조업).png', file: 'forms/form_a4d37581f9.png' },
+    preview: { name: '임차-사업개시신고 (비제조업).png', file: 'forms/form_310b4d5dc1.png' },
     docFiles: {
-      '0-0': { name: '사업개시 신고(확인)서', file: 'forms/form_ad2c231752.hwp' }
+      '0-0': { name: '사업개시 신고(확인)서.pdf', file: 'forms/form_121535ae7c.pdf' }
     }
   }
 };
@@ -2166,7 +2177,7 @@ function makeDownloadBtn(fileInfo) {
       예시
     </button>`;
   }
-  return `<a class="doc-btn doc-btn-download" href="${fileInfo.file}" download="${fileInfo.name || ''}" title="양식 다운로드 (작성예시 포함)">
+  return `<a class="doc-btn doc-btn-download" href="${fileInfo.file}" download="${fileInfo.name || ''}" title="양식 다운로드 (PDF, 작성예시 포함)" target="_blank">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
     양식+예시
   </a>`;
@@ -2310,7 +2321,7 @@ function openModal(key) {
   html += `<div class="info-box" style="background:var(--green-soft); border-left-color:var(--green); margin-top:24px;">
     <strong style="color:var(--green);">📌 안내사항</strong>
     <p>방문 시 도장을 지참(서류 수정 시 사용)하여 담당자를 찾아주세요. 도장은 개인의 경우 대표자 인감도장, 법인의 경우 법인 인감도장이 원칙입니다. 상담 소요시간으로 인해, 가급적 방문은 9:30-16:00 사이에 부탁드립니다. (12시-13시 점심시간 제외)</p>
-    <p style="margin-top:8px;">※ 각 양식의 <strong style="color:var(--blue);">[양식+예시]</strong> 버튼을 누르면 한글(HWP) 파일을 받을 수 있습니다. 양식 뒤쪽에 작성예시가 포함되어 있습니다.</p>
+    <p style="margin-top:8px;">※ 각 양식의 <strong style="color:var(--blue);">[양식+예시]</strong> 버튼을 누르면 PDF 파일이 열립니다. 양식 뒤쪽에 작성예시가 포함되어 있어 함께 참고하실 수 있습니다.</p>
   </div>`;
 
   document.getElementById('modalBody').innerHTML = html;
@@ -2369,77 +2380,86 @@ document.getElementById('searchInput').addEventListener('input', e => {
 });
 
 // ===== FORMS DOWNLOAD CENTER =====
-// 실제 업로드된 양식 파일 목록 (각 양식에는 작성예시가 포함되어 있음)
+// 실제 업로드된 양식 파일 목록 (각 양식에는 작성예시가 포함되어 있음 - PDF)
 const formList = [
   // 매매·경매·지식산업센터 분양
-  { name: '처분신고서 및 작성예시', desc: '매매·양도 시 양도인용 (개인정보동의서 포함)', file: 'forms/form_fde78b9178.hwp', tag: '매매/양도' },
-  { name: '(자가)입주계약신청서 및 작성예시', desc: '공장 매입·양수인용', file: 'forms/form_1d06b86524.hwp', tag: '매매/양도' },
-  { name: '지식산업센터 분양 입주계약신청서', desc: '지식산업센터 분양 입주 시', file: 'forms/form_4a68e46545.hwp', tag: '지식산업센터' },
-  { name: '지식산업센터 사업계획서', desc: '지식산업센터 분양용 사업계획서', file: 'forms/form_dc15dab631.hwpx', tag: '지식산업센터' },
+  { name: '처분신고서 및 작성예시', desc: '매매·양도 시 양도인용 (개인정보동의서 포함)', file: 'forms/form_f4e6e7e29f.pdf', tag: '매매/양도' },
+  { name: '(자가) 입주계약신청서 및 작성예시', desc: '공장 매입·양수인용', file: 'forms/form_74b1ad47bb.pdf', tag: '매매/양도' },
+  { name: '[제조업] 사업계획서 및 작성예시', desc: '제조업 사업계획서 (자가)', file: 'forms/form_d23e6da729.pdf', tag: '매매/양도' },
+  { name: '위험상황전파 개인정보 수집·활용 동의서', desc: '입주계약 시 함께 제출', file: 'forms/form_49ef0ea6eb.pdf', tag: '동의서' },
 
-  // 증축 / 면적변경
-  { name: '(증축_면적증가) 입주계약신청서', desc: '자가 공장 증축 신청', file: 'forms/form_012f4eca85.hwp', tag: '증축' },
-  { name: '(증축) 사업계획서 양식 및 작성예시', desc: '증축 부분에 대한 사업내용 기재', file: 'forms/form_3a26078618.hwp', tag: '증축' },
-  { name: '(변경)임대신고서 및 작성예시', desc: '임대인이 신고하는 면적변경', file: 'forms/form_c6e13444dc.hwp', tag: '면적변경' },
-  { name: '제조공간 증축(추가임차) 입주계약신청서', desc: '임차 - 제조면적 증가', file: 'forms/form_da01009d16.hwp', tag: '면적변경' },
-  { name: '부대면적 증축 입주계약신청서', desc: '임차 - 부대면적 증가', file: 'forms/form_6b60a15418.hwp', tag: '면적변경' },
+  // 지식산업센터 분양 / 신설
+  { name: '지식산업센터 분양 입주계약신청서', desc: '지식산업센터 분양 입주 시', file: 'forms/form_90e53bd67a.pdf', tag: '지식산업센터' },
+  { name: '지식산업센터 사업계획서 (분양)', desc: '지식산업센터 분양용 사업계획서', file: 'forms/form_4febc4abdf.pdf', tag: '지식산업센터' },
+  { name: '지식산업센터 처분신고서', desc: '지식산업센터 처분 시 주인공장용', file: 'forms/form_027d054894.pdf', tag: '지식산업센터' },
+  { name: '지식산업센터 입주계약신청서 [신설/증설]', desc: '매입공장 - 신설·증설(승인·변경승인)', file: 'forms/form_958e7f24b2.pdf', tag: '지식산업센터' },
+  { name: '지식산업센터 설립 사업계획서', desc: '지식산업센터 설립용', file: 'forms/form_ca02aa1978.pdf', tag: '지식산업센터' },
+  { name: '지식산업센터 (비제조업) 입주계약신청서', desc: '지식산업센터 건설 - 비제조업', file: 'forms/form_0a8fb7009f.pdf', tag: '지식산업센터' },
+  { name: '지식산업센터 비제조업 사업계획서', desc: '지식산업센터 건설용 비제조업', file: 'forms/form_d56b4c2fc0.pdf', tag: '지식산업센터' },
+  { name: '지식산업센터 설립완료신고서', desc: '준공 후 서류', file: 'forms/form_9143e43ee8.pdf', tag: '지식산업센터' },
+
+  // 증축
+  { name: '(증축_면적증가) 입주계약신청서', desc: '자가 공장 증축 신청', file: 'forms/form_d6942325bc.pdf', tag: '증축' },
+  { name: '(증축) 사업계획서 양식 및 작성예시', desc: '증축 부분에 대한 사업내용 기재', file: 'forms/form_4b363a2aca.pdf', tag: '증축' },
+
+  // 면적변경 (임차)
+  { name: '(변경) 임대신고서 및 작성예시', desc: '임대인이 신고하는 면적변경', file: 'forms/form_bf9ddc340a.pdf', tag: '면적변경' },
+  { name: '제조공간 증축(추가임차) 입주계약신청서', desc: '임차 - 제조면적 증가', file: 'forms/form_ea4583ee34.pdf', tag: '면적변경' },
+  { name: '제조공간 증축 - 임차 사업계획서', desc: '임차 신규입주 사업계획서', file: 'forms/form_70a5060951.pdf', tag: '면적변경' },
+  { name: '부대면적 증축 입주계약신청서', desc: '임차 - 부대면적 증가', file: 'forms/form_5663c80df9.pdf', tag: '면적변경' },
 
   // 업종변경
-  { name: '(자가-업종변경) 산업단지입주 신청(확인)서', desc: '자가 - 업종 추가/변경', file: 'forms/form_bfbd38ef58.hwp', tag: '업종변경' },
-  { name: '(자가-업종변경/추가) 사업계획서', desc: '자가 - 업종변경용 사업계획서', file: 'forms/form_589424ce5e.hwp', tag: '업종변경' },
-  { name: '(임차-업종변경) 산업단지입주 신청(확인)서', desc: '임차 - 업종 추가/변경', file: 'forms/form_1a04e36f21.hwp', tag: '업종변경' },
-  { name: '(임차-업종변경/추가) 사업계획서', desc: '임차 - 업종변경용 사업계획서', file: 'forms/form_f4b28ecd86.hwp', tag: '업종변경' },
+  { name: '(자가-업종변경) 산업단지입주 신청(확인)서', desc: '자가 - 업종 추가/변경', file: 'forms/form_c99f69009a.pdf', tag: '업종변경' },
+  { name: '(자가-업종변경/추가) 사업계획서', desc: '자가 - 업종변경용 사업계획서', file: 'forms/form_02baa33f92.pdf', tag: '업종변경' },
+  { name: '(임차-업종변경) 산업단지입주 신청(확인)서', desc: '임차 - 업종 추가/변경', file: 'forms/form_db48cf5304.pdf', tag: '업종변경' },
+  { name: '(임차-업종변경/추가) 사업계획서', desc: '임차 - 업종변경용 사업계획서', file: 'forms/form_b808de0cf8.pdf', tag: '업종변경' },
 
-  // 상호/대표자 변경
-  { name: '법인 - 회사명/대표자변경 입주계약신청서 (자가)', desc: '법인사업자용', file: 'forms/form_aad55f0a36.hwp', tag: '상호변경' },
-  { name: '개인 - 회사명/대표자변경 입주계약신청서 (자가)', desc: '개인사업자용 (처분신고 후 입주계약)', file: 'forms/form_220e8ace22.hwp', tag: '상호변경' },
-  { name: '법인 - 회사명/대표자변경 입주계약신청서 (임차)', desc: '법인사업자용 임차', file: 'forms/form_05027c903a.hwp', tag: '상호변경' },
-  { name: '개인 - 회사명/대표자변경 입주계약신청서 (임차)', desc: '개인사업자용 임차', file: 'forms/form_e1b9d7b85b.hwp', tag: '상호변경' },
+  // 상호/대표자 변경 (자가)
+  { name: '법인 - 회사명/대표자변경 신청서 (자가)', desc: '법인사업자용 자가공장', file: 'forms/form_23890916d3.pdf', tag: '상호변경' },
+  { name: '개인 - 회사명/대표자변경 신청서 (자가)', desc: '개인사업자용 자가공장 (처분신고 후 입주계약)', file: 'forms/form_69db4c4b06.pdf', tag: '상호변경' },
+  // 상호/대표자 변경 (임차)
+  { name: '법인 - 회사명/대표자변경 신청서 (임차)', desc: '법인사업자용 임차공장', file: 'forms/form_09ed7865bb.pdf', tag: '상호변경' },
+  { name: '개인 - 회사명/대표자변경 신청서 (임차)', desc: '개인사업자용 임차공장', file: 'forms/form_50f00f0471.pdf', tag: '상호변경' },
 
   // 법인전환
-  { name: '(자가-법인전환) 산업단지입주 신청(확인)서', desc: '자가 - 개인 → 법인 전환', file: 'forms/form_ee3e30e1ad.hwp', tag: '법인전환' },
-  { name: '임차(법인전환) 입주계약(변경) 신청서', desc: '임차 - 개인 → 법인 전환', file: 'forms/form_f3163bd378.hwp', tag: '법인전환' },
+  { name: '(자가-법인전환) 산업단지입주 신청(확인)서', desc: '자가 - 개인 → 법인 전환', file: 'forms/form_5db4216e9e.pdf', tag: '법인전환' },
+  { name: '임차(법인전환) 입주계약(변경) 신청서', desc: '임차 - 개인 → 법인 전환', file: 'forms/form_24c0061949.pdf', tag: '법인전환' },
 
   // 공장설립완료신고
-  { name: '공장설립등의 완료신고서 일체', desc: '공장설립 완료 신고 (자가/임차 공통)', file: 'forms/form_5882c4fb4a.hwp', tag: '공장등록' },
-  { name: '공장등록증 발급방법 안내', desc: 'FactoryOn 발급 절차 PDF', file: 'forms/form_2ef247fc3a.pdf', tag: '공장등록' },
-  { name: '등록면허세 납부안내', desc: '위택스 납부 안내', file: 'forms/form_9f714fbe1a.hwp', tag: '공장등록' },
+  { name: '공장설립등의 완료신고서 일체 (자가)', desc: '자가 공장설립 완료 신고', file: 'forms/form_5155159a8a.pdf', tag: '공장등록' },
+  { name: '공장설립등의 완료신고서 일체 (임차)', desc: '임차 공장설립 완료 신고', file: 'forms/form_d10c21bbe2.pdf', tag: '공장등록' },
+  { name: '공장등록증 발급방법 안내', desc: 'FactoryOn 발급 절차 PDF', file: 'forms/form_526da7d20a.pdf', tag: '공장등록' },
+  { name: '등록면허세 납부안내', desc: '위택스 납부 안내', file: 'forms/form_985c395e7f.pdf', tag: '공장등록' },
 
   // 처분 / 분할 / 해지
-  { name: '처분신고서 (시행규칙) 작성예시', desc: '공장·산업용지 양도 시 처분신고', file: 'forms/form_773b45fb01.hwp', tag: '처분/해지' },
-  { name: '산업용지 분할 협의 신청서', desc: '산업용지 분할 시', file: 'forms/form_3b5a78ebdf.hwp', tag: '처분/해지' },
-  { name: '입주계약 해지신청서', desc: '퇴거·폐업 등에 따른 해지', file: 'forms/form_24b473ebbf.hwp', tag: '처분/해지' },
+  { name: '처분신고서 (시행규칙) 작성예시', desc: '공장·산업용지 양도 시 처분신고', file: 'forms/form_772aed693d.pdf', tag: '처분/해지' },
+  { name: '산업용지 분할 협의 신청서', desc: '산업용지 분할 시', file: 'forms/form_3df35893fe.pdf', tag: '처분/해지' },
+  { name: '입주계약 해지신청서', desc: '퇴거·폐업 등에 따른 해지', file: 'forms/form_9e46d6acf9.pdf', tag: '처분/해지' },
 
   // 임대사업자 전환
-  { name: '입주계약변경(임대사업자) 신청서', desc: '제조업 → 임대사업자 전환', file: 'forms/form_db4fd62c01.hwp', tag: '임대사업자' },
-  { name: '임대사업자 사업계획서', desc: '임대사업자용 사업계획서', file: 'forms/form_12999ac2e5.hwp', tag: '임대사업자' },
+  { name: '입주계약변경(임대사업자) 신청서', desc: '제조업 → 임대사업자 전환', file: 'forms/form_da6e89d9f4.pdf', tag: '임대사업자' },
+  { name: '임대사업자 사업계획서', desc: '임대사업자용 사업계획서', file: 'forms/form_7fcc6bbd79.pdf', tag: '임대사업자' },
 
   // 비제조업
-  { name: '(비제조업) 입주계약신청서 (자가)', desc: '자가 - 비제조업 입주', file: 'forms/form_290b9a4f6d.hwp', tag: '비제조업' },
-  { name: '비제조업 사업계획서 (자가)', desc: '자가 - 비제조업 사업계획서', file: 'forms/form_dd2c8b4b62.hwp', tag: '비제조업' },
-  { name: '임차공장 (비제조업) 입주계약신청(확인)서', desc: '임차 - 비제조업 입주', file: 'forms/form_5bd4e0c7e9.hwp', tag: '비제조업' },
-  { name: '임차공장 비제조업 사업계획서', desc: '임차 - 비제조업 사업계획서', file: 'forms/form_18aa591914.hwp', tag: '비제조업' },
+  { name: '임차공장 (비제조업) 입주계약신청(확인)서', desc: '임차 - 비제조업 입주', file: 'forms/form_bdb5009cbd.pdf', tag: '비제조업' },
+  { name: '임차공장 비제조업 사업계획서', desc: '임차 - 비제조업 사업계획서', file: 'forms/form_501393e091.pdf', tag: '비제조업' },
+  { name: '비제조업 사업계획서 (공통)', desc: '제조업/비제조업 공통 사업계획서', file: 'forms/form_e973cf32ad.pdf', tag: '비제조업' },
 
   // 임대신고 / 전대
-  { name: '임대신고서 (시행규칙) 작성예시', desc: '주인공장 임대 신고', file: 'forms/form_717b0675d3.hwp', tag: '임대/전대' },
-  { name: '임대공장 - 임대신고서 (전대용)', desc: '전대 시 임대공장 신고', file: 'forms/form_4527b42e41.hwp', tag: '임대/전대' },
-  { name: '건물주인 날인 - 전대동의서', desc: '전대 시 소유주 동의서', file: 'forms/form_3375de9d97.hwp', tag: '임대/전대' },
-  { name: '전대동의서 (전차일 경우)', desc: '전차 입주 시 사용', file: 'forms/form_8178a74666.hwp', tag: '임대/전대' },
+  { name: '주인공장 - 임대신고서 작성예시', desc: '주인공장 임대 신고 (시행규칙)', file: 'forms/form_4da64d001d.pdf', tag: '임대/전대' },
+  { name: '임대공장 - 임대신고서 (전대용)', desc: '전대 시 임대공장 신고', file: 'forms/form_16d4bcc2ae.pdf', tag: '임대/전대' },
+  { name: '건물주인 날인 - 전대동의서', desc: '전대 시 소유주 동의서', file: 'forms/form_93f4a0622a.pdf', tag: '임대/전대' },
+  { name: '전대동의서 (전차일 경우)', desc: '전차 입주 시 사용', file: 'forms/form_2830c4b3af.pdf', tag: '임대/전대' },
 
   // 임차 입주계약
-  { name: '임차공장 산업단지입주계약 신청(확인)서', desc: '임차인용 입주계약 신청', file: 'forms/form_09cea9a789.hwp', tag: '임차 입주' },
-  { name: '전차인 (임차)입주계약신청서', desc: '전차인용 입주계약 신청', file: 'forms/form_b691fdd08a.hwp', tag: '임차 입주' },
-  { name: '전차인 임차(신규입주) 사업계획서', desc: '전차인용 사업계획서', file: 'forms/form_da9eb8d7f9.hwp', tag: '임차 입주' },
-
-  // 사업계획서 (공통)
-  { name: '[제조업] 사업계획서 및 작성예시', desc: '제조업용 사업계획서 (자가/임차 공통)', file: 'forms/form_f4cd1de26b.hwp', tag: '사업계획서' },
-  { name: '비제조업 사업계획서 (공통)', desc: '비제조업 공통 사업계획서', file: 'forms/form_53ad72225a.hwp', tag: '사업계획서' },
+  { name: '임차공장 - 산업단지입주계약 신청(확인)서', desc: '임차인용 입주계약 신청', file: 'forms/form_c5ae9ba601.pdf', tag: '임차 입주' },
+  { name: '[제조업] 사업계획서 (임차)', desc: '임차인용 제조업 사업계획서', file: 'forms/form_65e15824a9.pdf', tag: '임차 입주' },
+  { name: '전차인 - (임차)입주계약신청서', desc: '전차인용 입주계약 신청', file: 'forms/form_472b62e23b.pdf', tag: '임차 입주' },
+  { name: '전차인 임차(신규입주) 사업계획서', desc: '전차인용 사업계획서', file: 'forms/form_7fb62dfe0b.pdf', tag: '임차 입주' },
 
   // 사업개시신고
-  { name: '사업개시 신고(확인)서', desc: '비제조업 사업개시 신고 (자가/임차 공통)', file: 'forms/form_96b6e17c77.hwp', tag: '사업개시' },
-
-  // 동의서
-  { name: '위험상황전파 개인정보 수집·활용 동의서', desc: '입주계약 시 함께 제출', file: 'forms/form_575f05833c.hwp', tag: '동의서' }
+  { name: '사업개시 신고(확인)서 (자가)', desc: '자가 비제조업 사업개시 신고', file: 'forms/form_25b24de9a0.pdf', tag: '사업개시' },
+  { name: '사업개시 신고(확인)서 (임차)', desc: '임차 비제조업 사업개시 신고', file: 'forms/form_121535ae7c.pdf', tag: '사업개시' }
 ];
 
 function renderForms(filter = '') {
