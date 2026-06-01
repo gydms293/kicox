@@ -230,6 +230,89 @@
     margin-bottom: 32px;
   }
 
+  /* ========== QUICK TOOL BANNER (업종코드 검색) ========== */
+  .quick-tool-banner {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: linear-gradient(135deg, #1e5fb4 0%, #2d8fdb 100%);
+    color: #fff;
+    border-radius: 14px;
+    padding: 22px 28px;
+    margin-bottom: 24px;
+    text-decoration: none;
+    box-shadow: 0 6px 20px rgba(30,95,180,0.18);
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .quick-tool-banner::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 280px;
+    height: 280px;
+    background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .quick-tool-banner:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(30,95,180,0.28);
+  }
+  .qt-icon {
+    width: 56px; height: 56px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    backdrop-filter: blur(4px);
+    position: relative;
+    z-index: 1;
+  }
+  .qt-text {
+    flex: 1;
+    position: relative;
+    z-index: 1;
+  }
+  .qt-text strong {
+    display: block;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .qt-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    background: #ffd84d;
+    color: #5a4500;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+  }
+  .qt-text span {
+    font-size: 13.5px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.5;
+  }
+  .qt-arrow {
+    color: #fff;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+    position: relative;
+    z-index: 1;
+  }
+  .quick-tool-banner:hover .qt-arrow {
+    transform: translateX(4px);
+  }
+
   /* ========== CATEGORY TABS ========== */
   .category-tabs {
     display: grid;
@@ -989,6 +1072,10 @@
       border-top: 1px dashed var(--line);
     }
     .preview-bar { flex-direction: column; align-items: flex-start; }
+    .quick-tool-banner { padding: 18px 20px; gap: 14px; }
+    .qt-icon { width: 44px; height: 44px; }
+    .qt-text strong { font-size: 15.5px; }
+    .qt-text span { font-size: 12px; }
   }
 </style>
 </head>
@@ -1042,6 +1129,26 @@
 
   <h2 class="section-title">어떤 행정서비스가 필요하세요?</h2>
   <p class="section-sub">공장의 소유 형태를 먼저 선택한 뒤, 해당하는 민원 항목을 클릭하면 상세 절차와 서류 안내가 나타납니다.</p>
+
+  <!-- 업종코드 검색 빠른 메뉴 -->
+  <a href="search/" class="quick-tool-banner">
+    <div class="qt-icon">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/>
+        <path d="M21 21l-4.35-4.35"/>
+        <path d="M11 8v6M8 11h6" stroke-width="1.5"/>
+      </svg>
+    </div>
+    <div class="qt-text">
+      <strong>입주가능업종 검색<span class="qt-badge">NEW</span></strong>
+      <span>업종명·KSIC 코드로 산업단지 입주 가능 여부를 빠르게 확인하세요</span>
+    </div>
+    <div class="qt-arrow">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M5 12h14M13 5l7 7-7 7"/>
+      </svg>
+    </div>
+  </a>
 
   <!-- CATEGORY -->
   <div class="category-tabs">
