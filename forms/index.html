@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>민원서식 다운로드 센터 | 국가산업단지 인허가 안내</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0d2840;
+    --blue: #1e5fb4;
+    --blue-pale: #f0f6ff;
+    --ink: #1f2937;
+    --ink-mute: #6b7280;
+    --line: #e5e7eb;
+    --bg: #f9fafb;
+    --green: #047857;
+    --green-soft: #d1fae5;
+    --orange: #d97706;
+    --orange-soft: #fed7aa;
+    --purple: #7c3aed;
+    --purple-soft: #ede9fe;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+  }
+  body {
+    font-family: 'Malgun Gothic', '맑은 고딕', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.6;
+    -webkit-text-size-adjust: 100%;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* ===== HEADER ===== */
+  .header {
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: var(--blue-pale);
+    color: var(--blue);
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  .back-link:hover {
+    background: var(--blue);
+    color: #fff;
+    transform: translateX(-2px);
+  }
+  .header-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: -0.3px;
+  }
+  .header-title .subtitle {
+    font-size: 11px;
+    color: var(--ink-mute);
+    font-weight: 500;
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: linear-gradient(135deg, var(--purple) 0%, #9333ea 100%);
+    color: #fff;
+    padding: 48px 24px 56px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -10%;
+    width: 360px;
+    height: 360px;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-content {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .hero h1 {
+    font-size: 32px;
+    margin-bottom: 12px;
+    letter-spacing: -0.6px;
+  }
+  .hero p {
+    font-size: 15px;
+    opacity: 0.92;
+    line-height: 1.7;
+  }
+  .hero .hero-stat {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.18);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    margin-top: 16px;
+    backdrop-filter: blur(8px);
+  }
+
+  /* ===== TOOLBAR ===== */
+  .toolbar {
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 56px;
+    z-index: 90;
+  }
+  .toolbar-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .forms-search {
+    flex: 1;
+    min-width: 240px;
+    max-width: 380px;
+    display: flex;
+    align-items: center;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 10px 16px;
+    transition: all 0.2s;
+  }
+  .forms-search:focus-within {
+    border-color: var(--purple);
+    background: #fff;
+    box-shadow: 0 0 0 3px var(--purple-soft);
+  }
+  .forms-search input {
+    border: none;
+    background: transparent;
+    outline: none;
+    flex: 1;
+    font-size: 14px;
+    font-family: inherit;
+    margin-left: 8px;
+  }
+  .forms-search svg { color: var(--ink-mute); flex-shrink: 0; }
+
+  /* ===== TAG FILTERS ===== */
+  .tag-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .tag-chip {
+    padding: 7px 14px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.18s;
+    white-space: nowrap;
+    color: var(--ink);
+  }
+  .tag-chip:hover {
+    border-color: var(--purple);
+    color: var(--purple);
+  }
+  .tag-chip.active {
+    background: var(--purple);
+    color: #fff;
+    border-color: var(--purple);
+  }
+  .result-count {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--ink-mute);
+    white-space: nowrap;
+  }
+
+  /* ===== CONTAINER ===== */
+  .container {
+    max-width: 1240px;
+    margin: 32px auto;
+    padding: 0 24px 64px;
+  }
+
+  /* ===== FORM CARDS ===== */
+  .forms-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .form-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: all 0.2s;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+  }
+  .form-card:hover {
+    border-color: var(--purple);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(124,58,237,0.12);
+  }
+  .form-icon {
+    width: 46px; height: 46px;
+    background: var(--purple-soft);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--purple);
+    flex-shrink: 0;
+  }
+  .form-info { flex: 1; min-width: 0; }
+  .form-info strong {
+    display: block;
+    font-size: 14px;
+    color: var(--navy);
+    font-weight: 600;
+    margin-bottom: 4px;
+    letter-spacing: -0.2px;
+    word-break: keep-all;
+    line-height: 1.4;
+  }
+  .form-info span.desc {
+    display: block;
+    font-size: 12px;
+    color: var(--ink-mute);
+    margin-bottom: 6px;
+    line-height: 1.5;
+    word-break: keep-all;
+  }
+  .form-info .tag-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    background: var(--purple-soft);
+    color: var(--purple);
+    font-size: 10.5px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  .form-download {
+    color: var(--purple);
+    flex-shrink: 0;
+  }
+  .empty {
+    grid-column: 1/-1;
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--ink-mute);
+    font-size: 14px;
+  }
+  .empty strong { display: block; font-size: 16px; color: var(--ink); margin-bottom: 6px; }
+
+  /* ===== HELP BOX ===== */
+  .help-box {
+    margin-top: 36px;
+    background: linear-gradient(135deg, #fff 0%, var(--purple-soft) 100%);
+    border-radius: 14px;
+    padding: 24px 28px;
+    border: 1px solid var(--line);
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .help-box .help-icon {
+    width: 40px; height: 40px;
+    background: var(--purple);
+    color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .help-box .help-content strong {
+    display: block;
+    color: var(--navy);
+    font-size: 15px;
+    margin-bottom: 6px;
+  }
+  .help-box .help-content p {
+    color: var(--ink-mute);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    background: var(--navy);
+    color: #cbd5e1;
+    padding: 28px 24px;
+    text-align: center;
+    font-size: 12px;
+  }
+
+  @media (max-width: 980px) {
+    .hero { padding: 36px 20px 44px; }
+    .hero h1 { font-size: 26px; }
+    .hero p { font-size: 13px; }
+    .forms-grid { grid-template-columns: repeat(2, 1fr); }
+    .toolbar-inner { padding: 12px 18px; }
+    .container { padding: 0 18px 48px; margin-top: 24px; }
+    .header-title .subtitle { display: none; }
+  }
+  @media (max-width: 640px) {
+    .forms-grid { grid-template-columns: 1fr; }
+    .forms-search { max-width: 100%; }
+    .toolbar { top: 52px; }
+    .toolbar-inner { gap: 12px; flex-direction: column; align-items: stretch; }
+    .result-count { margin-left: 0; text-align: right; }
+    .tag-filters { justify-content: flex-start; overflow-x: auto; padding-bottom: 4px; }
+    .tag-chip { font-size: 11.5px; padding: 6px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <a href="../" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      메인으로
+    </a>
+    <div class="header-title">
+      민원서식 다운로드 센터
+      <span class="subtitle">국가산업단지 인허가 안내</span>
+    </div>
+    <div style="width: 80px;"></div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>📋 민원서식 다운로드</h1>
+    <p>입주계약, 처분신고, 사업계획서 등 산업단지 민원에 필요한<br>모든 법정 서식과 작성예시를 한 곳에서 받아보세요.</p>
+    <div class="hero-stat">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+      </svg>
+      <span id="totalCount">총 0개</span> · 모두 PDF로 다운로드 가능
+    </div>
+  </div>
+</section>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <div class="toolbar-inner">
+    <div class="forms-search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" placeholder="양식명, 키워드로 검색 (예: 처분, 사업계획서)" id="formSearch"/>
+    </div>
+    <div class="tag-filters" id="tagFilters">
+      <!-- 동적으로 채워짐 -->
+    </div>
+    <div class="result-count" id="resultCount">결과 0건</div>
+  </div>
+</div>
+
+<!-- CONTAINER -->
+<div class="container">
+  <div class="forms-grid" id="formsGrid">
+    <!-- 동적으로 채워짐 -->
+  </div>
+
+  <!-- 도움말 박스 -->
+  <div class="help-box">
+    <div class="help-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+      </svg>
+    </div>
+    <div class="help-content">
+      <strong>어떤 양식을 받아야 할지 모르겠나요?</strong>
+      <p>
+        메인 페이지에서 <a href="../" style="color:var(--purple); font-weight:600;">상황별 케이스(매매·증축·업종변경 등)</a>를 선택하시면
+        해당 절차에 필요한 모든 서류 목록과 신청 흐름을 안내해 드립니다.<br>
+        사업계획서 작성이 필요하시면 <a href="../business-plan/" style="color:var(--purple); font-weight:600;">사업계획서 작성 도우미</a>를 이용하세요.
+      </p>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  © 한국산업단지공단 인천국가산업단지 인허가 안내 · 본 사이트는 민원안내용 참고자료입니다.
+</footer>
+
+<script>
+const formList = [
+  // 매매·경매·지식산업센터 분양
+  { name: '처분신고서 및 작성예시', desc: '매매·양도 시 양도인용 (개인정보동의서 포함)', file: 'form_f4e6e7e29f.pdf', tag: '매매/양도' },
+  { name: '(자가) 입주계약신청서 및 작성예시', desc: '공장 매입·양수인용', file: 'form_74b1ad47bb.pdf', tag: '매매/양도' },
+  { name: '[제조업] 사업계획서 및 작성예시', desc: '제조업 사업계획서 (자가)', file: 'form_d23e6da729.pdf', tag: '매매/양도' },
+  { name: '위험상황전파 개인정보 수집·활용 동의서', desc: '입주계약 시 함께 제출', file: 'form_49ef0ea6eb.pdf', tag: '동의서' },
+
+  // 지식산업센터 분양 / 신설
+  { name: '지식산업센터 분양 입주계약신청서', desc: '지식산업센터 분양 입주 시', file: 'form_90e53bd67a.pdf', tag: '지식산업센터' },
+  { name: '지식산업센터 사업계획서 (분양)', desc: '지식산업센터 분양용 사업계획서', file: 'form_4febc4abdf.pdf', tag: '지식산업센터' },
+  { name: '지식산업센터 처분신고서', desc: '지식산업센터 처분 시 주인공장용', file: 'form_027d054894.pdf', tag: '지식산업센터' },
+  { name: '지식산업센터 입주계약신청서 [신설/증설]', desc: '매입공장 - 신설·증설(승인·변경승인)', file: 'form_958e7f24b2.pdf', tag: '지식산업센터' },
+  { name: '지식산업센터 설립 사업계획서', desc: '지식산업센터 설립용', file: 'form_ca02aa1978.pdf', tag: '지식산업센터' },
+  { name: '지식산업센터 (비제조업) 입주계약신청서', desc: '지식산업센터 건설 - 비제조업', file: 'form_0a8fb7009f.pdf', tag: '지식산업센터' },
+  { name: '지식산업센터 비제조업 사업계획서', desc: '지식산업센터 건설용 비제조업', file: 'form_d56b4c2fc0.pdf', tag: '지식산업센터' },
+  { name: '지식산업센터 설립완료신고서', desc: '준공 후 서류', file: 'form_9143e43ee8.pdf', tag: '지식산업센터' },
+
+  // 증축
+  { name: '(증축_면적증가) 입주계약신청서', desc: '자가 공장 증축 신청', file: 'form_d6942325bc.pdf', tag: '증축' },
+  { name: '(증축) 사업계획서 양식 및 작성예시', desc: '증축 부분에 대한 사업내용 기재', file: 'form_4b363a2aca.pdf', tag: '증축' },
+
+  // 면적변경 (임차)
+  { name: '(변경) 임대신고서 및 작성예시', desc: '임대인이 신고하는 면적변경', file: 'form_bf9ddc340a.pdf', tag: '면적변경' },
+  { name: '제조공간 증축(추가임차) 입주계약신청서', desc: '임차 - 제조면적 증가', file: 'form_ea4583ee34.pdf', tag: '면적변경' },
+  { name: '제조공간 증축 - 임차 사업계획서', desc: '임차 신규입주 사업계획서', file: 'form_70a5060951.pdf', tag: '면적변경' },
+  { name: '부대면적 증축 입주계약신청서', desc: '임차 - 부대면적 증가', file: 'form_5663c80df9.pdf', tag: '면적변경' },
+
+  // 업종변경
+  { name: '(자가-업종변경) 산업단지입주 신청(확인)서', desc: '자가 - 업종 추가/변경', file: 'form_c99f69009a.pdf', tag: '업종변경' },
+  { name: '(자가-업종변경/추가) 사업계획서', desc: '자가 - 업종변경용 사업계획서', file: 'form_02baa33f92.pdf', tag: '업종변경' },
+  { name: '(임차-업종변경) 산업단지입주 신청(확인)서', desc: '임차 - 업종 추가/변경', file: 'form_db48cf5304.pdf', tag: '업종변경' },
+  { name: '(임차-업종변경/추가) 사업계획서', desc: '임차 - 업종변경용 사업계획서', file: 'form_b808de0cf8.pdf', tag: '업종변경' },
+
+  // 상호/대표자 변경 (자가)
+  { name: '법인 - 회사명/대표자변경 신청서 (자가)', desc: '법인사업자용 자가공장', file: 'form_23890916d3.pdf', tag: '상호변경' },
+  { name: '개인 - 회사명/대표자변경 신청서 (자가)', desc: '개인사업자용 자가공장 (처분신고 후 입주계약)', file: 'form_69db4c4b06.pdf', tag: '상호변경' },
+  // 상호/대표자 변경 (임차)
+  { name: '법인 - 회사명/대표자변경 신청서 (임차)', desc: '법인사업자용 임차공장', file: 'form_09ed7865bb.pdf', tag: '상호변경' },
+  { name: '개인 - 회사명/대표자변경 신청서 (임차)', desc: '개인사업자용 임차공장', file: 'form_50f00f0471.pdf', tag: '상호변경' },
+
+  // 법인전환
+  { name: '(자가-법인전환) 산업단지입주 신청(확인)서', desc: '자가 - 개인 → 법인 전환', file: 'form_5db4216e9e.pdf', tag: '법인전환' },
+  { name: '임차(법인전환) 입주계약(변경) 신청서', desc: '임차 - 개인 → 법인 전환', file: 'form_24c0061949.pdf', tag: '법인전환' },
+
+  // 공장설립완료신고
+  { name: '공장설립등의 완료신고서 일체 (자가)', desc: '자가 공장설립 완료 신고', file: 'form_5155159a8a.pdf', tag: '공장등록' },
+  { name: '공장설립등의 완료신고서 일체 (임차)', desc: '임차 공장설립 완료 신고', file: 'form_d10c21bbe2.pdf', tag: '공장등록' },
+  { name: '공장등록증 발급방법 안내', desc: 'FactoryOn 발급 절차 PDF', file: 'form_526da7d20a.pdf', tag: '공장등록' },
+  { name: '등록면허세 납부안내', desc: '위택스 납부 안내', file: 'form_985c395e7f.pdf', tag: '공장등록' },
+
+  // 처분 / 분할 / 해지
+  { name: '처분신고서 (시행규칙) 작성예시', desc: '공장·산업용지 양도 시 처분신고', file: 'form_772aed693d.pdf', tag: '처분/해지' },
+  { name: '산업용지 분할 협의 신청서', desc: '산업용지 분할 시', file: 'form_3df35893fe.pdf', tag: '처분/해지' },
+  { name: '입주계약 해지신청서', desc: '퇴거·폐업 등에 따른 해지', file: 'form_9e46d6acf9.pdf', tag: '처분/해지' },
+
+  // 임대사업자 전환
+  { name: '입주계약변경(임대사업자) 신청서', desc: '제조업 → 임대사업자 전환', file: 'form_da6e89d9f4.pdf', tag: '임대사업자' },
+  { name: '임대사업자 사업계획서', desc: '임대사업자용 사업계획서', file: 'form_7fcc6bbd79.pdf', tag: '임대사업자' },
+
+  // 비제조업
+  { name: '임차공장 (비제조업) 입주계약신청(확인)서', desc: '임차 - 비제조업 입주', file: 'form_bdb5009cbd.pdf', tag: '비제조업' },
+  { name: '임차공장 비제조업 사업계획서', desc: '임차 - 비제조업 사업계획서', file: 'form_501393e091.pdf', tag: '비제조업' },
+  { name: '비제조업 사업계획서 (공통)', desc: '제조업/비제조업 공통 사업계획서', file: 'form_e973cf32ad.pdf', tag: '비제조업' },
+
+  // 임대신고 / 전대
+  { name: '주인공장 - 임대신고서 작성예시', desc: '주인공장 임대 신고 (시행규칙)', file: 'form_4da64d001d.pdf', tag: '임대/전대' },
+  { name: '임대공장 - 임대신고서 (전대용)', desc: '전대 시 임대공장 신고', file: 'form_16d4bcc2ae.pdf', tag: '임대/전대' },
+  { name: '건물주인 날인 - 전대동의서', desc: '전대 시 소유주 동의서', file: 'form_93f4a0622a.pdf', tag: '임대/전대' },
+  { name: '전대동의서 (전차일 경우)', desc: '전차 입주 시 사용', file: 'form_2830c4b3af.pdf', tag: '임대/전대' },
+
+  // 임차 입주계약
+  { name: '임차공장 - 산업단지입주계약 신청(확인)서', desc: '임차인용 입주계약 신청', file: 'form_c5ae9ba601.pdf', tag: '임차 입주' },
+  { name: '[제조업] 사업계획서 (임차)', desc: '임차인용 제조업 사업계획서', file: 'form_65e15824a9.pdf', tag: '임차 입주' },
+  { name: '전차인 - (임차)입주계약신청서', desc: '전차인용 입주계약 신청', file: 'form_472b62e23b.pdf', tag: '임차 입주' },
+  { name: '전차인 임차(신규입주) 사업계획서', desc: '전차인용 사업계획서', file: 'form_7fb62dfe0b.pdf', tag: '임차 입주' },
+
+  // 사업개시신고
+  { name: '사업개시 신고(확인)서 (자가)', desc: '자가 비제조업 사업개시 신고', file: 'form_25b24de9a0.pdf', tag: '사업개시' },
+  { name: '사업개시 신고(확인)서 (임차)', desc: '임차 비제조업 사업개시 신고', file: 'form_121535ae7c.pdf', tag: '사업개시' }
+];
+
+// 전체 태그 추출 (순서 유지)
+const TAG_ORDER = [
+  '매매/양도','지식산업센터','증축','면적변경','업종변경','상호변경','법인전환',
+  '공장등록','처분/해지','임대사업자','비제조업','임대/전대','임차 입주','사업개시','동의서'
+];
+const allTags = TAG_ORDER.filter(t => formList.some(f => f.tag === t));
+
+let currentTag = '전체';
+let currentQuery = '';
+
+function renderTagFilters() {
+  const wrap = document.getElementById('tagFilters');
+  const tags = ['전체', ...allTags];
+  wrap.innerHTML = tags.map(t =>
+    `<div class="tag-chip${t === currentTag ? ' active' : ''}" data-tag="${t}">${t}</div>`
+  ).join('');
+  wrap.querySelectorAll('.tag-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      currentTag = chip.dataset.tag;
+      renderTagFilters();
+      renderForms();
+    });
+  });
+}
+
+function renderForms() {
+  const grid = document.getElementById('formsGrid');
+  const q = currentQuery.toLowerCase().trim();
+
+  let filtered = formList.filter(f => {
+    if (currentTag !== '전체' && f.tag !== currentTag) return false;
+    if (!q) return true;
+    return f.name.toLowerCase().includes(q) ||
+           f.desc.toLowerCase().includes(q) ||
+           (f.tag && f.tag.toLowerCase().includes(q));
+  });
+
+  document.getElementById('resultCount').textContent = `결과 ${filtered.length}건`;
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div class="empty">
+      <strong>검색 결과가 없습니다</strong>
+      다른 키워드로 검색하거나 태그 필터를 변경해 보세요.
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(f => `
+    <a class="form-card" href="${f.file}" download="${f.name}" target="_blank" title="${f.name} 다운로드">
+      <div class="form-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="12" y1="18" x2="12" y2="12"/>
+          <polyline points="9 15 12 18 15 15"/>
+        </svg>
+      </div>
+      <div class="form-info">
+        <strong>${escapeHtml(f.name)}</strong>
+        <span class="desc">${escapeHtml(f.desc)}</span>
+        <span class="tag-badge">${escapeHtml(f.tag || '기타')}</span>
+      </div>
+      <div class="form-download">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+      </div>
+    </a>
+  `).join('');
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, m => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[m]));
+}
+
+document.getElementById('totalCount').textContent = `총 ${formList.length}개`;
+renderTagFilters();
+renderForms();
+
+document.getElementById('formSearch').addEventListener('input', e => {
+  currentQuery = e.target.value;
+  renderForms();
+});
+</script>
+</body>
+</html>

@@ -231,6 +231,12 @@
   }
 
   /* ========== QUICK TOOL BANNER (빠른 도구) ========== */
+  .quick-tools-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
   .quick-tool-banner {
     display: flex;
     align-items: center;
@@ -238,13 +244,19 @@
     background: linear-gradient(135deg, #1e5fb4 0%, #2d8fdb 100%);
     color: #fff;
     border-radius: 14px;
-    padding: 22px 28px;
-    margin-bottom: 24px;
+    padding: 22px 24px;
     text-decoration: none;
     box-shadow: 0 6px 20px rgba(30,95,180,0.18);
     transition: all 0.25s;
     position: relative;
     overflow: hidden;
+  }
+  .quick-tool-banner.banner-purple {
+    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+    box-shadow: 0 6px 20px rgba(124,58,237,0.18);
+  }
+  .quick-tool-banner.banner-purple:hover {
+    box-shadow: 0 10px 28px rgba(124,58,237,0.28);
   }
   .quick-tool-banner::before {
     content: '';
@@ -830,128 +842,6 @@
     font-weight: 700;
   }
 
-  /* ========== FORMS DOWNLOAD CENTER ========== */
-  .forms-section {
-    margin-top: 56px;
-    background: linear-gradient(135deg, #fff 0%, var(--blue-pale) 100%);
-    border-radius: 16px;
-    padding: 36px;
-    box-shadow: var(--shadow-sm);
-    border: 1px solid var(--line);
-  }
-  .forms-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    flex-wrap: wrap;
-    gap: 16px;
-    margin-bottom: 28px;
-  }
-  .forms-search {
-    display: flex;
-    align-items: center;
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    padding: 10px 16px;
-    width: 260px;
-  }
-  .forms-search input {
-    border: none;
-    background: transparent;
-    outline: none;
-    flex: 1;
-    font-size: 13px;
-    font-family: inherit;
-    margin-left: 8px;
-  }
-  .forms-search svg { color: var(--ink-mute); }
-
-  .forms-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-  }
-  .form-card {
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 18px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    transition: all 0.2s;
-    text-decoration: none;
-    color: inherit;
-    cursor: pointer;
-  }
-  .form-card:hover {
-    border-color: var(--blue);
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
-  }
-  .form-card.disabled {
-    opacity: 0.55;
-    cursor: not-allowed;
-  }
-  .form-card.disabled:hover {
-    transform: none;
-    border-color: var(--line);
-    box-shadow: none;
-  }
-  .form-icon {
-    width: 44px; height: 44px;
-    background: var(--blue-pale);
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--blue);
-    flex-shrink: 0;
-  }
-  .form-card.disabled .form-icon {
-    background: var(--bg);
-    color: var(--ink-mute);
-  }
-  .form-info { flex: 1; min-width: 0; }
-  .form-info strong {
-    display: block;
-    font-size: 14px;
-    color: var(--navy);
-    font-weight: 600;
-    margin-bottom: 4px;
-    letter-spacing: -0.2px;
-  }
-  .form-info span {
-    display: block;
-    font-size: 11.5px;
-    color: var(--ink-mute);
-  }
-  .form-download {
-    color: var(--blue);
-    flex-shrink: 0;
-  }
-  .form-card.disabled .form-download { color: var(--ink-mute); }
-
-  .form-card .badge-ready {
-    display: inline-block;
-    margin-top: 4px;
-    padding: 2px 8px;
-    background: var(--green-soft);
-    color: var(--green);
-    font-size: 10px;
-    border-radius: 4px;
-    font-weight: 600;
-  }
-  .form-card .badge-pending {
-    display: inline-block;
-    margin-top: 4px;
-    padding: 2px 8px;
-    background: #f3f4f6;
-    color: var(--ink-mute);
-    font-size: 10px;
-    border-radius: 4px;
-    font-weight: 600;
-  }
-
   /* ========== FAQ ========== */
   .faq-section {
     margin-top: 56px;
@@ -1058,8 +948,7 @@
     .flow-step + .flow-step::before { display: none; }
     .case-split { grid-template-columns: 1fr; }
     .faq-list { grid-template-columns: 1fr; }
-    .forms-grid { grid-template-columns: repeat(2, 1fr); }
-    .forms-search { width: 100%; }
+    .quick-tools-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 640px) {
     .hero { padding: 40px 20px 50px; }
@@ -1072,8 +961,6 @@
     .modal-body { padding: 20px; }
     .modal-head { padding: 20px; }
     .modal-head h2 { font-size: 18px; }
-    .forms-grid { grid-template-columns: 1fr; }
-    .forms-section { padding: 24px; }
     .doc-list li { flex-direction: column; align-items: stretch; }
     .doc-list li .doc-actions { 
       justify-content: flex-end; 
@@ -1140,25 +1027,47 @@
   <h2 class="section-title">어떤 행정서비스가 필요하세요?</h2>
   <p class="section-sub">공장의 소유 형태를 먼저 선택한 뒤, 해당하는 민원 항목을 클릭하면 상세 절차와 서류 안내가 나타납니다.</p>
 
-  <!-- 빠른 도구 배너 -->
-  <a href="search/" class="quick-tool-banner">
-    <div class="qt-icon">
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="11" cy="11" r="8"/>
-        <path d="M21 21l-4.35-4.35"/>
-        <path d="M11 8v6M8 11h6" stroke-width="1.5"/>
-      </svg>
-    </div>
-    <div class="qt-text">
-      <strong>입주가능업종 검색<span class="qt-badge">NEW</span></strong>
-      <span>업종명·KSIC 코드로 산업단지 입주 가능 여부를 빠르게 확인하세요</span>
-    </div>
-    <div class="qt-arrow">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-        <path d="M5 12h14M13 5l7 7-7 7"/>
-      </svg>
-    </div>
-  </a>
+  <!-- 빠른 도구 배너 그리드 -->
+  <div class="quick-tools-grid">
+    <a href="search/" class="quick-tool-banner">
+      <div class="qt-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="M21 21l-4.35-4.35"/>
+          <path d="M11 8v6M8 11h6" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="qt-text">
+        <strong>입주가능업종 검색<span class="qt-badge">NEW</span></strong>
+        <span>업종명·KSIC 코드·생산품으로 산업단지 입주 가능 여부를 확인하세요</span>
+      </div>
+      <div class="qt-arrow">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M5 12h14M13 5l7 7-7 7"/>
+        </svg>
+      </div>
+    </a>
+
+    <a href="forms/" class="quick-tool-banner banner-purple">
+      <div class="qt-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="12" y1="18" x2="12" y2="12"/>
+          <polyline points="9 15 12 18 15 15"/>
+        </svg>
+      </div>
+      <div class="qt-text">
+        <strong>민원서식 다운로드</strong>
+        <span>입주계약·처분·사업계획서 등 모든 법정 서식과 작성예시 (PDF)</span>
+      </div>
+      <div class="qt-arrow">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M5 12h14M13 5l7 7-7 7"/>
+        </svg>
+      </div>
+    </a>
+  </div>
 
   <!-- CATEGORY -->
   <div class="category-tabs">
@@ -1376,23 +1285,6 @@
   </div>
 
   <!-- 양식 다운로드 센터 -->
-  <div class="forms-section">
-    <div class="forms-header">
-      <div>
-        <h2 class="section-title" style="margin-bottom:8px;">민원서식 다운로드 센터</h2>
-        <p class="section-sub" style="margin-bottom:0;">필요한 양식을 클릭하여 다운로드 후 작성하세요. 모든 양식은 법정 서식 기준입니다.</p>
-      </div>
-      <div class="forms-search">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-        <input type="text" placeholder="양식명 검색" id="formSearch"/>
-      </div>
-    </div>
-
-    <div class="forms-grid" id="formsGrid">
-      <!-- 동적으로 채워짐 -->
-    </div>
-  </div>
-
   <!-- FAQ -->
   <div class="faq-section">
     <h2 class="section-title">자주 묻는 질문 (FAQ)</h2>
@@ -2509,132 +2401,6 @@ document.getElementById('searchInput').addEventListener('input', e => {
   });
 });
 
-// ===== FORMS DOWNLOAD CENTER =====
-// 실제 업로드된 양식 파일 목록 (각 양식에는 작성예시가 포함되어 있음 - PDF)
-const formList = [
-  // 매매·경매·지식산업센터 분양
-  { name: '처분신고서 및 작성예시', desc: '매매·양도 시 양도인용 (개인정보동의서 포함)', file: 'forms/form_f4e6e7e29f.pdf', tag: '매매/양도' },
-  { name: '(자가) 입주계약신청서 및 작성예시', desc: '공장 매입·양수인용', file: 'forms/form_74b1ad47bb.pdf', tag: '매매/양도' },
-  { name: '[제조업] 사업계획서 및 작성예시', desc: '제조업 사업계획서 (자가)', file: 'forms/form_d23e6da729.pdf', tag: '매매/양도' },
-  { name: '위험상황전파 개인정보 수집·활용 동의서', desc: '입주계약 시 함께 제출', file: 'forms/form_49ef0ea6eb.pdf', tag: '동의서' },
-
-  // 지식산업센터 분양 / 신설
-  { name: '지식산업센터 분양 입주계약신청서', desc: '지식산업센터 분양 입주 시', file: 'forms/form_90e53bd67a.pdf', tag: '지식산업센터' },
-  { name: '지식산업센터 사업계획서 (분양)', desc: '지식산업센터 분양용 사업계획서', file: 'forms/form_4febc4abdf.pdf', tag: '지식산업센터' },
-  { name: '지식산업센터 처분신고서', desc: '지식산업센터 처분 시 주인공장용', file: 'forms/form_027d054894.pdf', tag: '지식산업센터' },
-  { name: '지식산업센터 입주계약신청서 [신설/증설]', desc: '매입공장 - 신설·증설(승인·변경승인)', file: 'forms/form_958e7f24b2.pdf', tag: '지식산업센터' },
-  { name: '지식산업센터 설립 사업계획서', desc: '지식산업센터 설립용', file: 'forms/form_ca02aa1978.pdf', tag: '지식산업센터' },
-  { name: '지식산업센터 (비제조업) 입주계약신청서', desc: '지식산업센터 건설 - 비제조업', file: 'forms/form_0a8fb7009f.pdf', tag: '지식산업센터' },
-  { name: '지식산업센터 비제조업 사업계획서', desc: '지식산업센터 건설용 비제조업', file: 'forms/form_d56b4c2fc0.pdf', tag: '지식산업센터' },
-  { name: '지식산업센터 설립완료신고서', desc: '준공 후 서류', file: 'forms/form_9143e43ee8.pdf', tag: '지식산업센터' },
-
-  // 증축
-  { name: '(증축_면적증가) 입주계약신청서', desc: '자가 공장 증축 신청', file: 'forms/form_d6942325bc.pdf', tag: '증축' },
-  { name: '(증축) 사업계획서 양식 및 작성예시', desc: '증축 부분에 대한 사업내용 기재', file: 'forms/form_4b363a2aca.pdf', tag: '증축' },
-
-  // 면적변경 (임차)
-  { name: '(변경) 임대신고서 및 작성예시', desc: '임대인이 신고하는 면적변경', file: 'forms/form_bf9ddc340a.pdf', tag: '면적변경' },
-  { name: '제조공간 증축(추가임차) 입주계약신청서', desc: '임차 - 제조면적 증가', file: 'forms/form_ea4583ee34.pdf', tag: '면적변경' },
-  { name: '제조공간 증축 - 임차 사업계획서', desc: '임차 신규입주 사업계획서', file: 'forms/form_70a5060951.pdf', tag: '면적변경' },
-  { name: '부대면적 증축 입주계약신청서', desc: '임차 - 부대면적 증가', file: 'forms/form_5663c80df9.pdf', tag: '면적변경' },
-
-  // 업종변경
-  { name: '(자가-업종변경) 산업단지입주 신청(확인)서', desc: '자가 - 업종 추가/변경', file: 'forms/form_c99f69009a.pdf', tag: '업종변경' },
-  { name: '(자가-업종변경/추가) 사업계획서', desc: '자가 - 업종변경용 사업계획서', file: 'forms/form_02baa33f92.pdf', tag: '업종변경' },
-  { name: '(임차-업종변경) 산업단지입주 신청(확인)서', desc: '임차 - 업종 추가/변경', file: 'forms/form_db48cf5304.pdf', tag: '업종변경' },
-  { name: '(임차-업종변경/추가) 사업계획서', desc: '임차 - 업종변경용 사업계획서', file: 'forms/form_b808de0cf8.pdf', tag: '업종변경' },
-
-  // 상호/대표자 변경 (자가)
-  { name: '법인 - 회사명/대표자변경 신청서 (자가)', desc: '법인사업자용 자가공장', file: 'forms/form_23890916d3.pdf', tag: '상호변경' },
-  { name: '개인 - 회사명/대표자변경 신청서 (자가)', desc: '개인사업자용 자가공장 (처분신고 후 입주계약)', file: 'forms/form_69db4c4b06.pdf', tag: '상호변경' },
-  // 상호/대표자 변경 (임차)
-  { name: '법인 - 회사명/대표자변경 신청서 (임차)', desc: '법인사업자용 임차공장', file: 'forms/form_09ed7865bb.pdf', tag: '상호변경' },
-  { name: '개인 - 회사명/대표자변경 신청서 (임차)', desc: '개인사업자용 임차공장', file: 'forms/form_50f00f0471.pdf', tag: '상호변경' },
-
-  // 법인전환
-  { name: '(자가-법인전환) 산업단지입주 신청(확인)서', desc: '자가 - 개인 → 법인 전환', file: 'forms/form_5db4216e9e.pdf', tag: '법인전환' },
-  { name: '임차(법인전환) 입주계약(변경) 신청서', desc: '임차 - 개인 → 법인 전환', file: 'forms/form_24c0061949.pdf', tag: '법인전환' },
-
-  // 공장설립완료신고
-  { name: '공장설립등의 완료신고서 일체 (자가)', desc: '자가 공장설립 완료 신고', file: 'forms/form_5155159a8a.pdf', tag: '공장등록' },
-  { name: '공장설립등의 완료신고서 일체 (임차)', desc: '임차 공장설립 완료 신고', file: 'forms/form_d10c21bbe2.pdf', tag: '공장등록' },
-  { name: '공장등록증 발급방법 안내', desc: 'FactoryOn 발급 절차 PDF', file: 'forms/form_526da7d20a.pdf', tag: '공장등록' },
-  { name: '등록면허세 납부안내', desc: '위택스 납부 안내', file: 'forms/form_985c395e7f.pdf', tag: '공장등록' },
-
-  // 처분 / 분할 / 해지
-  { name: '처분신고서 (시행규칙) 작성예시', desc: '공장·산업용지 양도 시 처분신고', file: 'forms/form_772aed693d.pdf', tag: '처분/해지' },
-  { name: '산업용지 분할 협의 신청서', desc: '산업용지 분할 시', file: 'forms/form_3df35893fe.pdf', tag: '처분/해지' },
-  { name: '입주계약 해지신청서', desc: '퇴거·폐업 등에 따른 해지', file: 'forms/form_9e46d6acf9.pdf', tag: '처분/해지' },
-
-  // 임대사업자 전환
-  { name: '입주계약변경(임대사업자) 신청서', desc: '제조업 → 임대사업자 전환', file: 'forms/form_da6e89d9f4.pdf', tag: '임대사업자' },
-  { name: '임대사업자 사업계획서', desc: '임대사업자용 사업계획서', file: 'forms/form_7fcc6bbd79.pdf', tag: '임대사업자' },
-
-  // 비제조업
-  { name: '임차공장 (비제조업) 입주계약신청(확인)서', desc: '임차 - 비제조업 입주', file: 'forms/form_bdb5009cbd.pdf', tag: '비제조업' },
-  { name: '임차공장 비제조업 사업계획서', desc: '임차 - 비제조업 사업계획서', file: 'forms/form_501393e091.pdf', tag: '비제조업' },
-  { name: '비제조업 사업계획서 (공통)', desc: '제조업/비제조업 공통 사업계획서', file: 'forms/form_e973cf32ad.pdf', tag: '비제조업' },
-
-  // 임대신고 / 전대
-  { name: '주인공장 - 임대신고서 작성예시', desc: '주인공장 임대 신고 (시행규칙)', file: 'forms/form_4da64d001d.pdf', tag: '임대/전대' },
-  { name: '임대공장 - 임대신고서 (전대용)', desc: '전대 시 임대공장 신고', file: 'forms/form_16d4bcc2ae.pdf', tag: '임대/전대' },
-  { name: '건물주인 날인 - 전대동의서', desc: '전대 시 소유주 동의서', file: 'forms/form_93f4a0622a.pdf', tag: '임대/전대' },
-  { name: '전대동의서 (전차일 경우)', desc: '전차 입주 시 사용', file: 'forms/form_2830c4b3af.pdf', tag: '임대/전대' },
-
-  // 임차 입주계약
-  { name: '임차공장 - 산업단지입주계약 신청(확인)서', desc: '임차인용 입주계약 신청', file: 'forms/form_c5ae9ba601.pdf', tag: '임차 입주' },
-  { name: '[제조업] 사업계획서 (임차)', desc: '임차인용 제조업 사업계획서', file: 'forms/form_65e15824a9.pdf', tag: '임차 입주' },
-  { name: '전차인 - (임차)입주계약신청서', desc: '전차인용 입주계약 신청', file: 'forms/form_472b62e23b.pdf', tag: '임차 입주' },
-  { name: '전차인 임차(신규입주) 사업계획서', desc: '전차인용 사업계획서', file: 'forms/form_7fb62dfe0b.pdf', tag: '임차 입주' },
-
-  // 사업개시신고
-  { name: '사업개시 신고(확인)서 (자가)', desc: '자가 비제조업 사업개시 신고', file: 'forms/form_25b24de9a0.pdf', tag: '사업개시' },
-  { name: '사업개시 신고(확인)서 (임차)', desc: '임차 비제조업 사업개시 신고', file: 'forms/form_121535ae7c.pdf', tag: '사업개시' }
-];
-
-function renderForms(filter = '') {
-  const grid = document.getElementById('formsGrid');
-  const q = filter.toLowerCase().trim();
-  const filtered = formList.filter(f =>
-    !q || f.name.toLowerCase().includes(q) || f.desc.toLowerCase().includes(q) || (f.tag && f.tag.toLowerCase().includes(q))
-  );
-
-  if (filtered.length === 0) {
-    grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--ink-mute); font-size:14px;">검색 결과가 없습니다.</div>`;
-    return;
-  }
-
-  grid.innerHTML = filtered.map(f => {
-    return `
-      <a class="form-card" href="${f.file}" download="${f.name}">
-        <div class="form-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-            <polyline points="14 2 14 8 20 8"/>
-            <line x1="12" y1="18" x2="12" y2="12"/>
-            <polyline points="9 15 12 18 15 15"/>
-          </svg>
-        </div>
-        <div class="form-info">
-          <strong>${f.name}</strong>
-          <span>${f.desc}</span>
-          <span class="badge-ready">${f.tag || '다운로드 가능'}</span>
-        </div>
-        <div class="form-download">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
-          </svg>
-        </div>
-      </a>
-    `;
-  }).join('');
-}
-
-renderForms();
-
-document.getElementById('formSearch').addEventListener('input', e => {
-  renderForms(e.target.value);
-});
 </script>
 
 </body>
