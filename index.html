@@ -903,39 +903,136 @@
   footer {
     background: var(--navy-deep);
     color: #8fa3c0;
-    padding: 40px 24px 32px;
+    padding: 48px 24px 28px;
     margin-top: 80px;
   }
   .footer-inner {
     max-width: 1280px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 40px;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 60px;
     margin-bottom: 32px;
+    align-items: start;
   }
-  footer h4 {
+
+  /* 회사 정보 (왼쪽) */
+  .footer-company {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .footer-logo-img {
+    height: 54px;
+    width: auto;
+    display: block;
+  }
+  .footer-logo-sub {
+    color: #7d93b3;
+    font-size: 13px;
+    letter-spacing: 0.3px;
+    line-height: 1.4;
+    font-weight: 500;
+  }
+
+  .footer-info {
+    padding-left: 4px;
+  }
+  .footer-addr {
+    color: #b6c5dc;
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 16px;
+    word-break: keep-all;
+  }
+  .footer-contact {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .contact-item {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .contact-label {
+    display: inline-block;
+    font-size: 11px;
+    color: #6e85a8;
+    background: rgba(255,255,255,0.06);
+    padding: 3px 9px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+  }
+  .contact-item strong {
+    color: #fff;
+    font-size: 14.5px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+  .contact-item small {
+    color: #6e85a8;
+    font-size: 11px;
+  }
+  .contact-divider {
+    width: 1px;
+    height: 18px;
+    background: rgba(255,255,255,0.1);
+  }
+
+  /* 유용한 사이트 (오른쪽) */
+  .footer-links h4 {
     color: #fff;
     font-size: 14px;
     margin-bottom: 14px;
     font-weight: 600;
+    letter-spacing: -0.2px;
   }
-  footer p, footer li {
+  .footer-links ul { list-style: none; }
+  .footer-links li {
     font-size: 13px;
-    line-height: 1.8;
+    line-height: 2;
   }
-  footer ul { list-style: none; }
-  footer a { color: #8fa3c0; text-decoration: none; }
-  footer a:hover { color: #fff; }
+  .footer-links a {
+    color: #b6c5dc;
+    text-decoration: none;
+    transition: color 0.15s, padding 0.15s;
+    display: inline-block;
+  }
+  .footer-links a:hover {
+    color: #fff;
+    padding-left: 4px;
+  }
+  .footer-links a::before {
+    content: "→";
+    color: #4a5d7a;
+    margin-right: 6px;
+    font-size: 11px;
+    transition: color 0.15s;
+  }
+  .footer-links a:hover::before {
+    color: #5BC0DE;
+  }
+
   .footer-bottom {
     max-width: 1280px;
     margin: 0 auto;
-    padding-top: 24px;
+    padding-top: 22px;
     border-top: 1px solid rgba(255,255,255,0.08);
     font-size: 12px;
     color: #5a6b85;
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
   }
 
   /* ========== RESPONSIVE ========== */
@@ -960,6 +1057,11 @@
     main { padding: 32px 16px 48px; }
     .section-title { font-size: 22px; }
     .menu-grid { grid-template-columns: repeat(2, 1fr); }
+    /* 모바일에서 footer 연락처 세로 배치 */
+    .footer-contact { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .contact-divider { display: none; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; }
+    footer { padding: 36px 20px 24px; }
     .modal-body { padding: 20px; }
     .modal-head { padding: 20px; }
     .modal-head h2 { font-size: 18px; }
@@ -1016,7 +1118,7 @@
     <h1>복잡한 인허가,<br/><span class="accent">한눈에 살펴보는</span> 산업단지 입주 안내</h1>
     <p>공장 매매·임대·증축·업종변경 등 산업단지 민원에 필요한 절차와 양식을 한곳에서 안내합니다.</p>
     <div class="hero-stats">
-      <div class="hero-stat"><strong>21</strong><span>민원 케이스</span></div>
+      <div class="hero-stat"><strong>22</strong><span>민원 케이스</span></div>
       <div class="hero-stat"><strong>3~7일</strong><span>평균 처리기간</span></div>
       <div class="hero-stat"><strong>4가지</strong><span>준수해야 할 약속</span></div>
     </div>
@@ -1367,34 +1469,41 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <div>
-      <h4>한국산업단지공단</h4>
-      <p>본 안내서는 민원인과 실무자의 편의를 위해 제작된 자료이며, 실제 처리 시에는 관계 법령 및 관리기관의 안내에 따릅니다.</p>
-      <p style="margin-top:12px;">관련근거: 「산업집적활성화 및 공장설립에 관한 법률」</p>
+    <div class="footer-company">
+      <div class="footer-logo">
+        <img class="footer-logo-img" src="assets/kicox-logo.png" alt="한국산업단지공단 로고" />
+        <span class="footer-logo-sub">Korea Industrial Complex Corporation</span>
+      </div>
+      <div class="footer-info">
+        <p class="footer-addr">(41068) 대구광역시 동구 첨단로 39 (신서동) 한국산업단지공단</p>
+        <div class="footer-contact">
+          <span class="contact-item">
+            <span class="contact-label">대표전화</span>
+            <strong>070-8895-7000</strong>
+            <small>유료, 평일 09시~18시</small>
+          </span>
+          <span class="contact-divider"></span>
+          <span class="contact-item">
+            <span class="contact-label">팩&nbsp;&nbsp;&nbsp;스</span>
+            <strong>070-4850-9031</strong>
+            <small>유료, 평일 09시~18시</small>
+          </span>
+        </div>
+      </div>
     </div>
-    <div>
-      <h4>문의처</h4>
-      <ul>
-        <li>한국산업단지공단 대표번호</li>
-        <li>해당 지역본부 민원실</li>
-        <li>관할 시·군·구청 세무과</li>
-        <li>(등록면허세 관련)</li>
-      </ul>
-      <p style="margin-top:10px; font-size:12px;">※ 산업단지별 관리기관 연락처는 한국산업단지공단 홈페이지에서 확인하실 수 있습니다.</p>
-    </div>
-    <div>
+    <div class="footer-links">
       <h4>유용한 사이트</h4>
       <ul>
-        <li><a href="https://www.kicox.or.kr" target="_blank">한국산업단지공단</a></li>
-        <li><a href="http://www.factoryon.go.kr" target="_blank">FactoryOn (공장등록증)</a></li>
-        <li><a href="http://www.wetax.go.kr" target="_blank">위택스 (등록면허세)</a></li>
-        <li><a href="https://kssc.kostat.go.kr" target="_blank">통계분류 포털 (업종코드)</a></li>
-        <li><a href="https://www.iros.go.kr" target="_blank">인터넷등기소</a></li>
+        <li><a href="https://www.kicox.or.kr" target="_blank" rel="noopener">한국산업단지공단</a></li>
+        <li><a href="http://www.factoryon.go.kr" target="_blank" rel="noopener">FactoryOn (공장등록증)</a></li>
+        <li><a href="http://www.wetax.go.kr" target="_blank" rel="noopener">위택스 (등록면허세)</a></li>
+        <li><a href="https://kssc.kostat.go.kr" target="_blank" rel="noopener">통계분류 포털 (업종코드)</a></li>
+        <li><a href="https://www.iros.go.kr" target="_blank" rel="noopener">인터넷등기소</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 한국산업단지공단. All rights reserved.</span>
+    <span>© 한국산업단지공단(KICOX). All rights reserved.</span>
     <span>국가산업단지 민원·실무자 안내 페이지</span>
   </div>
 </footer>

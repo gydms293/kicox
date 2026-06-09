@@ -835,8 +835,11 @@ function selectDangi(id, btn) {
   doSearch();
 }
 
-// 초기 렌더 — 산단 선택 전엔 숨김
-// doSearch() 는 selectDangi에서 호출
+// 페이지 로드 시 남동국가산업단지 자동 선택 → 검색창 즉시 표시
+window.addEventListener('DOMContentLoaded', () => {
+  const namdongBtn = document.getElementById('btn-namdong');
+  if (namdongBtn) selectDangi('namdong', namdongBtn);
+});
 </script>
 </body>
 </html>
