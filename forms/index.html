@@ -126,6 +126,38 @@
     margin-top: 16px;
     backdrop-filter: blur(8px);
   }
+  /* 두 가지 형식 안내 (HWPX + PDF) */
+  .hero .format-info {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .fmt-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    backdrop-filter: blur(8px);
+  }
+  .fmt-pill.fmt-hwpx {
+    background: rgba(255,255,255,0.95);
+    color: #047857;
+  }
+  .fmt-pill.fmt-pdf {
+    background: rgba(255,255,255,0.18);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.4);
+  }
+  .fmt-text {
+    color: rgba(255,255,255,0.92);
+    font-size: 12.5px;
+    margin-left: 4px;
+  }
 
   /* ===== TOOLBAR ===== */
   .toolbar {
@@ -222,27 +254,17 @@
     background: #fff;
     border: 1px solid var(--line);
     border-radius: 12px;
-    padding: 20px;
+    padding: 18px;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 14px;
     transition: all 0.2s;
-    text-decoration: none;
     color: inherit;
-    cursor: pointer;
   }
   .form-card:hover {
     border-color: var(--purple);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(124,58,237,0.12);
-  }
-  .form-icon {
-    width: 46px; height: 46px;
-    background: var(--purple-soft);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--purple);
-    flex-shrink: 0;
+    box-shadow: 0 6px 18px rgba(124,58,237,0.10);
+    transform: translateY(-1px);
   }
   .form-info { flex: 1; min-width: 0; }
   .form-info strong {
@@ -259,7 +281,7 @@
     display: block;
     font-size: 12px;
     color: var(--ink-mute);
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     line-height: 1.5;
     word-break: keep-all;
   }
@@ -272,9 +294,71 @@
     border-radius: 4px;
     font-weight: 600;
   }
-  .form-download {
-    color: var(--purple);
-    flex-shrink: 0;
+
+  /* ===== 다운로드 버튼 (PDF + HWPX) ===== */
+  .form-downloads {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 2px;
+  }
+  .dl-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 10px 8px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.18s;
+    border: 1px solid transparent;
+    line-height: 1.2;
+  }
+  .dl-btn span {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.15;
+  }
+  .dl-btn span small {
+    font-size: 9.5px;
+    font-weight: 700;
+    opacity: 0.85;
+    letter-spacing: 0.3px;
+    display: block;
+    margin-top: 1px;
+  }
+  /* HWPX 편집용 - 녹색 (주력) */
+  .dl-btn.dl-hwpx {
+    background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+    color: #fff;
+    border-color: #047857;
+  }
+  .dl-btn.dl-hwpx:hover {
+    background: linear-gradient(135deg, #047857 0%, #059669 100%);
+    box-shadow: 0 3px 10px rgba(16,185,129,0.32);
+    transform: translateY(-1px);
+  }
+  /* PDF 인쇄용 - 빨강 (보조) */
+  .dl-btn.dl-pdf {
+    background: #fff;
+    color: #dc2626;
+    border-color: #fecaca;
+  }
+  .dl-btn.dl-pdf:hover {
+    background: #fef2f2;
+    border-color: #dc2626;
+    box-shadow: 0 2px 8px rgba(220,38,38,0.15);
+  }
+  /* 비활성 (없음) */
+  .dl-btn.dl-disabled {
+    background: #f9fafb;
+    color: #9ca3af;
+    border-color: #e5e7eb;
+    cursor: not-allowed;
+    opacity: 0.7;
   }
   .empty {
     grid-column: 1/-1;
@@ -369,11 +453,10 @@
   <div class="hero-content">
     <h1>📋 민원서식 다운로드</h1>
     <p>입주계약, 처분신고, 사업계획서 등 산업단지 민원에 필요한<br>모든 법정 서식과 작성예시를 한 곳에서 받아보세요.</p>
-    <div class="hero-stat">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-        <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
-      </svg>
-      <span id="totalCount">총 0개</span> · 모두 PDF로 다운로드 가능
+    <div class="format-info">
+      <span class="fmt-pill fmt-hwpx">✏️ 편집용 HWPX</span>
+      <span class="fmt-pill fmt-pdf">📄 인쇄용 PDF</span>
+      <span class="fmt-text">두 가지 형식 모두 제공</span>
     </div>
   </div>
 </section>
@@ -423,83 +506,84 @@
 <script>
 const formList = [
   // 매매·경매·지식산업센터 분양
-  { name: '처분신고서 및 작성예시', desc: '매매·양도 시 양도인용 (개인정보동의서 포함)', file: 'form_f4e6e7e29f.pdf', tag: '매매/양도' },
-  { name: '(자가) 입주계약신청서 및 작성예시', desc: '공장 매입·양수인용', file: 'form_74b1ad47bb.pdf', tag: '매매/양도' },
-  { name: '[제조업] 사업계획서 및 작성예시', desc: '제조업 사업계획서 (자가)', file: 'form_d23e6da729.pdf', tag: '매매/양도' },
-  { name: '위험상황전파 개인정보 수집·활용 동의서', desc: '입주계약 시 함께 제출', file: 'form_49ef0ea6eb.pdf', tag: '동의서' },
+  { name: '처분신고서 및 작성예시', desc: '매매·양도 시 양도인용 (개인정보동의서 포함)', pdf: 'form_f4e6e7e29f.pdf', hwpx: 'form_f4e6e7e29f.hwpx', tag: '매매/양도' },
+  { name: '(자가) 입주계약신청서 및 작성예시', desc: '공장 매입·양수인용', pdf: 'form_74b1ad47bb.pdf', hwpx: 'form_74b1ad47bb.hwpx', tag: '매매/양도' },
+  { name: '[제조업] 사업계획서 및 작성예시', desc: '제조업 사업계획서 (자가)', pdf: 'form_d23e6da729.pdf', hwpx: 'form_d23e6da729.hwpx', tag: '매매/양도' },
+  { name: '위험상황전파 개인정보 수집·활용 동의서', desc: '입주계약 시 함께 제출', pdf: 'form_49ef0ea6eb.pdf', hwpx: 'form_49ef0ea6eb.hwpx', tag: '동의서' },
 
   // 지식산업센터 분양 / 신설
-  { name: '지식산업센터 분양 입주계약신청서', desc: '지식산업센터 분양 입주 시', file: 'form_90e53bd67a.pdf', tag: '지식산업센터' },
-  { name: '지식산업센터 사업계획서 (분양)', desc: '지식산업센터 분양용 사업계획서', file: 'form_4febc4abdf.pdf', tag: '지식산업센터' },
-  { name: '지식산업센터 처분신고서', desc: '지식산업센터 처분 시 주인공장용', file: 'form_027d054894.pdf', tag: '지식산업센터' },
-  { name: '지식산업센터 입주계약신청서 [신설/증설]', desc: '매입공장 - 신설·증설(승인·변경승인)', file: 'form_958e7f24b2.pdf', tag: '지식산업센터' },
-  { name: '지식산업센터 설립 사업계획서', desc: '지식산업센터 설립용', file: 'form_ca02aa1978.pdf', tag: '지식산업센터' },
-  { name: '지식산업센터 (비제조업) 입주계약신청서', desc: '지식산업센터 건설 - 비제조업', file: 'form_0a8fb7009f.pdf', tag: '지식산업센터' },
-  { name: '지식산업센터 비제조업 사업계획서', desc: '지식산업센터 건설용 비제조업', file: 'form_d56b4c2fc0.pdf', tag: '지식산업센터' },
-  { name: '지식산업센터 설립완료신고서', desc: '준공 후 서류', file: 'form_9143e43ee8.pdf', tag: '지식산업센터' },
+  { name: '지식산업센터 분양 입주계약신청서', desc: '지식산업센터 분양 입주 시', pdf: 'form_90e53bd67a.pdf', hwpx: 'form_90e53bd67a.hwpx', tag: '지식산업센터' },
+  { name: '지식산업센터 사업계획서 (분양)', desc: '지식산업센터 분양용 사업계획서', pdf: 'form_4febc4abdf.pdf', hwpx: 'form_4febc4abdf.hwpx', tag: '지식산업센터' },
+  { name: '지식산업센터 처분신고서', desc: '지식산업센터 처분 시 주인공장용', pdf: 'form_027d054894.pdf', hwpx: 'form_027d054894.hwpx', tag: '지식산업센터' },
+  { name: '지식산업센터 입주계약신청서 [신설/증설]', desc: '매입공장 - 신설·증설(승인·변경승인)', pdf: 'form_958e7f24b2.pdf', hwpx: 'form_958e7f24b2.hwpx', tag: '지식산업센터' },
+  { name: '지식산업센터 설립 사업계획서', desc: '지식산업센터 설립용', pdf: 'form_ca02aa1978.pdf', hwpx: 'form_ca02aa1978.hwpx', tag: '지식산업센터' },
+  { name: '지식산업센터 (비제조업) 입주계약신청서', desc: '지식산업센터 건설 - 비제조업', pdf: 'form_0a8fb7009f.pdf', hwpx: 'form_0a8fb7009f.hwpx', tag: '지식산업센터' },
+  { name: '지식산업센터 비제조업 사업계획서', desc: '지식산업센터 건설용 비제조업', pdf: 'form_d56b4c2fc0.pdf', hwpx: 'form_d56b4c2fc0.hwpx', tag: '지식산업센터' },
+  { name: '지식산업센터 설립완료신고서', desc: '준공 후 서류', pdf: 'form_9143e43ee8.pdf', hwpx: 'form_9143e43ee8.hwpx', tag: '지식산업센터' },
 
   // 증축
-  { name: '(증축_면적증가) 입주계약신청서', desc: '자가 공장 증축 신청', file: 'form_d6942325bc.pdf', tag: '증축' },
-  { name: '(증축) 사업계획서 양식 및 작성예시', desc: '증축 부분에 대한 사업내용 기재', file: 'form_4b363a2aca.pdf', tag: '증축' },
+  { name: '(증축_면적증가) 입주계약신청서', desc: '자가 공장 증축 신청', pdf: 'form_d6942325bc.pdf', hwpx: 'form_d6942325bc.hwpx', tag: '증축' },
+  { name: '(증축) 사업계획서 양식 및 작성예시', desc: '증축 부분에 대한 사업내용 기재', pdf: 'form_4b363a2aca.pdf', hwpx: 'form_4b363a2aca.hwpx', tag: '증축' },
 
   // 면적변경 (임차)
-  { name: '(변경) 임대신고서 및 작성예시', desc: '임대인이 신고하는 면적변경', file: 'form_bf9ddc340a.pdf', tag: '면적변경' },
-  { name: '제조공간 증축(추가임차) 입주계약신청서', desc: '임차 - 제조면적 증가', file: 'form_ea4583ee34.pdf', tag: '면적변경' },
-  { name: '제조공간 증축 - 임차 사업계획서', desc: '임차 신규입주 사업계획서', file: 'form_70a5060951.pdf', tag: '면적변경' },
-  { name: '부대면적 증축 입주계약신청서', desc: '임차 - 부대면적 증가', file: 'form_5663c80df9.pdf', tag: '면적변경' },
+  { name: '(변경) 임대신고서 및 작성예시', desc: '임대인이 신고하는 면적변경', pdf: 'form_bf9ddc340a.pdf', hwpx: 'form_bf9ddc340a.hwpx', tag: '면적변경' },
+  { name: '제조공간 증축(추가임차) 입주계약신청서', desc: '임차 - 제조면적 증가', pdf: 'form_ea4583ee34.pdf', hwpx: 'form_ea4583ee34.hwpx', tag: '면적변경' },
+  { name: '제조공간 증축 - 임차 사업계획서', desc: '임차 신규입주 사업계획서', pdf: 'form_70a5060951.pdf', hwpx: 'form_70a5060951.hwpx', tag: '면적변경' },
+  { name: '부대면적 증축 입주계약신청서', desc: '임차 - 부대면적 증가', pdf: 'form_5663c80df9.pdf', hwpx: 'form_5663c80df9.hwpx', tag: '면적변경' },
 
   // 업종변경
-  { name: '(자가-업종변경) 산업단지입주 신청(확인)서', desc: '자가 - 업종 추가/변경', file: 'form_c99f69009a.pdf', tag: '업종변경' },
-  { name: '(자가-업종변경/추가) 사업계획서', desc: '자가 - 업종변경용 사업계획서', file: 'form_02baa33f92.pdf', tag: '업종변경' },
-  { name: '(임차-업종변경) 산업단지입주 신청(확인)서', desc: '임차 - 업종 추가/변경', file: 'form_db48cf5304.pdf', tag: '업종변경' },
-  { name: '(임차-업종변경/추가) 사업계획서', desc: '임차 - 업종변경용 사업계획서', file: 'form_b808de0cf8.pdf', tag: '업종변경' },
+  { name: '(자가-업종변경) 산업단지입주 신청(확인)서', desc: '자가 - 업종 추가/변경', pdf: 'form_c99f69009a.pdf', hwpx: 'form_c99f69009a.hwpx', tag: '업종변경' },
+  { name: '(자가-업종변경/추가) 사업계획서', desc: '자가 - 업종변경용 사업계획서', pdf: 'form_02baa33f92.pdf', hwpx: 'form_02baa33f92.hwpx', tag: '업종변경' },
+  { name: '(임차-업종변경) 산업단지입주 신청(확인)서', desc: '임차 - 업종 추가/변경', pdf: 'form_db48cf5304.pdf', hwpx: 'form_db48cf5304.hwpx', tag: '업종변경' },
+  { name: '(임차-업종변경/추가) 사업계획서', desc: '임차 - 업종변경용 사업계획서', pdf: 'form_b808de0cf8.pdf', hwpx: 'form_b808de0cf8.hwpx', tag: '업종변경' },
 
   // 상호/대표자 변경 (자가)
-  { name: '법인 - 회사명/대표자변경 신청서 (자가)', desc: '법인사업자용 자가공장', file: 'form_23890916d3.pdf', tag: '상호변경' },
-  { name: '개인 - 회사명/대표자변경 신청서 (자가)', desc: '개인사업자용 자가공장 (처분신고 후 입주계약)', file: 'form_69db4c4b06.pdf', tag: '상호변경' },
+  { name: '법인 - 회사명/대표자변경 신청서 (자가)', desc: '법인사업자용 자가공장', pdf: 'form_23890916d3.pdf', hwpx: 'form_23890916d3.hwpx', tag: '상호변경' },
+  { name: '개인 - 회사명/대표자변경 신청서 (자가)', desc: '개인사업자용 자가공장 (처분신고 후 입주계약)', pdf: 'form_69db4c4b06.pdf', hwpx: 'form_69db4c4b06.hwpx', tag: '상호변경' },
   // 상호/대표자 변경 (임차)
-  { name: '법인 - 회사명/대표자변경 신청서 (임차)', desc: '법인사업자용 임차공장', file: 'form_09ed7865bb.pdf', tag: '상호변경' },
-  { name: '개인 - 회사명/대표자변경 신청서 (임차)', desc: '개인사업자용 임차공장', file: 'form_50f00f0471.pdf', tag: '상호변경' },
+  { name: '법인 - 회사명/대표자변경 신청서 (임차)', desc: '법인사업자용 임차공장', pdf: 'form_09ed7865bb.pdf', hwpx: 'form_09ed7865bb.hwpx', tag: '상호변경' },
+  { name: '개인 - 회사명/대표자변경 신청서 (임차)', desc: '개인사업자용 임차공장', pdf: 'form_50f00f0471.pdf', hwpx: 'form_50f00f0471.hwpx', tag: '상호변경' },
 
   // 법인전환
-  { name: '(자가-법인전환) 산업단지입주 신청(확인)서', desc: '자가 - 개인 → 법인 전환', file: 'form_5db4216e9e.pdf', tag: '법인전환' },
-  { name: '임차(법인전환) 입주계약(변경) 신청서', desc: '임차 - 개인 → 법인 전환', file: 'form_24c0061949.pdf', tag: '법인전환' },
+  { name: '(자가-법인전환) 산업단지입주 신청(확인)서', desc: '자가 - 개인 → 법인 전환', pdf: 'form_5db4216e9e.pdf', hwpx: 'form_5db4216e9e.hwpx', tag: '법인전환' },
+  { name: '임차(법인전환) 입주계약(변경) 신청서', desc: '임차 - 개인 → 법인 전환', pdf: 'form_24c0061949.pdf', hwpx: 'form_24c0061949.hwpx', tag: '법인전환' },
 
   // 공장설립완료신고
-  { name: '공장설립등의 완료신고서 일체 (자가)', desc: '자가 공장설립 완료 신고', file: 'form_5155159a8a.pdf', tag: '공장등록' },
-  { name: '공장설립등의 완료신고서 일체 (임차)', desc: '임차 공장설립 완료 신고', file: 'form_d10c21bbe2.pdf', tag: '공장등록' },
-  { name: '공장등록증 발급방법 안내', desc: 'FactoryOn 발급 절차 PDF', file: 'form_526da7d20a.pdf', tag: '공장등록' },
-  { name: '등록면허세 납부안내', desc: '위택스 납부 안내', file: 'form_985c395e7f.pdf', tag: '공장등록' },
+  { name: '공장설립등의 완료신고서 일체 (자가)', desc: '자가 공장설립 완료 신고', pdf: 'form_5155159a8a.pdf', hwpx: 'form_5155159a8a.hwpx', tag: '공장등록' },
+  { name: '공장설립등의 완료신고서 일체 (임차)', desc: '임차 공장설립 완료 신고', pdf: 'form_d10c21bbe2.pdf', hwpx: 'form_d10c21bbe2.hwpx', tag: '공장등록' },
+  { name: '공장등록증 발급방법 안내', desc: 'FactoryOn 발급 절차 (인쇄용 안내문)', pdf: 'form_526da7d20a.pdf', hwpx: null, tag: '공장등록' },
+  { name: '등록면허세 납부안내', desc: '위택스 납부 안내', pdf: 'form_985c395e7f.pdf', hwpx: 'form_985c395e7f.hwpx', tag: '공장등록' },
 
   // 처분 / 분할 / 해지
-  { name: '처분신고서 (시행규칙) 작성예시', desc: '공장·산업용지 양도 시 처분신고', file: 'form_772aed693d.pdf', tag: '처분/해지' },
-  { name: '산업용지 분할 협의 신청서', desc: '산업용지 분할 시', file: 'form_3df35893fe.pdf', tag: '처분/해지' },
-  { name: '입주계약 해지신청서', desc: '퇴거·폐업 등에 따른 해지', file: 'form_9e46d6acf9.pdf', tag: '처분/해지' },
+  { name: '처분신고서 (시행규칙) 작성예시', desc: '공장·산업용지 양도 시 처분신고', pdf: 'form_772aed693d.pdf', hwpx: 'form_772aed693d.hwpx', tag: '처분/해지' },
+  { name: '산업용지 분할 협의 신청서', desc: '산업용지 분할 시', pdf: 'form_3df35893fe.pdf', hwpx: 'form_3df35893fe.hwpx', tag: '처분/해지' },
+  { name: '입주계약 해지신청서', desc: '퇴거·폐업 등에 따른 해지', pdf: 'form_9e46d6acf9.pdf', hwpx: 'form_9e46d6acf9.hwpx', tag: '처분/해지' },
 
   // 임대사업자 전환
-  { name: '입주계약변경(임대사업자) 신청서', desc: '제조업 → 임대사업자 전환', file: 'form_da6e89d9f4.pdf', tag: '임대사업자' },
-  { name: '임대사업자 사업계획서', desc: '임대사업자용 사업계획서', file: 'form_7fcc6bbd79.pdf', tag: '임대사업자' },
+  { name: '입주계약변경(임대사업자) 신청서', desc: '제조업 → 임대사업자 전환', pdf: 'form_da6e89d9f4.pdf', hwpx: 'form_da6e89d9f4.hwpx', tag: '임대사업자' },
+  { name: '임대사업자 사업계획서', desc: '임대사업자용 사업계획서', pdf: 'form_7fcc6bbd79.pdf', hwpx: 'form_7fcc6bbd79.hwpx', tag: '임대사업자' },
 
   // 비제조업
-  { name: '임차공장 (비제조업) 입주계약신청(확인)서', desc: '임차 - 비제조업 입주', file: 'form_bdb5009cbd.pdf', tag: '비제조업' },
-  { name: '임차공장 비제조업 사업계획서', desc: '임차 - 비제조업 사업계획서', file: 'form_501393e091.pdf', tag: '비제조업' },
-  { name: '비제조업 사업계획서 (공통)', desc: '제조업/비제조업 공통 사업계획서', file: 'form_e973cf32ad.pdf', tag: '비제조업' },
+  { name: '(자가) 비제조업 입주계약신청서', desc: '자가 - 비제조업 입주 (편집용 HWPX 제공)', pdf: null, hwpx: 'form_jaga_bijejojo.hwpx', tag: '비제조업' },
+  { name: '임차공장 (비제조업) 입주계약신청(확인)서', desc: '임차 - 비제조업 입주', pdf: 'form_bdb5009cbd.pdf', hwpx: 'form_bdb5009cbd.hwpx', tag: '비제조업' },
+  { name: '임차공장 비제조업 사업계획서', desc: '임차 - 비제조업 사업계획서', pdf: 'form_501393e091.pdf', hwpx: 'form_501393e091.hwpx', tag: '비제조업' },
+  { name: '비제조업 사업계획서 (공통)', desc: '제조업/비제조업 공통 사업계획서', pdf: 'form_e973cf32ad.pdf', hwpx: 'form_e973cf32ad.hwpx', tag: '비제조업' },
 
   // 임대신고 / 전대
-  { name: '주인공장 - 임대신고서 작성예시', desc: '주인공장 임대 신고 (시행규칙)', file: 'form_4da64d001d.pdf', tag: '임대/전대' },
-  { name: '임대공장 - 임대신고서 (전대용)', desc: '전대 시 임대공장 신고', file: 'form_16d4bcc2ae.pdf', tag: '임대/전대' },
-  { name: '건물주인 날인 - 전대동의서', desc: '전대 시 소유주 동의서', file: 'form_93f4a0622a.pdf', tag: '임대/전대' },
-  { name: '전대동의서 (전차일 경우)', desc: '전차 입주 시 사용', file: 'form_2830c4b3af.pdf', tag: '임대/전대' },
+  { name: '주인공장 - 임대신고서 작성예시', desc: '주인공장 임대 신고 (시행규칙)', pdf: 'form_4da64d001d.pdf', hwpx: 'form_4da64d001d.hwpx', tag: '임대/전대' },
+  { name: '임대공장 - 임대신고서 (전대용)', desc: '전대 시 임대공장 신고', pdf: 'form_16d4bcc2ae.pdf', hwpx: 'form_16d4bcc2ae.hwpx', tag: '임대/전대' },
+  { name: '건물주인 날인 - 전대동의서', desc: '전대 시 소유주 동의서', pdf: 'form_93f4a0622a.pdf', hwpx: 'form_93f4a0622a.hwpx', tag: '임대/전대' },
+  { name: '전대동의서 (전차일 경우)', desc: '전차 입주 시 사용', pdf: 'form_2830c4b3af.pdf', hwpx: 'form_2830c4b3af.hwpx', tag: '임대/전대' },
 
   // 임차 입주계약
-  { name: '임차공장 - 산업단지입주계약 신청(확인)서', desc: '임차인용 입주계약 신청', file: 'form_c5ae9ba601.pdf', tag: '임차 입주' },
-  { name: '[제조업] 사업계획서 (임차)', desc: '임차인용 제조업 사업계획서', file: 'form_65e15824a9.pdf', tag: '임차 입주' },
-  { name: '전차인 - (임차)입주계약신청서', desc: '전차인용 입주계약 신청', file: 'form_472b62e23b.pdf', tag: '임차 입주' },
-  { name: '전차인 임차(신규입주) 사업계획서', desc: '전차인용 사업계획서', file: 'form_7fb62dfe0b.pdf', tag: '임차 입주' },
+  { name: '임차공장 - 산업단지입주계약 신청(확인)서', desc: '임차인용 입주계약 신청', pdf: 'form_c5ae9ba601.pdf', hwpx: 'form_c5ae9ba601.hwpx', tag: '임차 입주' },
+  { name: '[제조업] 사업계획서 (임차)', desc: '임차인용 제조업 사업계획서', pdf: 'form_65e15824a9.pdf', hwpx: 'form_65e15824a9.hwpx', tag: '임차 입주' },
+  { name: '전차인 - (임차)입주계약신청서', desc: '전차인용 입주계약 신청', pdf: 'form_472b62e23b.pdf', hwpx: 'form_472b62e23b.hwpx', tag: '임차 입주' },
+  { name: '전차인 임차(신규입주) 사업계획서', desc: '전차인용 사업계획서', pdf: 'form_7fb62dfe0b.pdf', hwpx: 'form_7fb62dfe0b.hwpx', tag: '임차 입주' },
 
   // 사업개시신고
-  { name: '사업개시 신고(확인)서 (자가)', desc: '자가 비제조업 사업개시 신고', file: 'form_25b24de9a0.pdf', tag: '사업개시' },
-  { name: '사업개시 신고(확인)서 (임차)', desc: '임차 비제조업 사업개시 신고', file: 'form_121535ae7c.pdf', tag: '사업개시' }
+  { name: '사업개시 신고(확인)서 (자가)', desc: '자가 비제조업 사업개시 신고', pdf: 'form_25b24de9a0.pdf', hwpx: 'form_25b24de9a0.hwpx', tag: '사업개시' },
+  { name: '사업개시 신고(확인)서 (임차)', desc: '임차 비제조업 사업개시 신고', pdf: 'form_121535ae7c.pdf', hwpx: 'form_121535ae7c.hwpx', tag: '사업개시' }
 ];
 
 // 전체 태그 추출 (순서 유지)
@@ -549,28 +633,52 @@ function renderForms() {
     return;
   }
 
-  grid.innerHTML = filtered.map(f => `
-    <a class="form-card" href="${f.file}" download="${f.name}" target="_blank" title="${f.name} 다운로드">
-      <div class="form-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  grid.innerHTML = filtered.map(f => {
+    // HWPX 편집용 버튼
+    const hwpxBtn = f.hwpx ? `
+      <a class="dl-btn dl-hwpx" href="${f.hwpx}" download="${escapeHtml(f.name)}.hwpx" title="${escapeHtml(f.name)} 편집용 (한글 HWPX) 다운로드">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+        </svg>
+        <span>편집용<small>HWPX</small></span>
+      </a>` : `
+      <span class="dl-btn dl-disabled" title="편집용 파일이 제공되지 않습니다">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+        </svg>
+        <span>편집용<small>HWPX 없음</small></span>
+      </span>`;
+
+    // PDF 인쇄용 버튼
+    const pdfBtn = f.pdf ? `
+      <a class="dl-btn dl-pdf" href="${f.pdf}" download="${escapeHtml(f.name)}.pdf" target="_blank" title="${escapeHtml(f.name)} 인쇄용 (PDF) 다운로드">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
           <polyline points="14 2 14 8 20 8"/>
-          <line x1="12" y1="18" x2="12" y2="12"/>
-          <polyline points="9 15 12 18 15 15"/>
         </svg>
-      </div>
+        <span>인쇄용<small>PDF</small></span>
+      </a>` : `
+      <span class="dl-btn dl-disabled" title="PDF가 제공되지 않습니다">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+        </svg>
+        <span>인쇄용<small>PDF 없음</small></span>
+      </span>`;
+
+    return `
+    <div class="form-card">
       <div class="form-info">
         <strong>${escapeHtml(f.name)}</strong>
         <span class="desc">${escapeHtml(f.desc)}</span>
         <span class="tag-badge">${escapeHtml(f.tag || '기타')}</span>
       </div>
-      <div class="form-download">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
-        </svg>
+      <div class="form-downloads">
+        ${hwpxBtn}
+        ${pdfBtn}
       </div>
-    </a>
-  `).join('');
+    </div>`;
+  }).join('');
 }
 
 function escapeHtml(s) {
@@ -579,7 +687,6 @@ function escapeHtml(s) {
   }[m]));
 }
 
-document.getElementById('totalCount').textContent = `총 ${formList.length}개`;
 renderTagFilters();
 renderForms();
 
