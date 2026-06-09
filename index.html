@@ -702,18 +702,6 @@
     transform: translateY(-1px);
     box-shadow: 0 2px 6px rgba(30,95,180,0.25);
   }
-  /* HWPX 편집용 양식 버튼 (녹색) */
-  .doc-btn-hwpx {
-    background: linear-gradient(135deg, #059669 0%, #10b981 100%) !important;
-    color: #fff !important;
-    border-color: #047857 !important;
-    box-shadow: 0 2px 6px rgba(16,185,129,0.22);
-  }
-  .doc-btn-hwpx:hover {
-    background: linear-gradient(135deg, #047857 0%, #059669 100%) !important;
-    transform: translateY(-1px);
-    box-shadow: 0 3px 10px rgba(16,185,129,0.35);
-  }
   .doc-btn-preview {
     background: #fff;
     color: var(--blue);
@@ -1026,7 +1014,7 @@
   <div class="hero-inner">
     <div class="hero-badge">민원인과 실무자가 함께 보는 안내서</div>
     <h1>복잡한 인허가,<br/><span class="accent">한눈에 살펴보는</span> 산업단지 입주 안내</h1>
-    <p>전국 국가산업단지 입주계약부터 공장등록까지, 자가공장·임차공장 케이스별 필요 서류와 절차를 단계별로 안내합니다.</p>
+    <p>공장 매매·임대·증축·업종변경 등 산업단지 민원에 필요한 절차와 양식을 한곳에서 안내합니다.</p>
     <div class="hero-stats">
       <div class="hero-stat"><strong>21</strong><span>민원 케이스</span></div>
       <div class="hero-stat"><strong>3~7일</strong><span>평균 처리기간</span></div>
@@ -2209,21 +2197,16 @@ function makeDownloadBtn(fileInfo) {
   // PDF를 HWPX로 자동 변환 (단, NO_HWPX_FILES는 PDF 유지)
   let downloadHref = fileInfo.file;
   let downloadFileName = fileInfo.name || '';
-  let btnLabel = '양식+예시';
-  let btnTitle = '양식 다운로드 (PDF, 작성예시 포함)';
-  let isHwpx = false;
+  let btnTitle = '양식+예시 다운로드 (PDF, 작성예시 포함)';
   if (fileInfo.file.endsWith('.pdf') && !NO_HWPX_FILES.includes(fileInfo.file)) {
     downloadHref = fileInfo.file.replace('.pdf', '.hwpx');
     downloadFileName = (fileInfo.name || '').replace(/\.pdf$/i, '.hwpx');
-    btnLabel = '편집용 양식';
-    btnTitle = '편집용 양식 다운로드 (HWPX, 한컴오피스에서 편집 가능)';
-    isHwpx = true;
+    btnTitle = '양식+예시 다운로드 (HWPX 편집용, 한컴오피스에서 편집 가능)';
   }
 
-  const btnClass = isHwpx ? 'doc-btn doc-btn-download doc-btn-hwpx' : 'doc-btn doc-btn-download';
-  const downloadBtn = `<a class="${btnClass}" href="${downloadHref}" download="${downloadFileName}" title="${btnTitle}" target="_blank">
+  const downloadBtn = `<a class="doc-btn doc-btn-download" href="${downloadHref}" download="${downloadFileName}" title="${btnTitle}" target="_blank">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-    ${btnLabel}
+    양식+예시
   </a>`;
 
   // 사업계획서인 경우 작성 도우미 버튼 추가
@@ -2376,7 +2359,7 @@ function openModal(key) {
   html += `<div class="info-box" style="background:var(--green-soft); border-left-color:var(--green); margin-top:24px;">
     <strong style="color:var(--green);">📌 안내사항</strong>
     <p>방문 시 도장을 지참(서류 수정 시 사용)하여 담당자를 찾아주세요. 도장은 개인의 경우 대표자 인감도장, 법인의 경우 법인 인감도장이 원칙입니다. 상담 소요시간으로 인해, 가급적 방문은 9:30-16:00 사이에 부탁드립니다. (12시-13시 점심시간 제외)</p>
-    <p style="margin-top:8px;">※ 각 양식의 <strong style="color:var(--green);">[편집용 양식]</strong> 버튼을 누르면 HWPX 파일이 다운로드됩니다. 한컴오피스(한글)에서 열어 편집·작성이 가능합니다. 양식 뒤쪽에 작성예시가 함께 포함되어 있습니다.</p>
+    <p style="margin-top:8px;">※ 각 양식의 <strong style="color:var(--blue);">[양식+예시]</strong> 버튼을 누르면 HWPX 파일이 다운로드됩니다. 한컴오피스(한글)에서 열어 편집·작성이 가능하며, 양식 뒤쪽에 작성예시가 함께 포함되어 있습니다.</p>
   </div>`;
 
   document.getElementById('modalBody').innerHTML = html;
